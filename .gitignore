@@ -1,7 +1,2 @@
-.import/
-.export/
+# Godot 4+ specific ignores
 .godot/
-.mono/
-export/
-*.import
-*.tmp

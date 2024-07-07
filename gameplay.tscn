@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3 uid="uid://bkaskjofg0e42"]
+
+[ext_resource type="Script" path="res://gameplay.gd" id="1_wjm3a"]
+[ext_resource type="Texture2D" uid="uid://cnf2eiyqjveif" path="res://assets/sprites/basic_platform.png" id="2_g4s13"]
+[ext_resource type="Texture2D" uid="uid://dyjxtoj7clmvb" path="res://assets/sprites/basic_border.png" id="3_m5bcj"]
+[ext_resource type="Texture2D" uid="uid://crxsbserfg7oi" path="res://assets/sprites/basic_ball.png" id="3_ryj0y"]
+[ext_resource type="Script" path="res://Player.gd" id="5_r4plt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uyt2j"]
+size = Vector2(20.1257, 18.7264)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kt8fs"]
+friction = 0.8
+bounce = 0.8
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ol2h7"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ld8eo"]
+bounce = 0.4
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource("1_wjm3a")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
+
+[node name="Platform01" type="StaticBody2D" parent="."]
+position = Vector2(318, 259)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform01"]
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("2_g4s13")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform01"]
+scale = Vector2(5.545, 0.487)
+shape = SubResource("RectangleShape2D_uyt2j")
+
+[node name="Platform02" type="StaticBody2D" parent="."]
+position = Vector2(513, 181)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform02"]
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("2_g4s13")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform02"]
+scale = Vector2(5.545, 0.487)
+shape = SubResource("RectangleShape2D_uyt2j")
+
+[node name="Platform03" type="StaticBody2D" parent="."]
+position = Vector2(153, 185)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform03"]
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("2_g4s13")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform03"]
+scale = Vector2(5.545, 0.487)
+shape = SubResource("RectangleShape2D_uyt2j")
+
+[node name="LevelBounds" type="StaticBody2D" parent="."]
+position = Vector2(320, 180)
+
+[node name="Sprite2D" type="Sprite2D" parent="LevelBounds"]
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("3_m5bcj")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LevelBounds"]
+polygon = PackedVector2Array(-258, -177, 261, -177, 276, -172, 291, -158, 297, -140, 297, 136, 293, 151, 282, 164, 261, 172, -258, 172, -276, 165, -289, 152, -295, 135, -295, -141, -289, -159, -275, -172, -259, -177, -259, -277, -423, -277, -423, 268, 409, 268, 409, -277, -258, -277)
+
+[node name="Ball" type="RigidBody2D" parent="."]
+position = Vector2(323, 55)
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_kt8fs")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+scale = Vector2(0.785, 0.785)
+shape = SubResource("CircleShape2D_ol2h7")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("3_ryj0y")
+
+[node name="Player" type="RigidBody2D" parent="."]
+position = Vector2(271, 242)
+mass = 0.3
+physics_material_override = SubResource("PhysicsMaterial_ld8eo")
+script = ExtResource("5_r4plt")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+scale = Vector2(0.785, 0.785)
+shape = SubResource("CircleShape2D_ol2h7")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("3_ryj0y")

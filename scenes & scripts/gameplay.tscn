@@ -1,19 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://bkaskjofg0e42"]
+[gd_scene load_steps=11 format=3 uid="uid://bkaskjofg0e42"]
 
 [ext_resource type="Script" path="res://scenes & scripts/gameplay.gd" id="1_wjm3a"]
 [ext_resource type="Texture2D" uid="uid://cnf2eiyqjveif" path="res://assets/sprites/basic_platform.png" id="2_g4s13"]
+[ext_resource type="PackedScene" uid="uid://cv7gh6sgss3m" path="res://scenes & scripts/platform.tscn" id="2_uwxlj"]
 [ext_resource type="Texture2D" uid="uid://dyjxtoj7clmvb" path="res://assets/sprites/basic_border.png" id="3_m5bcj"]
-[ext_resource type="Texture2D" uid="uid://crxsbserfg7oi" path="res://assets/sprites/basic_ball.png" id="3_ryj0y"]
 [ext_resource type="PackedScene" uid="uid://bf8cqxd6j6rof" path="res://scenes & scripts/ball.tscn" id="4_0fchy"]
-[ext_resource type="Script" path="res://scenes & scripts/Player.gd" id="5_r4plt"]
+[ext_resource type="PackedScene" uid="uid://6mytvone5yik" path="res://scenes & scripts/player.tscn" id="5_52syx"]
+[ext_resource type="PackedScene" uid="uid://ceeixme1jgg1c" path="res://scenes & scripts/goal.tscn" id="7_m1xtc"]
+[ext_resource type="Texture2D" uid="uid://ryuqaupmt72j" path="res://assets/sprites/basic_green_goal.png" id="8_lk5ge"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uyt2j"]
-size = Vector2(20.1257, 18.7264)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jc2qs"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ld8eo"]
-bounce = 0.1
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ol2h7"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6jqs6"]
+size = Vector2(22.5519, 50.4451)
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_wjm3a")
@@ -25,44 +24,10 @@ anchor_mode = 0
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
 
-[node name="Platform01" type="StaticBody2D" parent="."]
-position = Vector2(318, 259)
-metadata/_edit_group_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Platform01"]
-scale = Vector2(0.333, 0.333)
-texture = ExtResource("2_g4s13")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform01"]
-scale = Vector2(5.545, 0.487)
-shape = SubResource("RectangleShape2D_uyt2j")
-
-[node name="Platform02" type="StaticBody2D" parent="."]
-position = Vector2(513, 181)
-metadata/_edit_group_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Platform02"]
-scale = Vector2(0.333, 0.333)
-texture = ExtResource("2_g4s13")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform02"]
-scale = Vector2(5.545, 0.487)
-shape = SubResource("RectangleShape2D_uyt2j")
-
-[node name="Platform03" type="StaticBody2D" parent="."]
-position = Vector2(153, 185)
-metadata/_edit_group_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Platform03"]
-scale = Vector2(0.333, 0.333)
-texture = ExtResource("2_g4s13")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform03"]
-scale = Vector2(5.545, 0.487)
-shape = SubResource("RectangleShape2D_uyt2j")
-
 [node name="LevelBounds" type="StaticBody2D" parent="."]
 position = Vector2(320, 180)
+collision_layer = 8
+collision_mask = 7
 
 [node name="Sprite2D" type="Sprite2D" parent="LevelBounds"]
 scale = Vector2(0.333, 0.333)
@@ -72,18 +37,57 @@ texture = ExtResource("3_m5bcj")
 polygon = PackedVector2Array(-258, -177, 261, -177, 276, -172, 291, -158, 297, -140, 297, 136, 293, 151, 282, 164, 261, 172, -258, 172, -276, 165, -289, 152, -295, 135, -295, -141, -289, -159, -275, -172, -259, -177, -259, -277, -423, -277, -423, 268, 409, 268, 409, -277, -258, -277)
 
 [node name="Ball" parent="." instance=ExtResource("4_0fchy")]
+collision_layer = 4
+collision_mask = 31
 
-[node name="Player" type="RigidBody2D" parent="."]
-position = Vector2(271, 242)
-mass = 0.3
-physics_material_override = SubResource("PhysicsMaterial_ld8eo")
-script = ExtResource("5_r4plt")
+[node name="Player" parent="." instance=ExtResource("5_52syx")]
+position = Vector2(162, 193)
+
+[node name="Platform1" parent="." instance=ExtResource("2_uwxlj")]
+position = Vector2(324, 261)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-scale = Vector2(0.785, 0.785)
-shape = SubResource("CircleShape2D_ol2h7")
+[node name="Sprite2D" parent="Platform1" index="0"]
+texture = ExtResource("2_g4s13")
 
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-scale = Vector2(0.333, 0.333)
-texture = ExtResource("3_ryj0y")
+[node name="CollisionShape2D" parent="Platform1" index="1"]
+shape = SubResource("RectangleShape2D_jc2qs")
+
+[node name="Platform2" parent="." instance=ExtResource("2_uwxlj")]
+position = Vector2(499, 214)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="Platform2" index="0"]
+texture = ExtResource("2_g4s13")
+
+[node name="CollisionShape2D" parent="Platform2" index="1"]
+shape = SubResource("RectangleShape2D_jc2qs")
+
+[node name="Platform3" parent="." instance=ExtResource("2_uwxlj")]
+position = Vector2(160, 210)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="Platform3" index="0"]
+texture = ExtResource("2_g4s13")
+
+[node name="CollisionShape2D" parent="Platform3" index="1"]
+shape = SubResource("RectangleShape2D_jc2qs")
+
+[node name="Goal" parent="." instance=ExtResource("7_m1xtc")]
+position = Vector2(302, 309)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="Goal" index="0"]
+texture = ExtResource("8_lk5ge")
+
+[node name="StaticBody2D" parent="Goal" index="1"]
+team_name = 1
+
+[node name="CollisionShape2D" parent="Goal/StaticBody2D" index="0"]
+position = Vector2(3, 0.5)
+shape = SubResource("RectangleShape2D_6jqs6")
+
+[editable path="Platform1"]
+[editable path="Platform2"]
+[editable path="Platform3"]
+[editable path="Goal"]

@@ -29,3 +29,9 @@ func _integrate_forces(state):
 	if abs(linear_velocity.y) > MAX_SPEED_Y:
 		state.linear_velocity.y = sign(linear_velocity.y) * MAX_SPEED_Y
 	
+	if Input.is_action_just_pressed("move_right") && linear_velocity.x < 0:
+		state.linear_velocity.x = 0
+	
+	if Input.is_action_just_pressed("move_left") && linear_velocity.x > 0:
+		state.linear_velocity.x = 0
+	

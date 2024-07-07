@@ -11,9 +11,12 @@ config_version=5
 [application]
 
 config/name="Wizard Soccer"
-run/main_scene="res://gameplay.tscn"
+run/main_scene="res://scenes & scripts/gameplay.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+
+[autoload]
+
+BubbleManager="*res://scenes & scripts/bubble_manager.gd"
 
 [display]
 

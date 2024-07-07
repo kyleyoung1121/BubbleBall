@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf8cqxd6j6rof"]
+
+[ext_resource type="Texture2D" uid="uid://crxsbserfg7oi" path="res://assets/sprites/basic_ball.png" id="1_cykut"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kt8fs"]
+friction = 0.8
+bounce = 0.8
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ol2h7"]
+
+[node name="Ball" type="RigidBody2D" groups=["ball"]]
+position = Vector2(323, 55)
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_kt8fs")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["ball"]]
+scale = Vector2(0.785, 0.785)
+shape = SubResource("CircleShape2D_ol2h7")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["ball"]]
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("1_cykut")

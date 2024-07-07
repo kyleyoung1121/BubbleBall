@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceeixme1jgg1c"]
+
+[ext_resource type="Script" path="res://scenes & scripts/goal.gd" id="1_t6fm4"]
+
+[node name="Goal" type="Node2D"]
+script = ExtResource("1_t6fm4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.333, 0.333)
+
+[node name="Area2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(1.685, 1.685)

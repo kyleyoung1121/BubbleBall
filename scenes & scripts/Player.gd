@@ -11,6 +11,9 @@ const MAX_SPEED_X = 200.0
 const MAX_SPEED_Y = 300.0
 
 
+var team_name = 1
+
+
 func _physics_process(delta):
 	# Jump: Apply impulse upwards. If falling, set speed to 0 before applying
 	if Input.is_action_just_pressed("jump"):
@@ -43,5 +46,6 @@ func _integrate_forces(state):
 func summon_bubble():
 	var bubble_instance = BUBBLE_SCENE.instantiate()
 	bubble_instance.position = self.position  # Set the bubble's position to the player's position
+	bubble_instance.set_team(team_name)
 	get_parent().add_child(bubble_instance)  # Add the bubble to the scene tree
 	BubbleManager.set_current_bubble(bubble_instance)

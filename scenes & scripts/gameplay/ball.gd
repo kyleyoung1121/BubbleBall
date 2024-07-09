@@ -9,15 +9,15 @@ func _ready():
 	set_max_contacts_reported(5)
 
 
-
 func _process(delta):
 	var colliding_bodies = get_colliding_bodies()
 	
+	# Check to see if the ball has collided with a goal
 	for body in colliding_bodies:
 		if body.is_in_group("goal"):
 			var goal_node = body
 			
-			# Assuming the goal has a method to get its team name
+			# Ask the goal for its team
 			var team_name = goal_node.get_team_name()
 			
 			# Print which goal was scored on

@@ -12,6 +12,7 @@ const IMPULSE = 30.0
 var team_name = null
 
 
+# If the bubble is collided with, delete the bubble and apply force if it touched the ball
 func _on_body_entered(body):
 	if body.is_in_group("ball"):
 		# Calculate the direction from the bubble to the ball
@@ -19,9 +20,10 @@ func _on_body_entered(body):
 		# Apply impulse to the ball
 		body.apply_central_impulse(direction * IMPULSE)
 		# Remove the bubble from the scene
-	queue_free()
+	queue_free() # Bubble is deleted upon any collision, ball or not.
 
 
+# Given a team, assign the collision layers.
 func set_team(given_team):
 	team_name = given_team
 	if given_team == 1: 

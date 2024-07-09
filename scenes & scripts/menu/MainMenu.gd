@@ -17,34 +17,40 @@ const GAMEPLAY_SCENE_PATH = "res://scenes & scripts/gameplay/gameplay.tscn"
 var player_nodes = {}
 
 
+# When the player decide to start a match, call the relevant methods on the LoadMatch singleton
 func start_match():
 	LoadMatch.store_players(player_nodes)
 	LoadMatch.start_match()
 
 
+# Add a new card representing a new player
 func add_player_card(player_num):
 	var player_card_instance = PLAYER_CARD_SCENE.instantiate()
 	var player_number_label = player_card_instance.get_node("PlayerNumber")
 	player_number_label.text = str(player_num)
 	player_nodes[player_num] = player_card_instance
 	
-	# Add the new card, and adjust the graphic to appear last
+	# Add the new card, and adjust the 'Press A To Join' graphic to appear last
 	players_and_prompt.add_child(player_card_instance)
 	var last_index = players_and_prompt.get_child_count() - 1
 	players_and_prompt.move_child(add_players_graphic, last_index)
 	
+	# If at least two players are joined, show the prompt to start the match
 	if player_nodes.keys().size() >= 2:
 		hold_x_to_start_graphic.visible = true
 
 
+# If a player backs out, remove their card.
 func remove_player_card(player_num):
+	# Remove the associated card
 	player_nodes[player_num].queue_free()
 	player_nodes.erase(player_num)
-	
+	# If applicable hide the 'Press A To Join' graphic (there must be >= 2 players)
 	if player_nodes.keys().size() < 2:
 		hold_x_to_start_graphic.visible = false
 
 
+# Show the main menu & connect the relevant signals to methods 
 func _ready():
 	PlayerManager.player_joined.connect(add_player_card)
 	PlayerManager.player_left.connect(remove_player_card)
@@ -55,9 +61,13 @@ func _ready():
 	hold_x_to_start_graphic.visible = false
 
 
+# Handle player input
 func _process(_delta):
-	PlayerManager.handle_join_input()
+	# Listen for join input, the PlayerManager will then initialize players as needed
+	if add_players_menu.visible == true:
+		PlayerManager.handle_join_input()
 	
+	# If the players want to start the match, call start_match()
 	if add_players_menu.visible == true and hold_x_to_start_graphic.visible == true:
 		if PlayerManager.someone_wants_to_start():
 			start_match()
@@ -68,15 +78,15 @@ func _process(_delta):
 		var query_player_back = PlayerManager.some_player_back()
 		if not query_player_back == -999:
 			PlayerManager.leave(query_player_back)
-			
+		
+		# If an unconnected player presses back, go to main menu
 		elif PlayerManager.some_device_back():
-			# Go to main menu and remove all players
+			# Go to main menu
 			_on_add_players_back_button_pressed()
 			# Remove each player card
 			for player_num in player_nodes.keys():
 				PlayerManager.leave(player_num)
 
-	
 	# Back out from the settings menu
 	if settings_menu.visible == true and PlayerManager.some_device_back():
 		print("Back pressed at settings")

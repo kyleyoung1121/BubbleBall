@@ -16,10 +16,9 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 
 [autoload]
 
-BubbleManager="*res://scenes & scripts/global/bubble_manager.gd"
 MultiplayerInput="*res://addons/plugins/multiplayer_input.gd"
 PlayerManager="*res://scenes & scripts/multiplayer/player_manager.gd"
-LoadMatch="*res://scenes & scripts/gameplay/load_match.gd"
+LoadMatch="*res://scenes & scripts/global/load_match.gd"
 
 [display]
 

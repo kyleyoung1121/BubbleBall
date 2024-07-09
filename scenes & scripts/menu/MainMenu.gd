@@ -18,7 +18,8 @@ var player_nodes = {}
 
 
 func start_match():
-	get_tree().change_scene_to_file(GAMEPLAY_SCENE_PATH)
+	LoadMatch.store_players(player_nodes)
+	LoadMatch.start_match()
 
 
 func add_player_card(player_num):

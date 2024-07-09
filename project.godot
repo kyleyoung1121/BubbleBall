@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Wizard Soccer"
-run/main_scene="res://scenes & scripts/gameplay/gameplay.tscn"
+run/main_scene="res://scenes & scripts/menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 
 [autoload]
@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 BubbleManager="*res://scenes & scripts/global/bubble_manager.gd"
 MultiplayerInput="*res://addons/plugins/multiplayer_input.gd"
 PlayerManager="*res://scenes & scripts/multiplayer/player_manager.gd"
+LoadMatch="*res://scenes & scripts/gameplay/load_match.gd"
 
 [display]
 

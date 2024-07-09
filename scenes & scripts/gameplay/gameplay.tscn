@@ -1,14 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://bkaskjofg0e42"]
+[gd_scene load_steps=14 format=3 uid="uid://bkaskjofg0e42"]
 
 [ext_resource type="Script" path="res://scenes & scripts/gameplay/gameplay.gd" id="1_wjm3a"]
 [ext_resource type="Texture2D" uid="uid://cnf2eiyqjveif" path="res://assets/sprites/basic_platform.png" id="2_g4s13"]
 [ext_resource type="PackedScene" uid="uid://cv7gh6sgss3m" path="res://scenes & scripts/gameplay/platform.tscn" id="2_uwxlj"]
 [ext_resource type="Texture2D" uid="uid://dyjxtoj7clmvb" path="res://assets/sprites/basic_border.png" id="3_m5bcj"]
 [ext_resource type="PackedScene" uid="uid://bf8cqxd6j6rof" path="res://scenes & scripts/gameplay/ball.tscn" id="4_0fchy"]
-[ext_resource type="PackedScene" uid="uid://6mytvone5yik" path="res://scenes & scripts/gameplay/player.tscn" id="5_52syx"]
 [ext_resource type="PackedScene" uid="uid://ceeixme1jgg1c" path="res://scenes & scripts/gameplay/goal.tscn" id="7_m1xtc"]
 [ext_resource type="Texture2D" uid="uid://ryuqaupmt72j" path="res://assets/sprites/basic_green_goal.png" id="8_lk5ge"]
+[ext_resource type="PackedScene" uid="uid://4xcvg367crpo" path="res://scenes & scripts/gameplay/spawn_point.tscn" id="9_6vsdq"]
 [ext_resource type="Texture2D" uid="uid://bncltxqsyd8h0" path="res://assets/sprites/basic_purple_goal.png" id="9_pqf0r"]
+[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/fonts/new_theme.tres" id="10_y65wx"]
+[ext_resource type="Script" path="res://scenes & scripts/gameplay/count_down_text.gd" id="11_hh4ss"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jc2qs"]
 
@@ -40,9 +42,6 @@ polygon = PackedVector2Array(-258, -177, 261, -177, 276, -172, 291, -158, 297, -
 [node name="Ball" parent="." instance=ExtResource("4_0fchy")]
 collision_layer = 4
 collision_mask = 31
-
-[node name="Player" parent="." instance=ExtResource("5_52syx")]
-position = Vector2(162, 193)
 
 [node name="Platform1" parent="." instance=ExtResource("2_uwxlj")]
 position = Vector2(324, 261)
@@ -102,8 +101,77 @@ team_name = 2
 position = Vector2(-2, 0)
 shape = SubResource("RectangleShape2D_6jqs6")
 
+[node name="SpawnPoint1-1" parent="." groups=["TeamOneSpawn"] instance=ExtResource("9_6vsdq")]
+position = Vector2(75, 60)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint1-1" index="0"]
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint1-2" parent="." groups=["TeamOneSpawn"] instance=ExtResource("9_6vsdq")]
+position = Vector2(75, 110)
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint1-3" parent="." groups=["TeamOneSpawn"] instance=ExtResource("9_6vsdq")]
+position = Vector2(75, 160)
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint2-1" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("9_6vsdq")]
+position = Vector2(566, 60)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint2-1" index="0"]
+text = "2"
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint2-2" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("9_6vsdq")]
+position = Vector2(566, 110)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint2-2" index="0"]
+text = "2"
+
+[node name="SpawnPoint2-3" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("9_6vsdq")]
+position = Vector2(566, 160)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint2-3" index="0"]
+text = "2"
+
+[node name="CountDownText" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 303.0
+offset_top = 94.0
+offset_right = 343.0
+offset_bottom = 148.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = ExtResource("10_y65wx")
+theme_override_font_sizes/font_size = 41
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_hh4ss")
+
+[node name="StartTimer" type="Timer" parent="CountDownText"]
+wait_time = 0.06
+one_shot = true
+
+[connection signal="timeout" from="CountDownText/StartTimer" to="." method="_on_start_timer_timeout"]
+
 [editable path="Platform1"]
 [editable path="Platform2"]
 [editable path="Platform3"]
 [editable path="Goal"]
 [editable path="Goal2"]
+[editable path="SpawnPoint1-1"]
+[editable path="SpawnPoint1-2"]
+[editable path="SpawnPoint1-3"]
+[editable path="SpawnPoint2-1"]
+[editable path="SpawnPoint2-2"]
+[editable path="SpawnPoint2-3"]

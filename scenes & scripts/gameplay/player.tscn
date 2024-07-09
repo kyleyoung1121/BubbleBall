@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://6mytvone5yik"]
 
-[ext_resource type="Script" path="res://scenes & scripts/player.gd" id="1_7rfqs"]
+[ext_resource type="Script" path="res://scenes & scripts/gameplay/player.gd" id="1_7rfqs"]
 [ext_resource type="Texture2D" uid="uid://crxsbserfg7oi" path="res://assets/sprites/basic_ball.png" id="2_b3bh1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ld8eo"]

@@ -1,13 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://bkaskjofg0e42"]
+[gd_scene load_steps=12 format=3 uid="uid://bkaskjofg0e42"]
 
-[ext_resource type="Script" path="res://scenes & scripts/gameplay.gd" id="1_wjm3a"]
+[ext_resource type="Script" path="res://scenes & scripts/gameplay/gameplay.gd" id="1_wjm3a"]
 [ext_resource type="Texture2D" uid="uid://cnf2eiyqjveif" path="res://assets/sprites/basic_platform.png" id="2_g4s13"]
-[ext_resource type="PackedScene" uid="uid://cv7gh6sgss3m" path="res://scenes & scripts/platform.tscn" id="2_uwxlj"]
+[ext_resource type="PackedScene" uid="uid://cv7gh6sgss3m" path="res://scenes & scripts/gameplay/platform.tscn" id="2_uwxlj"]
 [ext_resource type="Texture2D" uid="uid://dyjxtoj7clmvb" path="res://assets/sprites/basic_border.png" id="3_m5bcj"]
-[ext_resource type="PackedScene" uid="uid://bf8cqxd6j6rof" path="res://scenes & scripts/ball.tscn" id="4_0fchy"]
-[ext_resource type="PackedScene" uid="uid://6mytvone5yik" path="res://scenes & scripts/player.tscn" id="5_52syx"]
-[ext_resource type="PackedScene" uid="uid://ceeixme1jgg1c" path="res://scenes & scripts/goal.tscn" id="7_m1xtc"]
+[ext_resource type="PackedScene" uid="uid://bf8cqxd6j6rof" path="res://scenes & scripts/gameplay/ball.tscn" id="4_0fchy"]
+[ext_resource type="PackedScene" uid="uid://6mytvone5yik" path="res://scenes & scripts/gameplay/player.tscn" id="5_52syx"]
+[ext_resource type="PackedScene" uid="uid://ceeixme1jgg1c" path="res://scenes & scripts/gameplay/goal.tscn" id="7_m1xtc"]
 [ext_resource type="Texture2D" uid="uid://ryuqaupmt72j" path="res://assets/sprites/basic_green_goal.png" id="8_lk5ge"]
+[ext_resource type="Texture2D" uid="uid://bncltxqsyd8h0" path="res://assets/sprites/basic_purple_goal.png" id="9_pqf0r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jc2qs"]
 
@@ -87,7 +88,22 @@ team_name = 1
 position = Vector2(3, 0.5)
 shape = SubResource("RectangleShape2D_6jqs6")
 
+[node name="Goal2" parent="." instance=ExtResource("7_m1xtc")]
+position = Vector2(345, 309)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="Goal2" index="0"]
+texture = ExtResource("9_pqf0r")
+
+[node name="StaticBody2D" parent="Goal2" index="1"]
+team_name = 2
+
+[node name="CollisionShape2D" parent="Goal2/StaticBody2D" index="0"]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_6jqs6")
+
 [editable path="Platform1"]
 [editable path="Platform2"]
 [editable path="Platform3"]
 [editable path="Goal"]
+[editable path="Goal2"]

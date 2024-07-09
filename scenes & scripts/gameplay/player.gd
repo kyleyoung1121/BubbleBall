@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 
-const BUBBLE_SCENE = preload("res://scenes & scripts/bubble.tscn")  # Adjust the path
+const BUBBLE_SCENE = preload("res://scenes & scripts/gameplay/bubble.tscn")
 
 
 const SPEED = 550.0

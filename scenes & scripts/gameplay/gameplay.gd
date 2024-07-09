@@ -28,4 +28,3 @@ func _process(delta):
 
 func _on_start_timer_timeout():
 	match_begin()
-

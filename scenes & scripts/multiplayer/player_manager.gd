@@ -1,18 +1,66 @@
 extends Node
 
+
 # player is 0-3
 # device is -1 for keyboard/mouse, 0+ for joypads
 # these concepts seem similar but it is useful to separate them so for example, device 6 could control player 1.
 
+
 signal player_joined(player)
 signal player_left(player)
 
-# map from player integer to dictionary of data
-# the existence of a key in this dictionary means this player is joined.
-# use get_player_data() and set_player_data() to use this dictionary.
+
+# player_num -> dictionary of data
 var player_data: Dictionary = {}
 
+
 const MAX_PLAYERS = 8
+
+
+#  #  #  #  #  #  #  #  #  #  #  #  #
+# FUNCTIONS FOR INPUT HANDLING
+
+# call this from a loop in the main menu or anywhere they can join
+# this is an example of how to look for an action on all devices
+func handle_join_input():
+	for device in get_unjoined_devices():
+		if MultiplayerInput.is_action_just_pressed(device, "join"):
+			join(device)
+
+
+# Check if any device has pressed the back button
+func some_device_back() -> bool:
+	for device in get_unjoined_devices():
+		if MultiplayerInput.is_action_just_pressed(device, "back"):
+			#print(str(device) + " device just pressed back")
+			return true
+	return false
+
+
+# Check for some particular player pressing the back button
+func some_player_back() -> int:
+	for player in player_data:
+		var device = get_player_device(player)
+		if MultiplayerInput.is_action_just_pressed(device, "back"):
+			print(str(player) + " player just pressed back")
+			return player
+	# Magic number used to represent no players pressing back
+	return -999
+
+
+# to see if anybody is pressing the "start" action
+# this is an example of how to look for an action on all players
+# note the difference between this and handle_join_input(). players vs devices.
+func someone_wants_to_start() -> bool:
+	for player in player_data:
+		var device = get_player_device(player)
+		if MultiplayerInput.is_action_just_pressed(device, "start"):
+			return true
+	return false
+
+
+#  #  #  #  #  #  #  #  #  #  #  #  #
+# FUNCTIONS REQUIRED FOR BASIC USE
 
 func join(device: int):
 	var player = next_player()
@@ -20,7 +68,8 @@ func join(device: int):
 		# initialize default player data here
 		player_data[player] = {
 			"device": device,
-			"team": (player % 2) + 1 # Alternate between team 1 and team 2
+			"team": (player % 2) + 1, # Alternate between team 1 and team 2
+			"current_bubble": null
 		}
 		player_joined.emit(player)
 
@@ -52,43 +101,6 @@ func set_player_data(player: int, key: StringName, value: Variant):
 		return
 	
 	player_data[player][key] = value
-
-# call this from a loop in the main menu or anywhere they can join
-# this is an example of how to look for an action on all devices
-func handle_join_input():
-	for device in get_unjoined_devices():
-		if MultiplayerInput.is_action_just_pressed(device, "join"):
-			join(device)
-
-
-func some_device_back() -> bool:
-	for device in get_unjoined_devices():
-		if MultiplayerInput.is_action_just_pressed(device, "back"):
-			print(str(device) + " device just pressed back")
-			return true
-	return false
-
-
-# to see if someone is pressing the "back" action
-func some_player_back() -> int:
-	for player in player_data:
-		var device = get_player_device(player)
-		if MultiplayerInput.is_action_just_pressed(device, "back"):
-			print(str(player) + " player just pressed back")
-			return player
-	return -999
-
-
-# to see if anybody is pressing the "start" action
-# this is an example of how to look for an action on all players
-# note the difference between this and handle_join_input(). players vs devices.
-func someone_wants_to_start() -> bool:
-	for player in player_data:
-		var device = get_player_device(player)
-		if MultiplayerInput.is_action_just_pressed(device, "start"):
-			return true
-	return false
-
 
 func is_device_joined(device: int) -> bool:
 	for player_id in player_data:

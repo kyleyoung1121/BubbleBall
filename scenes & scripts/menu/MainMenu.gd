@@ -8,6 +8,8 @@ extends CanvasLayer
 @onready var hold_x_to_start_graphic = $AddPlayers/CenterContainer/VBoxContainer/HoldXToStartGraphic
 @onready var players_and_prompt = $AddPlayers/CenterContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PlayersAndPrompt
 @onready var add_players_graphic = $AddPlayers/CenterContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PlayersAndPrompt/AddPlayersGraphic
+@onready var main_play_button = $Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MainPlayButton
+@onready var setting_back_button = $Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SettingsBackButton
 
 const PLAYER_CARD_SCENE = preload("res://scenes & scripts/menu/player_card.tscn")
 const GAMEPLAY_SCENE_PATH = "res://scenes & scripts/gameplay/gameplay.tscn"
@@ -20,7 +22,7 @@ var player_nodes = {}
 # When the player decide to start a match, call the relevant methods on the LoadMatch singleton
 func start_match():
 	LoadMatch.store_players(player_nodes)
-	LoadMatch.start_match()
+	LoadMatch.begin_game_preparations()
 
 
 # Add a new card representing a new player
@@ -59,6 +61,8 @@ func _ready():
 	settings_menu.visible = false
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
+	
+	main_play_button.grab_focus()
 
 
 # Handle player input
@@ -103,6 +107,7 @@ func _on_main_play_button_pressed():
 func _on_main_options_button_pressed():
 	main_menu.visible = false
 	settings_menu.visible = true
+	setting_back_button.grab_focus()
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
 
@@ -113,6 +118,7 @@ func _on_main_quit_button_pressed():
 
 func _on_settings_back_button_pressed():
 	main_menu.visible = true
+	main_play_button.grab_focus()
 	settings_menu.visible = false
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
@@ -120,6 +126,7 @@ func _on_settings_back_button_pressed():
 
 func _on_add_players_back_button_pressed():
 	main_menu.visible = true
+	main_play_button.grab_focus()
 	settings_menu.visible = false
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false

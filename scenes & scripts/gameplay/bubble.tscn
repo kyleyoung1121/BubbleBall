@@ -1,16 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://de2soqlwduoor"]
+[gd_scene load_steps=3 format=3 uid="uid://de2soqlwduoor"]
 
 [ext_resource type="Script" path="res://scenes & scripts/gameplay/bubble.gd" id="1_2jeib"]
-[ext_resource type="Texture2D" uid="uid://s70og1oloc7t" path="res://assets/sprites/basic_bubble.png" id="2_orxvs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8dmdr"]
 
-[node name="Bubble" type="Node2D"]
+[node name="Bubble" type="Node2D" groups=["Bubble"]]
 script = ExtResource("1_2jeib")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.333, 0.333)
-texture = ExtResource("2_orxvs")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0

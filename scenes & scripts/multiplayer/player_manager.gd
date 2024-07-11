@@ -48,6 +48,14 @@ func some_player_back() -> int:
 	return -999
 
 
+func someone_button_pressed(button) -> bool:
+	for player in player_data:
+		var device = get_player_device(player)
+		if MultiplayerInput.is_action_just_pressed(device, button):
+			return true
+	return false
+
+
 # to see if anybody is pressing the "start" action
 # this is an example of how to look for an action on all players
 # note the difference between this and handle_join_input(). players vs devices.

@@ -2,6 +2,7 @@ extends RigidBody2D
 
 
 @onready var grounded_ray_cast = $GroundedRayCast
+@onready var slide_duration_timer = $SlideDurationTimer
 
 
 const BUBBLE_SCENE = preload("res://scenes & scripts/gameplay/bubble.tscn")
@@ -10,10 +11,13 @@ const BUBBLE_SCENE = preload("res://scenes & scripts/gameplay/bubble.tscn")
 const SPEED = 550.0
 const JUMP_VELOCITY = -90.0
 const DIVE_SPEED = 120
+const SLIDE_SPEED = 800
+const SLIDE_SPEED_IMPULSE = 150
 const EXTRA_GRAVITY = 60
 const EXTRA_FALL_SPEED = 20
 const DRAFT = -0.75
-const MAX_SPEED_X = 270.0
+const MAX_SPEED_X = 400.0
+const SOFT_MAX_SPEED_X = 270.0
 const MAX_SPEED_Y_RISING = 300.0
 const MAX_SPEED_Y_FALLING = 600.0
 const BALL_JUMP_RANGE_X = 70.0
@@ -27,6 +31,8 @@ var bounds = {
 	"max_y": 360,
 	"min_y": 0
 }
+var facing_right = true
+var is_sliding = false
 var player: int
 var input
 
@@ -37,50 +43,94 @@ func init(player_num: int):
 	var device = PlayerManager.get_player_device(player)
 	input = DeviceInput.new(device)
 	team_name = PlayerManager.get_player_data(player_num, "team")
+	mass = GameSettings.player_mass
 
 
 func _physics_process(delta):
-	# Jump: Apply impulse upwards. If falling, set speed to 0 before applying
+	
+	# Update which direction the player is facing
+	if input.is_action_just_pressed("move_left"):
+		facing_right = false
+	elif input.is_action_just_pressed("move_right"):
+		facing_right = true
+	
+	# Jump: Determine which action is appropriate: jump, power jump, slide
 	if input.is_action_just_pressed("jump"):
-		# If falling, set speed to 0 before applying
-		if linear_velocity.y > 0:
-			set_linear_velocity(Vector2(linear_velocity.x, 0))
-		# Apply impulse upwards
-		apply_central_impulse(Vector2(0, JUMP_VELOCITY))
-		# Only summon a bubble mid-air
-		if not grounded_ray_cast.is_colliding():
-			summon_bubble()
-		# If grounded, apply jump force to nearby ball if applicable
+		
+		# Player is holding down
+		if input.is_action_pressed("dive") and grounded_ray_cast.is_colliding():
+			handle_start_slide()
+		
+		# Player is not holding down
 		else:
-			var ball_instance = get_tree().get_nodes_in_group("ball")[0]
-			# If the ball is close to us while we jump from the ground, apply the jump to it too
-			if abs(global_position.x - ball_instance.global_position.x) < BALL_JUMP_RANGE_X:
-				if abs(global_position.y - ball_instance.global_position.y) < BALL_JUMP_RANGE_Y:
-					# Now that we've determined that we are close to the ball,
-					# let's find how much force to apply. (Goal: ball jumps about as high as player)
-					var ball_mass_ratio = ball_instance.mass / mass
-					ball_instance.apply_central_impulse(Vector2(0, ball_mass_ratio * JUMP_VELOCITY))
-					# In addition to jumping, the ball should have a slight horizontal push 
-					ball_instance.apply_central_impulse(Vector2(linear_velocity.x * ball_mass_ratio * 0.3, 0))
+			handle_basic_jump()
+			
+			# If midair, summon a bubble on jump
+			if not grounded_ray_cast.is_colliding():
+				summon_bubble()
+				
+			# If grounded, apply jump force to nearby ball if applicable
+			else:
+				handle_power_jump()
 	
 	# Apply an extra amount of gravity
 	apply_central_force(Vector2(0, EXTRA_GRAVITY))
-	
-	# Dive: Fall faster on command
-	if input.is_action_pressed("dive"):
-		apply_central_force(Vector2(0, DIVE_SPEED))
 	
 	# Apply extra downwards force when falling
 	if linear_velocity.y > 0:
 		apply_central_force(Vector2(0, EXTRA_FALL_SPEED))
 	
-	# Movement: Apply force according to key pressed. Apply drag.
-	var direction = input.get_action_strength("move_right") - input.get_action_strength("move_left")
-	apply_central_force(Vector2(direction * SPEED, 0))
-	apply_central_force(Vector2(linear_velocity.x * DRAFT, 0))
+	# Dive: Fall faster on command
+	if input.is_action_pressed("dive"):
+		apply_central_force(Vector2(0, DIVE_SPEED))
+	
+	if is_sliding:
+		# To prevent massive speed transfer into ball, lower mass of player during slide
+		mass = 0.2
+		# Wane off the force applied as the timer gets lower
+		# Equation has been selected arbitrarily. ( x^2 + x ) felt nice.
+		var time_decay = (slide_duration_timer.time_left ** 2) + slide_duration_timer.time_left
+		if facing_right:
+			apply_central_force(Vector2(SLIDE_SPEED * time_decay, 0))
+		else:
+			apply_central_force(Vector2(-SLIDE_SPEED * time_decay, 0))
+	
 	
 	# Ensure the ground ray cast is always pointing down, regardless of player rotation
 	grounded_ray_cast.global_rotation = 0
+
+
+func handle_basic_jump():
+	# If falling, set speed to 0 before applying
+	if linear_velocity.y > 0:
+		set_linear_velocity(Vector2(linear_velocity.x, 0))
+	# Apply impulse upwards
+	apply_central_impulse(Vector2(0, JUMP_VELOCITY))
+
+
+func handle_power_jump():
+	var ball_instance = get_tree().get_nodes_in_group("ball")[0]
+	# If the ball is close to us while we jump from the ground, apply the jump to it too
+	if abs(global_position.x - ball_instance.global_position.x) < BALL_JUMP_RANGE_X:
+		if abs(global_position.y - ball_instance.global_position.y) < BALL_JUMP_RANGE_Y:
+			# Now that we've determined that we are close to the ball,
+			# let's find how much force to apply. (Goal: ball jumps about as high as player)
+			var ball_mass_ratio = ball_instance.mass / mass
+			ball_instance.linear_velocity.y = 0
+			ball_instance.apply_central_impulse(Vector2(0, ball_mass_ratio * JUMP_VELOCITY))
+			# In addition to jumping, the ball should have a slight horizontal push 
+			ball_instance.apply_central_impulse(Vector2(linear_velocity.x * ball_mass_ratio * 0.3, 0))
+
+
+func handle_start_slide():
+	# Start the slide with an impulse
+	if facing_right:
+		apply_central_impulse(Vector2(SLIDE_SPEED_IMPULSE, 0))
+	else:
+		apply_central_impulse(Vector2(-SLIDE_SPEED_IMPULSE, 0))
+	# During the slide, in _physics_process(), we look for this flag and apply more continual force
+	is_sliding = true
+	slide_duration_timer.start()
 
 
 func _integrate_forces(state):
@@ -93,6 +143,13 @@ func _integrate_forces(state):
 	if linear_velocity.y > MAX_SPEED_Y_FALLING:
 		state.linear_velocity.y = sign(linear_velocity.y) * MAX_SPEED_Y_FALLING
 	
+	# Movement: Apply force according to key pressed. Apply drag.
+	var direction = input.get_action_strength("move_right") - input.get_action_strength("move_left")
+	# Only apply more force if we haven't hit the max speed
+	if abs(linear_velocity.x) < SOFT_MAX_SPEED_X:
+		apply_central_force(Vector2(direction * SPEED, 0))
+	apply_central_force(Vector2(linear_velocity.x * DRAFT, 0))
+	
 	# Allow for instant horizontal movement change
 	if input.is_action_just_pressed("move_right") && linear_velocity.x < 0:
 		state.linear_velocity.x = 0
@@ -100,10 +157,7 @@ func _integrate_forces(state):
 		state.linear_velocity.x = 0
 	
 	# Check for screen wrap
-	if global_position.x > bounds["max_x"]: global_position.x = bounds["min_x"]
-	if global_position.x < bounds["min_x"]: global_position.x = bounds["max_x"]
-	if global_position.y > bounds["max_y"]: global_position.y = bounds["min_y"]
-	if global_position.y < bounds["min_y"]: global_position.y = bounds["max_y"]
+	apply_screen_wrap()
 
 
 # Summon a bubble, called upon each jump
@@ -121,5 +175,17 @@ func summon_bubble():
 	PlayerManager.set_player_data(player, "current_bubble", bubble_instance)
 
 
+func apply_screen_wrap():
+	if global_position.x > bounds["max_x"]: global_position.x = bounds["min_x"]
+	if global_position.x < bounds["min_x"]: global_position.x = bounds["max_x"]
+	if global_position.y > bounds["max_y"]: global_position.y = bounds["min_y"]
+	if global_position.y < bounds["min_y"]: global_position.y = bounds["max_y"]
+
+
 func set_bounds(given_bounds):
 	bounds = given_bounds
+
+
+func _on_slide_duration_timer_timeout():
+	is_sliding = false
+	mass = GameSettings.player_mass

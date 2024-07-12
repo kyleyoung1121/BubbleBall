@@ -6,10 +6,15 @@ extends Node2D
 @onready var post_round_timer = $PostRoundTimer
 
 
+const ORANGE_TEAM_TEXTURE = preload("res://assets/sprites/players/orange_player.png")
+const BLUE_TEAM_TEXTURE = preload("res://assets/sprites/players/blue_player.png")
 const BALL_SCENE = preload("res://scenes & scripts/gameplay/ball.tscn")
 const MAP01_PATH = "res://scenes & scripts/maps/map_01.tscn"
 const MAP02_PATH = "res://scenes & scripts/maps/map_02.tscn"
-const MAP_PATHS = [MAP01_PATH, MAP02_PATH]
+const MAP03_PATH = "res://scenes & scripts/maps/map_03.tscn"
+const MAP04_PATH = "res://scenes & scripts/maps/map_04.tscn"
+const MAP05_PATH = "res://scenes & scripts/maps/map_05.tscn"
+const MAP_PATHS = [MAP01_PATH, MAP02_PATH, MAP03_PATH, MAP04_PATH, MAP05_PATH]
 
 
 # Keep track of the player nums and their corresponding player instances
@@ -19,6 +24,9 @@ var map_iterator = 0
 var match_in_progress = false
 var round_in_progress = false
 var ball_instance
+
+var team_one_goals = 0
+var team_two_goals = 0
 
 var bounds = {}
 
@@ -49,18 +57,32 @@ func _process(delta):
 
 func goal_scored(team):
 	if round_in_progress:
+		# Start post-round. Players can still move, but cannot score
 		round_in_progress = false
 		post_round_timer.start()
+		# Add this goal to the point totals
+		if team == 1: team_one_goals += 1
+		if team == 2: team_two_goals += 1
 
 
 func reset_round():
-	round_in_progress = true
+	# Reset players & ball
 	freeze_time()
 	remove_players()
 	remove_ball()
 	remove_bubbles()
 	add_ball()
-	prepare_match()
+	
+	# If the match is over, prepare for map selection
+	if team_one_goals > GameSettings.points_to_win or team_two_goals > GameSettings.points_to_win:
+		match_in_progress = false
+		team_one_goals = 0
+		team_two_goals = 0
+	
+	# If there are still rounds to play, start a new one
+	else:
+		round_in_progress = true
+		prepare_match()
 
 
 func prepare_match():
@@ -87,6 +109,8 @@ func prepare_match():
 			player_nodes[player_num].collision_mask = 0b00001111 # All except goal (1-4)
 			# Move this player to an applicable spawn point. Iterate to avoid spawning players together
 			player_nodes[player_num].position = team_one_spawns[team_one_iterator].position
+			# Set the players sprite to match their team
+			player_nodes[player_num].get_node("Sprite2D").texture = ORANGE_TEAM_TEXTURE
 			team_one_iterator += 1
 			# If we don't have enough spawn points, cycle back around and double up.
 			if team_one_iterator > team_one_spawns.size() - 1: team_one_iterator = 0
@@ -96,6 +120,8 @@ func prepare_match():
 			player_nodes[player_num].collision_mask = 0b00001111 # All except goal (1-4)
 			# Move this player to an applicable spawn point. Iterate to avoid spawning players together
 			player_nodes[player_num].position = team_two_spawns[team_two_iterator].position
+			# Set the players sprite to match their team
+			player_nodes[player_num].get_node("Sprite2D").texture = BLUE_TEAM_TEXTURE
 			team_two_iterator += 1
 			# If we don't have enough spawn points, cycle back around and double up.
 			if team_two_iterator > team_two_spawns.size() - 1: team_two_iterator = 0

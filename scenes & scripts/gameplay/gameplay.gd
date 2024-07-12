@@ -4,7 +4,8 @@ extends Node2D
 @onready var start_timer = $CountDownText/StartTimer
 @onready var count_down_text = $CountDownText
 @onready var post_round_timer = $PostRoundTimer
-
+@onready var orange_hearts = $OrangeHearts
+@onready var blue_hearts = $BlueHearts
 
 const ORANGE_TEAM_TEXTURE = preload("res://assets/sprites/players/orange_player.png")
 const BLUE_TEAM_TEXTURE = preload("res://assets/sprites/players/blue_player.png")
@@ -55,7 +56,7 @@ func _ready():
 	# Set the team lives
 	team_one_lives = GameSettings.team_lives
 	team_two_lives = GameSettings.team_lives
-	update_player_lives()
+	update_all_hearts()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -77,6 +78,7 @@ func _process(delta):
 	if not match_in_progress and PlayerManager.someone_button_pressed("ui_accept"):
 		prepare_match()
 
+
 func goal_scored(team):
 	if round_in_progress:
 		# Start post-round. Players can still move, but cannot score
@@ -86,7 +88,7 @@ func goal_scored(team):
 		if team == 1: team_one_lives -= 1
 		if team == 2: team_two_lives -= 1
 		# Update the life totals for both players
-		update_player_lives()
+		update_all_hearts()
 
 
 func reset_round():
@@ -102,7 +104,7 @@ func reset_round():
 		match_in_progress = false
 		team_one_lives = GameSettings.team_lives
 		team_two_lives = GameSettings.team_lives
-		update_player_lives()
+		update_all_hearts()
 	
 	# If there are still rounds to play, start a new one
 	else:
@@ -158,98 +160,41 @@ func prepare_match():
 	start_timer.start()
 
 
-func update_player_lives():
-	# Set visibility of hearts 4 & 5, as well as the extra lives text
-	if team_one_lives >= 4: $OrangeHearts/Heart4.visible = true
-	if team_one_lives >= 5: $OrangeHearts/Heart5.visible = true
-	if team_one_lives > 5: $OrangeHearts/AdditionalHearts.visible = true
-	if team_two_lives >= 4: $BlueHearts/Heart4.visible = true
-	if team_two_lives >= 5: $BlueHearts/Heart5.visible = true
-	if team_two_lives > 5: $BlueHearts/AdditionalHearts.visible = true
-
-	# Set team one's life count
-	if team_one_lives <= 0:
-		$OrangeHearts/Heart1.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart2.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart3.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart4.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_one_lives == 1:
-		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart2.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart3.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart4.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_one_lives == 2:
-		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart2.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart3.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart4.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_one_lives == 3:
-		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart2.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart3.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart4.texture = EMPTY_HEART_TEXTURE
-		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_one_lives == 4:
-		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart2.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart3.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart4.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_one_lives >= 5:
-		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart2.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart3.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart4.texture = ORANGE_HEART_TEXTURE
-		$OrangeHearts/Heart5.texture = ORANGE_HEART_TEXTURE
-	if team_one_lives > 5:
-		$OrangeHearts/AdditionalHearts.text = "+" + str(team_one_lives - 5)
-	else:
-		$OrangeHearts/AdditionalHearts.text = ""
+# Function to update hearts for a given team
+func update_team_hearts(team_lives, heart_nodes, heart_texture):
+	for i in range(5):
+		heart_nodes[i].texture = heart_texture if team_lives > i else EMPTY_HEART_TEXTURE
 	
-	# Set team two's life count
-	if team_two_lives <= 0:
-		$BlueHearts/Heart1.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart2.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart3.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart4.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_two_lives == 1:
-		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart2.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart3.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart4.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_two_lives == 2:
-		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart2.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart3.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart4.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_two_lives == 3:
-		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart2.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart3.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart4.texture = EMPTY_HEART_TEXTURE
-		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_two_lives == 4:
-		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart2.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart3.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart4.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
-	elif team_two_lives >= 5:
-		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart2.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart3.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart4.texture = BLUE_HEART_TEXTURE
-		$BlueHearts/Heart5.texture = BLUE_HEART_TEXTURE
-	if team_two_lives > 5:
-		$BlueHearts/AdditionalHearts.text = "+" + str(team_two_lives - 5)
-	else:
-		$BlueHearts/AdditionalHearts.text = ""
+	# Set visibility of extra hearts and additional text
+	heart_nodes[3].visible = GameSettings.team_lives >= 4
+	heart_nodes[4].visible = GameSettings.team_lives >= 5
+	heart_nodes[5].visible = GameSettings.team_lives > 5
+	heart_nodes[5].text = "+" + str(team_lives - 5) if team_lives > 5 else ""
+
+
+func update_all_hearts():
+	# Array of heart nodes for each team
+	var orange_heart_nodes = [
+		orange_hearts.get_node("Heart1"),
+		orange_hearts.get_node("Heart2"),
+		orange_hearts.get_node("Heart3"),
+		orange_hearts.get_node("Heart4"),
+		orange_hearts.get_node("Heart5"),
+		orange_hearts.get_node("AdditionalHearts")
+	]
+
+	var blue_heart_nodes = [
+		blue_hearts.get_node("Heart1"),
+		blue_hearts.get_node("Heart2"),
+		blue_hearts.get_node("Heart3"),
+		blue_hearts.get_node("Heart4"),
+		blue_hearts.get_node("Heart5"),
+		blue_hearts.get_node("AdditionalHearts")
+	]
+
+	# Update hearts for both teams
+	update_team_hearts(team_one_lives, orange_heart_nodes, ORANGE_HEART_TEXTURE)
+	update_team_hearts(team_two_lives, blue_heart_nodes, BLUE_HEART_TEXTURE)
 
 
 func add_ball():

@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkaskjofg0e42"]
+
+[ext_resource type="Script" path="res://scenes & scripts/gameplay/gameplay.gd" id="1_wjm3a"]
+[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/fonts/new_theme.tres" id="10_y65wx"]
+[ext_resource type="Script" path="res://scenes & scripts/gameplay/count_down_text.gd" id="11_hh4ss"]
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource("1_wjm3a")
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
+
+[node name="CountDownText" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 303.0
+offset_top = 94.0
+offset_right = 343.0
+offset_bottom = 148.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = ExtResource("10_y65wx")
+theme_override_font_sizes/font_size = 41
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_hh4ss")
+
+[node name="StartTimer" type="Timer" parent="CountDownText"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="PostRoundTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="CountDownText/StartTimer" to="." method="match_begin"]
+[connection signal="timeout" from="PostRoundTimer" to="." method="reset_round"]

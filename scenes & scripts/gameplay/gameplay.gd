@@ -8,49 +8,71 @@ extends Node2D
 
 const ORANGE_TEAM_TEXTURE = preload("res://assets/sprites/players/orange_player.png")
 const BLUE_TEAM_TEXTURE = preload("res://assets/sprites/players/blue_player.png")
+const ORANGE_HEART_TEXTURE = preload("res://assets/sprites/orange_heart.png")
+const BLUE_HEART_TEXTURE = preload("res://assets/sprites/blue_heart.png")
+const EMPTY_HEART_TEXTURE = preload("res://assets/sprites/empty_heart.png")
 const BALL_SCENE = preload("res://scenes & scripts/gameplay/ball.tscn")
-const MAP01_PATH = "res://scenes & scripts/maps/map_01.tscn"
-const MAP02_PATH = "res://scenes & scripts/maps/map_02.tscn"
-const MAP03_PATH = "res://scenes & scripts/maps/map_03.tscn"
-const MAP04_PATH = "res://scenes & scripts/maps/map_04.tscn"
-const MAP05_PATH = "res://scenes & scripts/maps/map_05.tscn"
-const MAP_PATHS = [MAP01_PATH, MAP02_PATH, MAP03_PATH, MAP04_PATH, MAP05_PATH]
+const MAPS_FOLDER = "res://scenes & scripts/maps/"
 
 
 # Keep track of the player nums and their corresponding player instances
 var player_nodes = {}
+var map_paths = []
 var map_selected = null
 var map_iterator = 0
 var match_in_progress = false
 var round_in_progress = false
 var ball_instance
 
-var team_one_goals = 0
-var team_two_goals = 0
+var team_one_lives
+var team_two_lives
 
 var bounds = {}
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	show_map(MAP_PATHS[map_iterator])
+	# Attempt to open the maps folder
+	var dir = DirAccess.open(MAPS_FOLDER)
+	if dir:
+		# Begin reading the directory contents
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		# Loop through all items in the directory
+		while file_name != "":
+			# Check if the item is a file (not a directory)
+			if !dir.current_is_dir():
+				# Append the full path of the map file to the list
+				map_paths.append(MAPS_FOLDER + file_name)
+			# Get the next item in the directory
+			file_name = dir.get_next()
+		# End the directory listing
+		dir.list_dir_end()
+	
+	# Show the initial map
+	show_map(map_paths[map_iterator])
+	
+	# Set the team lives
+	team_one_lives = GameSettings.team_lives
+	team_two_lives = GameSettings.team_lives
+	update_player_lives()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if not match_in_progress and PlayerManager.someone_button_pressed("map_select_next"):
 		map_iterator += 1
-		if map_iterator > MAP_PATHS.size() - 1:
+		if map_iterator > map_paths.size() - 1:
 			map_iterator = 0
 		remove_map()
-		show_map(MAP_PATHS[map_iterator])
+		show_map(map_paths[map_iterator])
 	
 	if not match_in_progress and PlayerManager.someone_button_pressed("map_select_previous"):
 		map_iterator -= 1
 		if map_iterator < 0:
-			map_iterator = MAP_PATHS.size() - 1
+			map_iterator = map_paths.size() - 1
 		remove_map()
-		show_map(MAP_PATHS[map_iterator])
+		show_map(map_paths[map_iterator])
 	
 	if not match_in_progress and PlayerManager.someone_button_pressed("ui_accept"):
 		prepare_match()
@@ -61,8 +83,10 @@ func goal_scored(team):
 		round_in_progress = false
 		post_round_timer.start()
 		# Add this goal to the point totals
-		if team == 1: team_one_goals += 1
-		if team == 2: team_two_goals += 1
+		if team == 1: team_one_lives -= 1
+		if team == 2: team_two_lives -= 1
+		# Update the life totals for both players
+		update_player_lives()
 
 
 func reset_round():
@@ -74,10 +98,11 @@ func reset_round():
 	add_ball()
 	
 	# If the match is over, prepare for map selection
-	if team_one_goals > GameSettings.points_to_win or team_two_goals > GameSettings.points_to_win:
+	if team_one_lives <= 0 or team_two_lives <= 0:
 		match_in_progress = false
-		team_one_goals = 0
-		team_two_goals = 0
+		team_one_lives = GameSettings.team_lives
+		team_two_lives = GameSettings.team_lives
+		update_player_lives()
 	
 	# If there are still rounds to play, start a new one
 	else:
@@ -131,6 +156,100 @@ func prepare_match():
 	# Set time scale to normal
 	Engine.time_scale = 1
 	start_timer.start()
+
+
+func update_player_lives():
+	# Set visibility of hearts 4 & 5, as well as the extra lives text
+	if team_one_lives >= 4: $OrangeHearts/Heart4.visible = true
+	if team_one_lives >= 5: $OrangeHearts/Heart5.visible = true
+	if team_one_lives > 5: $OrangeHearts/AdditionalHearts.visible = true
+	if team_two_lives >= 4: $BlueHearts/Heart4.visible = true
+	if team_two_lives >= 5: $BlueHearts/Heart5.visible = true
+	if team_two_lives > 5: $BlueHearts/AdditionalHearts.visible = true
+
+	# Set team one's life count
+	if team_one_lives <= 0:
+		$OrangeHearts/Heart1.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart2.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart3.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart4.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_one_lives == 1:
+		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart2.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart3.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart4.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_one_lives == 2:
+		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart2.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart3.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart4.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_one_lives == 3:
+		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart2.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart3.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart4.texture = EMPTY_HEART_TEXTURE
+		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_one_lives == 4:
+		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart2.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart3.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart4.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_one_lives >= 5:
+		$OrangeHearts/Heart1.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart2.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart3.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart4.texture = ORANGE_HEART_TEXTURE
+		$OrangeHearts/Heart5.texture = ORANGE_HEART_TEXTURE
+	if team_one_lives > 5:
+		$OrangeHearts/AdditionalHearts.text = "+" + str(team_one_lives - 5)
+	else:
+		$OrangeHearts/AdditionalHearts.text = ""
+	
+	# Set team two's life count
+	if team_two_lives <= 0:
+		$BlueHearts/Heart1.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart2.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart3.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart4.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_two_lives == 1:
+		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart2.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart3.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart4.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_two_lives == 2:
+		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart2.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart3.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart4.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_two_lives == 3:
+		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart2.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart3.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart4.texture = EMPTY_HEART_TEXTURE
+		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_two_lives == 4:
+		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart2.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart3.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart4.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart5.texture = EMPTY_HEART_TEXTURE
+	elif team_two_lives >= 5:
+		$BlueHearts/Heart1.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart2.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart3.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart4.texture = BLUE_HEART_TEXTURE
+		$BlueHearts/Heart5.texture = BLUE_HEART_TEXTURE
+	if team_two_lives > 5:
+		$BlueHearts/AdditionalHearts.text = "+" + str(team_two_lives - 5)
+	else:
+		$BlueHearts/AdditionalHearts.text = ""
 
 
 func add_ball():

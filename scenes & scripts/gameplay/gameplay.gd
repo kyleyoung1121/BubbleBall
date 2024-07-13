@@ -4,6 +4,7 @@ extends Node2D
 @onready var start_timer = $CountDownText/StartTimer
 @onready var count_down_text = $CountDownText
 @onready var post_round_timer = $PostRoundTimer
+@onready var post_match_timer = $PostMatchTimer
 @onready var orange_hearts = $OrangeHearts
 @onready var blue_hearts = $BlueHearts
 
@@ -23,6 +24,7 @@ var map_selected = null
 var map_iterator = 0
 var match_in_progress = false
 var round_in_progress = false
+var block_match_start = false
 var ball_instance
 
 var team_one_lives
@@ -61,23 +63,24 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not match_in_progress and PlayerManager.someone_button_pressed("map_select_next"):
-		map_iterator += 1
-		if map_iterator > map_paths.size() - 1:
-			map_iterator = 0
-		remove_map()
-		show_map(map_paths[map_iterator])
-	
-	if not match_in_progress and PlayerManager.someone_button_pressed("map_select_previous"):
-		map_iterator -= 1
-		if map_iterator < 0:
-			map_iterator = map_paths.size() - 1
-		remove_map()
-		show_map(map_paths[map_iterator])
-	
-	if not match_in_progress and PlayerManager.someone_button_pressed("ui_accept"):
-		prepare_match()
-		SoundManager.play_sound("start01")
+	if not match_in_progress and not block_match_start:
+		if PlayerManager.someone_button_pressed("map_select_next"):
+			map_iterator += 1
+			if map_iterator > map_paths.size() - 1:
+				map_iterator = 0
+			remove_map()
+			show_map(map_paths[map_iterator])
+		
+		if PlayerManager.someone_button_pressed("map_select_previous"):
+			map_iterator -= 1
+			if map_iterator < 0:
+				map_iterator = map_paths.size() - 1
+			remove_map()
+			show_map(map_paths[map_iterator])
+		
+		if PlayerManager.someone_button_pressed("ui_accept"):
+			prepare_match()
+			SoundManager.play_sound("start01")
 
 
 func goal_scored(team):
@@ -109,6 +112,8 @@ func reset_round():
 		team_two_lives = GameSettings.team_lives
 		update_all_hearts()
 		SoundManager.play_sound("win", -2)
+		block_match_start = true
+		post_match_timer.start()
 	
 	# If there are still rounds to play, start a new one
 	else:
@@ -282,3 +287,7 @@ func unfreeze_time():
 	for node in get_tree().get_nodes_in_group("ball"):
 		if node is RigidBody2D:
 			node.freeze = false
+
+
+func _on_post_match_timer_timeout():
+	block_match_start = false

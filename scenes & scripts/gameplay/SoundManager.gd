@@ -27,6 +27,8 @@ func preload_sounds():
 	sounds["pop"] = preload("res://assets/audio/pop01.mp3")
 	sounds["countdown"] = preload("res://assets/audio/countdown.mp3")
 	sounds["win"] = preload("res://assets/audio/win01.mp3")
+	sounds["ui_next"] = preload("res://assets/audio/ui_next01.mp3")
+	sounds["ui_back"] = preload("res://assets/audio/ui_back01.mp3")
 	
 	# Add more sounds as needed
 

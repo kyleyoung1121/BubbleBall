@@ -16,11 +16,11 @@ const SLIDE_SPEED_IMPULSE = 150
 const EXTRA_GRAVITY = 60
 const EXTRA_FALL_SPEED = 20
 const DRAFT = -0.75
-const MAX_SPEED_X = 400.0
+const MAX_SPEED_X = 500.0
 const SOFT_MAX_SPEED_X = 270.0
 const MAX_SPEED_Y_RISING = 300.0
 const MAX_SPEED_Y_FALLING = 600.0
-const BALL_JUMP_RANGE_X = 70.0
+const BALL_JUMP_RANGE_X = 40.0
 const BALL_JUMP_RANGE_Y = 10.0
 
 
@@ -63,7 +63,7 @@ func _physics_process(delta):
 		
 		# Player is not holding down
 		else:
-			handle_basic_jump()
+			handle_jump()
 			
 			# If midair, summon a bubble on jump
 			if not grounded_ray_cast.is_colliding():
@@ -100,13 +100,22 @@ func _physics_process(delta):
 	grounded_ray_cast.global_rotation = 0
 
 
-func handle_basic_jump():
-	# If falling, set speed to 0 before applying
-	if linear_velocity.y > 0:
-		set_linear_velocity(Vector2(linear_velocity.x, 0))
-	# Apply impulse upwards
-	apply_central_impulse(Vector2(0, JUMP_VELOCITY))
-
+func handle_jump():
+	# Jump normally if not holding down
+	if not input.is_action_pressed("dive"):
+		# If falling, set speed to 0 before applying
+		if linear_velocity.y > 0:
+			set_linear_velocity(Vector2(linear_velocity.x, 0))
+		# Apply impulse upwards
+		apply_central_impulse(Vector2(0, JUMP_VELOCITY))
+	
+	# If holding down during a jump, boost downwards instead
+	else:
+		# If rising, set speed to 0 before applying
+		if linear_velocity.y < 0:
+			set_linear_velocity(Vector2(linear_velocity.x, 0))
+		# Apply impulse downwards 
+		apply_central_impulse(Vector2(0, JUMP_VELOCITY * -0.5))
 
 func handle_power_jump():
 	var ball_instance = get_tree().get_nodes_in_group("ball")[0]

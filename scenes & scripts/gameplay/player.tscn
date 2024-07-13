@@ -30,7 +30,7 @@ hit_from_inside = true
 collide_with_areas = true
 
 [node name="SlideDurationTimer" type="Timer" parent="."]
-wait_time = 0.4
+wait_time = 0.55
 one_shot = true
 
 [connection signal="timeout" from="SlideDurationTimer" to="." method="_on_slide_duration_timer_timeout"]

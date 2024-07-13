@@ -21,12 +21,14 @@ var player_nodes = {}
 
 # When the player decide to start a match, call the relevant methods on the LoadMatch singleton
 func start_match():
+	SoundManager.play_sound("start02", -3)
 	LoadMatch.store_players(player_nodes)
 	LoadMatch.begin_game_preparations()
 
 
 # Add a new card representing a new player
 func add_player_card(player_num):
+	play_ui_select_sound()
 	var player_card_instance = PLAYER_CARD_SCENE.instantiate()
 	var player_number_label = player_card_instance.get_node("PlayerNumber")
 	player_number_label.text = str(player_num)
@@ -75,6 +77,7 @@ func _process(_delta):
 	if add_players_menu.visible == true and hold_x_to_start_graphic.visible == true:
 		if PlayerManager.someone_wants_to_start():
 			start_match()
+			play_ui_select_sound()
 	
 	# Back out from the add players screen
 	if add_players_menu.visible == true:
@@ -97,11 +100,16 @@ func _process(_delta):
 		_on_settings_back_button_pressed()
 
 
+func play_ui_select_sound():
+	SoundManager.play_sound("start02", -8)
+
+
 func _on_main_play_button_pressed():
 	main_menu.visible = false
 	settings_menu.visible = false
 	add_players_menu.visible = true
 	hold_x_to_start_graphic.visible = false
+	play_ui_select_sound()
 
 
 func _on_main_options_button_pressed():
@@ -110,9 +118,11 @@ func _on_main_options_button_pressed():
 	setting_back_button.grab_focus()
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
+	play_ui_select_sound()
 
 
 func _on_main_quit_button_pressed():
+	play_ui_select_sound()
 	get_tree().quit()
 
 
@@ -122,6 +132,7 @@ func _on_settings_back_button_pressed():
 	settings_menu.visible = false
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
+	play_ui_select_sound()
 
 
 func _on_add_players_back_button_pressed():
@@ -130,3 +141,4 @@ func _on_add_players_back_button_pressed():
 	settings_menu.visible = false
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
+	play_ui_select_sound()

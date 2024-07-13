@@ -25,6 +25,7 @@ func _on_body_entered(body):
 		body.apply_central_impulse(direction * IMPULSE)
 		# Remove the bubble from the scene
 	queue_free() # Bubble is deleted upon any collision, ball or not.
+	SoundManager.play_sound("bounce06", -25, 1.6)
 
 
 # Given a team, assign the sprite & collision layers.

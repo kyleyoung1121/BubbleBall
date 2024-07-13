@@ -7,6 +7,7 @@ signal goal_scored(team)
 const MAX_SPEED = 550
 
 
+var has_played_collision_sound = false
 var bounds = {
 	"max_x": 640,
 	"min_x": 0,
@@ -33,6 +34,17 @@ func _process(delta):
 				emit_signal("goal_scored", 1)
 			elif team_name == 2:
 				emit_signal("goal_scored", 2)
+	
+	# If there was any collision, play a sound
+	if colliding_bodies.size() > 0:
+		if not has_played_collision_sound:
+			# Find a good pitch for the bounce sound based on velocity
+			var average_velocity = (linear_velocity.x + linear_velocity.y) / 2
+			var desired_pitch = 1.2 - (0.4 * (average_velocity / MAX_SPEED))
+			SoundManager.play_sound("bounce02", -15, desired_pitch)
+			has_played_collision_sound = true
+	else:
+		has_played_collision_sound = false
 
 
 func _integrate_forces(state):
@@ -44,11 +56,9 @@ func _integrate_forces(state):
 	
 	if abs(linear_velocity.x) > MAX_SPEED:
 		state.linear_velocity.x = sign(linear_velocity.x) * MAX_SPEED
-		print("Speed capped!")
 	
 	if abs(linear_velocity.y) > MAX_SPEED:
 		state.linear_velocity.y = sign(linear_velocity.y) * MAX_SPEED
-		print("Speed capped!")
 
 
 func set_bounds(given_bounds):

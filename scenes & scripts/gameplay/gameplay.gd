@@ -77,6 +77,7 @@ func _process(delta):
 	
 	if not match_in_progress and PlayerManager.someone_button_pressed("ui_accept"):
 		prepare_match()
+		SoundManager.play_sound("start01")
 
 
 func goal_scored(team):
@@ -89,6 +90,8 @@ func goal_scored(team):
 		if team == 2: team_two_lives -= 1
 		# Update the life totals for both players
 		update_all_hearts()
+		# Play the corresponding sound effect
+		SoundManager.play_sound("goal")
 
 
 func reset_round():
@@ -105,6 +108,7 @@ func reset_round():
 		team_one_lives = GameSettings.team_lives
 		team_two_lives = GameSettings.team_lives
 		update_all_hearts()
+		SoundManager.play_sound("win", -2)
 	
 	# If there are still rounds to play, start a new one
 	else:
@@ -158,6 +162,7 @@ func prepare_match():
 	# Set time scale to normal
 	Engine.time_scale = 1
 	start_timer.start()
+	SoundManager.play_sound("countdown", -8)
 
 
 # Function to update hearts for a given team

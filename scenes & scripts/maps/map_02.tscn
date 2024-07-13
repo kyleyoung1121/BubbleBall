@@ -27,7 +27,7 @@ position = Vector2(618, 223)
 position = Vector2(26, 223)
 
 [node name="Goal" parent="." instance=ExtResource("3_hqsvm")]
-position = Vector2(653, 223)
+position = Vector2(-13, 223)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" parent="Goal" index="0"]
@@ -41,7 +41,7 @@ position = Vector2(0.25, 0.5)
 shape = SubResource("RectangleShape2D_6jqs6")
 
 [node name="Goal2" parent="." instance=ExtResource("3_hqsvm")]
-position = Vector2(-13, 223)
+position = Vector2(653, 223)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" parent="Goal2" index="0"]

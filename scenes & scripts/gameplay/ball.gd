@@ -4,6 +4,9 @@ extends RigidBody2D
 signal goal_scored(team)
 
 
+const MAX_SPEED = 550
+
+
 var bounds = {
 	"max_x": 640,
 	"min_x": 0,
@@ -30,8 +33,6 @@ func _process(delta):
 				emit_signal("goal_scored", 1)
 			elif team_name == 2:
 				emit_signal("goal_scored", 2)
-			# Print which goal was scored on
-			print("Ball scored on goal of team: ", team_name)
 
 
 func _integrate_forces(state):
@@ -40,6 +41,14 @@ func _integrate_forces(state):
 	if global_position.x < bounds["min_x"]: global_position.x = bounds["max_x"]
 	if global_position.y > bounds["max_y"]: global_position.y = bounds["min_y"]
 	if global_position.y < bounds["min_y"]: global_position.y = bounds["max_y"]
+	
+	if abs(linear_velocity.x) > MAX_SPEED:
+		state.linear_velocity.x = sign(linear_velocity.x) * MAX_SPEED
+		print("Speed capped!")
+	
+	if abs(linear_velocity.y) > MAX_SPEED:
+		state.linear_velocity.y = sign(linear_velocity.y) * MAX_SPEED
+		print("Speed capped!")
 
 
 func set_bounds(given_bounds):

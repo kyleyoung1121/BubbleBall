@@ -141,22 +141,22 @@ metadata/_edit_group_ = true
 metadata/_edit_group_ = true
 
 [node name="SpawnPoint1-1" parent="." groups=["TeamOneSpawn"] instance=ExtResource("9_cv85s")]
-position = Vector2(75, 60)
+position = Vector2(51, 60)
 metadata/_edit_group_ = true
 
 [node name="Label" parent="SpawnPoint1-1" index="0"]
 metadata/_edit_group_ = true
 
 [node name="SpawnPoint1-2" parent="." groups=["TeamOneSpawn"] instance=ExtResource("9_cv85s")]
-position = Vector2(75, 110)
+position = Vector2(51, 110)
 metadata/_edit_group_ = true
 
 [node name="SpawnPoint1-3" parent="." groups=["TeamOneSpawn"] instance=ExtResource("9_cv85s")]
-position = Vector2(75, 160)
+position = Vector2(51, 160)
 metadata/_edit_group_ = true
 
 [node name="SpawnPoint2-1" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("9_cv85s")]
-position = Vector2(566, 60)
+position = Vector2(590, 60)
 metadata/_edit_group_ = true
 
 [node name="Label" parent="SpawnPoint2-1" index="0"]
@@ -164,14 +164,14 @@ text = "2"
 metadata/_edit_group_ = true
 
 [node name="SpawnPoint2-2" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("9_cv85s")]
-position = Vector2(566, 110)
+position = Vector2(590, 110)
 metadata/_edit_group_ = true
 
 [node name="Label" parent="SpawnPoint2-2" index="0"]
 text = "2"
 
 [node name="SpawnPoint2-3" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("9_cv85s")]
-position = Vector2(566, 160)
+position = Vector2(590, 160)
 metadata/_edit_group_ = true
 
 [node name="Label" parent="SpawnPoint2-3" index="0"]

@@ -135,6 +135,7 @@ func handle_power_jump():
 		play_jump_sound()
 
 func handle_start_slide():
+	SoundManager.play_sound("bounce06", -20, 0.5)
 	# Start the slide with an impulse
 	if facing_right:
 		apply_central_impulse(Vector2(SLIDE_SPEED_IMPULSE, 0))

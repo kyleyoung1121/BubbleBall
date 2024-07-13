@@ -120,5 +120,10 @@ vertical_alignment = 1
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 pitch_scale = 0.18
 
+[node name="PostMatchTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="timeout" from="CountDownText/StartTimer" to="." method="match_begin"]
 [connection signal="timeout" from="PostRoundTimer" to="." method="reset_round"]
+[connection signal="timeout" from="PostMatchTimer" to="." method="_on_post_match_timer_timeout"]

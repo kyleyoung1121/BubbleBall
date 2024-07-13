@@ -68,6 +68,7 @@ func _physics_process(delta):
 			# If midair, summon a bubble on jump
 			if not grounded_ray_cast.is_colliding():
 				summon_bubble()
+				play_jump_sound()
 				
 			# If grounded, apply jump force to nearby ball if applicable
 			else:
@@ -129,7 +130,9 @@ func handle_power_jump():
 			ball_instance.apply_central_impulse(Vector2(0, ball_mass_ratio * JUMP_VELOCITY))
 			# In addition to jumping, the ball should have a slight horizontal push 
 			ball_instance.apply_central_impulse(Vector2(linear_velocity.x * ball_mass_ratio * 0.3, 0))
-
+			SoundManager.play_sound("bounce03", -10)
+	else:
+		play_jump_sound()
 
 func handle_start_slide():
 	# Start the slide with an impulse
@@ -182,6 +185,10 @@ func summon_bubble():
 	if players_old_bubble != null and is_instance_valid(players_old_bubble):
 		PlayerManager.get_player_data(player, "current_bubble").queue_free()
 	PlayerManager.set_player_data(player, "current_bubble", bubble_instance)
+
+
+func play_jump_sound():
+	SoundManager.play_sound("bounce06", -25)
 
 
 func apply_screen_wrap():

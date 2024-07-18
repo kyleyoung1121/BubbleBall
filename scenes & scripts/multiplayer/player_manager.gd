@@ -83,6 +83,10 @@ func leave(player: int):
 		player_data.erase(player)
 		player_left.emit(player)
 
+func remove_all_players():
+	for player in player_data.keys():
+		leave(player)
+
 func get_player_count():
 	return player_data.size()
 

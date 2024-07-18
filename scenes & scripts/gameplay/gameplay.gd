@@ -64,21 +64,21 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if not match_in_progress and not block_match_start:
-		if PlayerManager.someone_button_pressed("map_select_next"):
+		if PlayerManager.player_button_pressed("map_select_next"):
 			map_iterator += 1
 			if map_iterator > map_paths.size() - 1:
 				map_iterator = 0
 			remove_map()
 			show_map(map_paths[map_iterator])
 		
-		if PlayerManager.someone_button_pressed("map_select_previous"):
+		if PlayerManager.player_button_pressed("map_select_previous"):
 			map_iterator -= 1
 			if map_iterator < 0:
 				map_iterator = map_paths.size() - 1
 			remove_map()
 			show_map(map_paths[map_iterator])
 		
-		if PlayerManager.someone_button_pressed("ui_accept"):
+		if PlayerManager.player_button_pressed("ui_accept"):
 			prepare_match()
 			SoundManager.play_sound("start01")
 
@@ -218,7 +218,6 @@ func add_ball():
 		ball_instance.position = Vector2(323, 55)
 	
 	freeze_time()
-	#map_selected.move_child()
 
 
 func remove_ball():

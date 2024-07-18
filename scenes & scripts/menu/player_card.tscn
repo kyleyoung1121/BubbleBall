@@ -1,17 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmec7pa60wbed"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6p3c1"]
-bg_color = Color(0.2484, 0.2484, 0.2484, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[gd_scene format=3 uid="uid://cmec7pa60wbed"]
 
 [node name="PlayerCard" type="PanelContainer"]
 custom_minimum_size = Vector2(50, 100)
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_6p3c1")
 
 [node name="PlayerNumber" type="Label" parent="."]
 layout_mode = 2

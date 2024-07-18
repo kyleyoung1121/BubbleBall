@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://co5qno52avgo4"
-path="res://.godot/imported/PixelAzureBonds-327Z.ttf-6467a3dbb5fb3c1bebc1a9971936ad8f.fontdata"
+path="res://.godot/imported/PixelAzureBonds-327Z.ttf-1f783e33804e7795c9decc70eb924ef0.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/PixelAzureBonds-327Z.ttf"
-dest_files=["res://.godot/imported/PixelAzureBonds-327Z.ttf-6467a3dbb5fb3c1bebc1a9971936ad8f.fontdata"]
+source_file="res://assets/themes/fonts/PixelAzureBonds-327Z.ttf"
+dest_files=["res://.godot/imported/PixelAzureBonds-327Z.ttf-1f783e33804e7795c9decc70eb924ef0.fontdata"]
 
 [params]
 

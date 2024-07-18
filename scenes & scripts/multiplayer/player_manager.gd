@@ -28,43 +28,22 @@ func handle_join_input():
 			join(device)
 
 
-# Check if any device has pressed the back button
-func some_device_back() -> bool:
+# If any device is pressing a certain button, return true
+func device_button_pressed(button) -> bool:
 	for device in get_unjoined_devices():
-		if MultiplayerInput.is_action_just_pressed(device, "back"):
-			#print(str(device) + " device just pressed back")
-			return true
-	return false
-
-
-# Check for some particular player pressing the back button
-func some_player_back() -> int:
-	for player in player_data:
-		var device = get_player_device(player)
-		if MultiplayerInput.is_action_just_pressed(device, "back"):
-			print(str(player) + " player just pressed back")
-			return player
-	# Magic number used to represent no players pressing back
-	return -999
-
-
-func someone_button_pressed(button) -> bool:
-	for player in player_data:
-		var device = get_player_device(player)
 		if MultiplayerInput.is_action_just_pressed(device, button):
 			return true
 	return false
 
 
-# to see if anybody is pressing the "start" action
-# this is an example of how to look for an action on all players
-# note the difference between this and handle_join_input(). players vs devices.
-func someone_wants_to_start() -> bool:
+# Check if a player is pressing a button. Return that player's number, or 0 if false.
+func player_button_pressed(button) -> int:
 	for player in player_data:
 		var device = get_player_device(player)
-		if MultiplayerInput.is_action_just_pressed(device, "start"):
-			return true
-	return false
+		if MultiplayerInput.is_action_just_pressed(device, button):
+			return player
+	# If no player is pressing the button, return 0
+	return 0
 
 
 #  #  #  #  #  #  #  #  #  #  #  #  #
@@ -76,7 +55,7 @@ func join(device: int):
 		# initialize default player data here
 		player_data[player] = {
 			"device": device,
-			"team": (player % 2) + 1, # Alternate between team 1 and team 2
+			"team": ((player + 1) % 2) + 1, # Alternate between team 1 and team 2
 			"current_bubble": null
 		}
 		player_joined.emit(player)
@@ -119,7 +98,7 @@ func is_device_joined(device: int) -> bool:
 # returns a valid player integer for a new player.
 # returns -1 if there is no room for a new player.
 func next_player() -> int:
-	for i in MAX_PLAYERS:
+	for i in range(1, MAX_PLAYERS + 1):
 		if !player_data.has(i): return i
 	return -1
 

@@ -55,7 +55,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Bubble Soccer"
+text = "Bubble Ball"
 horizontal_alignment = 1
 
 [node name="MainPlayButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes & scripts/gameplay/gameplay.gd" id="1_wjm3a"]
 [ext_resource type="Texture2D" uid="uid://d01on1qdeiasv" path="res://assets/sprites/orange_heart.png" id="5_ckosj"]
 [ext_resource type="Texture2D" uid="uid://c2h78hpnumckf" path="res://assets/sprites/blue_heart.png" id="6_amfrv"]
-[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/fonts/new_theme.tres" id="10_y65wx"]
+[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="10_y65wx"]
 [ext_resource type="Script" path="res://scenes & scripts/gameplay/count_down_text.gd" id="11_hh4ss"]
 
 [node name="Gameplay" type="Node2D"]

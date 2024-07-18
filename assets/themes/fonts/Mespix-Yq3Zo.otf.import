@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://1kfkv2e8vat1"
-path="res://.godot/imported/PixelGamingRegular-d9w0g.ttf-4d79303cbeb5491ed85c15f0e3561e02.fontdata"
+uid="uid://bv7ym2noieqsj"
+path="res://.godot/imported/Mespix-Yq3Zo.otf-3f3656b3a3f75e859356c9011cddce9d.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/PixelGamingRegular-d9w0g.ttf"
-dest_files=["res://.godot/imported/PixelGamingRegular-d9w0g.ttf-4d79303cbeb5491ed85c15f0e3561e02.fontdata"]
+source_file="res://assets/themes/fonts/Mespix-Yq3Zo.otf"
+dest_files=["res://.godot/imported/Mespix-Yq3Zo.otf-3f3656b3a3f75e859356c9011cddce9d.fontdata"]
 
 [params]
 

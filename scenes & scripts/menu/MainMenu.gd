@@ -12,6 +12,8 @@ extends CanvasLayer
 @onready var setting_back_button = $Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SettingsBackButton
 
 const PLAYER_CARD_SCENE = preload("res://scenes & scripts/menu/player_card.tscn")
+const PLAYER_CARD_TEAM_ONE_THEME = preload("res://assets/themes/team_one_player_card.tres")
+const PLAYER_CARD_TEAM_TWO_THEME = preload("res://assets/themes/team_two_player_card.tres")
 const GAMEPLAY_SCENE_PATH = "res://scenes & scripts/gameplay/gameplay.tscn"
 
 
@@ -29,10 +31,18 @@ func start_match():
 # Add a new card representing a new player
 func add_player_card(player_num):
 	play_ui_next_sound(-8, 1)
+	# Create a player card
 	var player_card_instance = PLAYER_CARD_SCENE.instantiate()
+	
+	# Find and set the player number label to display which player this is
 	var player_number_label = player_card_instance.get_node("PlayerNumber")
 	player_number_label.text = str(player_num)
+	
+	# Add the player card to our dict of player nodes
 	player_nodes[player_num] = player_card_instance
+	
+	# Update the card's team color
+	player_card_update_color(player_num)
 	
 	# Add the new card, and adjust the 'Press A To Join' graphic to appear last
 	players_and_prompt.add_child(player_card_instance)
@@ -76,19 +86,20 @@ func _process(_delta):
 	
 	# If the players want to start the match, call start_match()
 	if add_players_menu.visible == true and hold_x_to_start_graphic.visible == true:
-		if PlayerManager.someone_wants_to_start():
+		# If at least one player has pressed start, continue
+		if PlayerManager.player_button_pressed("start"):
 			start_match()
 			play_ui_next_sound()
 	
 	# Back out from the add players screen
 	if add_players_menu.visible == true:
 		# If a particular player has hit back, remove them and their card.
-		var query_player_back = PlayerManager.some_player_back()
-		if not query_player_back == -999:
+		var query_player_back = PlayerManager.player_button_pressed("back")
+		if query_player_back:
 			PlayerManager.leave(query_player_back)
 		
 		# If an unconnected player presses back, go to main menu
-		elif PlayerManager.some_device_back():
+		elif PlayerManager.device_button_pressed("back"):
 			# Go to main menu
 			_on_add_players_back_button_pressed()
 			# Remove each player card
@@ -96,13 +107,37 @@ func _process(_delta):
 				PlayerManager.leave(player_num)
 
 	# Back out from the settings menu
-	if settings_menu.visible == true and PlayerManager.some_device_back():
+	if settings_menu.visible == true and PlayerManager.device_button_pressed("back"):
 		print("Back pressed at settings")
 		_on_settings_back_button_pressed()
 
 
+func player_card_switch_team(player_num):
+	# Get the player card's current & new team number (1 or 2)
+	var current_team = PlayerManager.get_player_data(player_num, "team")
+	var new_team = (current_team % 2) + 1
+	
+	# Set the player's data
+	PlayerManager.set_player_data(player_num, "team", new_team)
+	
+	# Update the card's color
+	player_card_update_color(player_num)
+
+
+func player_card_update_color(player_num):
+	# Find the player instance
+	var player_instance = player_nodes[player_num]
+	# Assign its color based on its team
+	var player_card_team = PlayerManager.get_player_data(player_num, "team")
+	if player_card_team == 1:
+		player_instance.add_theme_stylebox_override("panel", PLAYER_CARD_TEAM_ONE_THEME)
+	else:
+		player_instance.add_theme_stylebox_override("panel", PLAYER_CARD_TEAM_TWO_THEME)
+
+
 func play_ui_next_sound(volume = -8, pitch = 1.2):
 	SoundManager.play_sound("ui_next", volume, pitch)
+
 
 func play_ui_back_sound(volume = -8, pitch = 1.2):
 	SoundManager.play_sound("ui_back", volume, pitch)

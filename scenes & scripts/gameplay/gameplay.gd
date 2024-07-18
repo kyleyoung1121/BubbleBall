@@ -8,6 +8,8 @@ extends Node2D
 @onready var orange_hearts = $OrangeHearts
 @onready var blue_hearts = $BlueHearts
 
+
+const MAIN_MENU_SCENE_PATH = "res://scenes & scripts/menu/main_menu.tscn"
 const ORANGE_TEAM_TEXTURE = preload("res://assets/sprites/players/orange_player.png")
 const BLUE_TEAM_TEXTURE = preload("res://assets/sprites/players/blue_player.png")
 const ORANGE_HEART_TEXTURE = preload("res://assets/sprites/orange_heart.png")
@@ -81,6 +83,13 @@ func _process(delta):
 		if PlayerManager.player_button_pressed("ui_accept"):
 			prepare_match()
 			SoundManager.play_sound("start01")
+		
+		if PlayerManager.player_button_pressed("back"):
+			PlayerManager.remove_all_players()
+			LoadMatch.remove_all_players()
+			remove_players()
+			remove_map()
+			get_tree().change_scene_to_file(MAIN_MENU_SCENE_PATH)
 
 
 func goal_scored(team):

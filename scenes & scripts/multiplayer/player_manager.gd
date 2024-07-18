@@ -8,6 +8,7 @@ extends Node
 
 signal player_joined(player)
 signal player_left(player)
+signal player_changed_team()
 
 
 # player_num -> dictionary of data
@@ -26,6 +27,23 @@ func handle_join_input():
 	for device in get_unjoined_devices():
 		if MultiplayerInput.is_action_just_pressed(device, "join"):
 			join(device)
+
+
+# Check if any player(s) are trying to change teams. Update their data accordingly
+func handle_team_change_requests():
+	# Check each player. Get input data regarding if they pressed next or previous
+	for player in player_data.keys():
+		var device = get_player_device(player)
+		var pressed_next = MultiplayerInput.is_action_just_pressed(device, "map_select_next")
+		var pressed_previous = MultiplayerInput.is_action_just_pressed(device, "map_select_previous")
+		
+		# If this player has pressed next or previous, we can swap their team
+		if pressed_next or pressed_previous:
+			var current_team = get_player_data(player, "team")
+			var new_team = (current_team % 2) + 1
+			set_player_data(player, "team", new_team)
+			# After swapping teams, emit this signal so the UI can change accordingly
+			player_changed_team.emit()
 
 
 # If any device is pressing a certain button, return true
@@ -64,6 +82,10 @@ func leave(player: int):
 	if player_data.has(player):
 		player_data.erase(player)
 		player_left.emit(player)
+
+func remove_all_players():
+	for player in player_data.keys():
+		leave(player)
 
 func get_player_count():
 	return player_data.size()

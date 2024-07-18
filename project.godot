@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Wizard Soccer"
+config/name="Bubble Ball"
 run/main_scene="res://scenes & scripts/menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 

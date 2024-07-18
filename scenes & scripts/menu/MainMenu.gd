@@ -41,8 +41,8 @@ func add_player_card(player_num):
 	# Add the player card to our dict of player nodes
 	player_nodes[player_num] = player_card_instance
 	
-	# Update the card's team color
-	player_card_update_color(player_num)
+	# Update the cards' team colors
+	update_player_card_colors()
 	
 	# Add the new card, and adjust the 'Press A To Join' graphic to appear last
 	players_and_prompt.add_child(player_card_instance)
@@ -69,6 +69,7 @@ func remove_player_card(player_num):
 func _ready():
 	PlayerManager.player_joined.connect(add_player_card)
 	PlayerManager.player_left.connect(remove_player_card)
+	PlayerManager.player_changed_team.connect(update_player_card_colors)
 	
 	main_menu.visible = true
 	settings_menu.visible = false
@@ -83,6 +84,7 @@ func _process(_delta):
 	# Listen for join input, the PlayerManager will then initialize players as needed
 	if add_players_menu.visible == true:
 		PlayerManager.handle_join_input()
+		PlayerManager.handle_team_change_requests()
 	
 	# If the players want to start the match, call start_match()
 	if add_players_menu.visible == true and hold_x_to_start_graphic.visible == true:
@@ -112,27 +114,16 @@ func _process(_delta):
 		_on_settings_back_button_pressed()
 
 
-func player_card_switch_team(player_num):
-	# Get the player card's current & new team number (1 or 2)
-	var current_team = PlayerManager.get_player_data(player_num, "team")
-	var new_team = (current_team % 2) + 1
-	
-	# Set the player's data
-	PlayerManager.set_player_data(player_num, "team", new_team)
-	
-	# Update the card's color
-	player_card_update_color(player_num)
-
-
-func player_card_update_color(player_num):
-	# Find the player instance
-	var player_instance = player_nodes[player_num]
-	# Assign its color based on its team
-	var player_card_team = PlayerManager.get_player_data(player_num, "team")
-	if player_card_team == 1:
-		player_instance.add_theme_stylebox_override("panel", PLAYER_CARD_TEAM_ONE_THEME)
-	else:
-		player_instance.add_theme_stylebox_override("panel", PLAYER_CARD_TEAM_TWO_THEME)
+func update_player_card_colors():
+	for player_num in player_nodes.keys():
+		# Find the player instance
+		var player_instance = player_nodes[player_num]
+		# Assign its color based on its team
+		var player_card_team = PlayerManager.get_player_data(player_num, "team")
+		if player_card_team == 1:
+			player_instance.add_theme_stylebox_override("panel", PLAYER_CARD_TEAM_ONE_THEME)
+		else:
+			player_instance.add_theme_stylebox_override("panel", PLAYER_CARD_TEAM_TWO_THEME) 
 
 
 func play_ui_next_sound(volume = -8, pitch = 1.2):

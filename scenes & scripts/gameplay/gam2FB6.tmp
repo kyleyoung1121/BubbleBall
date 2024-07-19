@@ -1,0 +1,167 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkaskjofg0e42"]
+
+[ext_resource type="Script" path="res://scenes & scripts/gameplay/gameplay.gd" id="1_wjm3a"]
+[ext_resource type="Texture2D" uid="uid://d01on1qdeiasv" path="res://assets/sprites/orange_heart.png" id="5_ckosj"]
+[ext_resource type="Texture2D" uid="uid://c2h78hpnumckf" path="res://assets/sprites/blue_heart.png" id="6_amfrv"]
+[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="10_y65wx"]
+[ext_resource type="Script" path="res://scenes & scripts/gameplay/count_down_text.gd" id="11_hh4ss"]
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource("1_wjm3a")
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
+
+[node name="CountDownText" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 303.0
+offset_top = 94.0
+offset_right = 343.0
+offset_bottom = 148.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = ExtResource("10_y65wx")
+theme_override_font_sizes/font_size = 41
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_hh4ss")
+
+[node name="StartTimer" type="Timer" parent="CountDownText"]
+wait_time = 3.0
+one_shot = true
+
+[node name="NextMapSymbol" type="Label" parent="."]
+z_index = 10
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 568.0
+offset_top = 156.0
+offset_right = 608.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = ExtResource("10_y65wx")
+theme_override_font_sizes/font_size = 41
+text = ">"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PreviousMapSymbol" type="Label" parent="."]
+z_index = 10
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 34.0
+offset_top = 156.0
+offset_right = 74.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = ExtResource("10_y65wx")
+theme_override_font_sizes/font_size = 41
+text = "<"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="PostRoundTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="OrangeHearts" type="Node2D" parent="."]
+z_index = 10
+
+[node name="Heart1" type="Sprite2D" parent="OrangeHearts"]
+position = Vector2(12, 54)
+texture = ExtResource("5_ckosj")
+
+[node name="Heart2" type="Sprite2D" parent="OrangeHearts"]
+position = Vector2(12, 75)
+texture = ExtResource("5_ckosj")
+
+[node name="Heart3" type="Sprite2D" parent="OrangeHearts"]
+position = Vector2(12, 96)
+texture = ExtResource("5_ckosj")
+
+[node name="Heart4" type="Sprite2D" parent="OrangeHearts"]
+visible = false
+position = Vector2(12, 117)
+texture = ExtResource("5_ckosj")
+
+[node name="Heart5" type="Sprite2D" parent="OrangeHearts"]
+visible = false
+position = Vector2(12, 138)
+texture = ExtResource("5_ckosj")
+
+[node name="AdditionalHearts" type="Label" parent="OrangeHearts"]
+visible = false
+offset_top = 144.0
+offset_right = 23.0
+offset_bottom = 171.0
+theme = ExtResource("10_y65wx")
+theme_override_colors/font_color = Color(1, 0.561935, 0.226301, 1)
+theme_override_font_sizes/font_size = 11
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BlueHearts" type="Node2D" parent="."]
+z_index = 10
+position = Vector2(617, 0)
+
+[node name="Heart1" type="Sprite2D" parent="BlueHearts"]
+position = Vector2(12, 54)
+texture = ExtResource("6_amfrv")
+
+[node name="Heart2" type="Sprite2D" parent="BlueHearts"]
+position = Vector2(12, 75)
+texture = ExtResource("6_amfrv")
+
+[node name="Heart3" type="Sprite2D" parent="BlueHearts"]
+position = Vector2(12, 96)
+texture = ExtResource("6_amfrv")
+
+[node name="Heart4" type="Sprite2D" parent="BlueHearts"]
+visible = false
+position = Vector2(12, 117)
+texture = ExtResource("6_amfrv")
+
+[node name="Heart5" type="Sprite2D" parent="BlueHearts"]
+visible = false
+position = Vector2(12, 138)
+texture = ExtResource("6_amfrv")
+
+[node name="AdditionalHearts" type="Label" parent="BlueHearts"]
+visible = false
+offset_top = 144.0
+offset_right = 23.0
+offset_bottom = 171.0
+theme = ExtResource("10_y65wx")
+theme_override_colors/font_color = Color(0.248918, 0.740579, 1, 1)
+theme_override_font_sizes/font_size = 11
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+pitch_scale = 0.18
+
+[node name="PostMatchTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="CountDownText/StartTimer" to="." method="match_begin"]
+[connection signal="timeout" from="PostRoundTimer" to="." method="reset_round"]
+[connection signal="timeout" from="PostMatchTimer" to="." method="_on_post_match_timer_timeout"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b20qyvib4hu52"]
+[gd_scene load_steps=8 format=3 uid="uid://b20qyvib4hu52"]
 
 [ext_resource type="Script" path="res://scenes & scripts/menu/MainMenu.gd" id="2_ti8ij"]
+[ext_resource type="PackedScene" uid="uid://c7eltkbk00sxq" path="res://scenes & scripts/menu/pause_menu.tscn" id="3_2pykj"]
 [ext_resource type="Texture2D" uid="uid://cgnxp0jjepcym" path="res://assets/sprites/buttons/a_button.png" id="3_7sh2c"]
 [ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="3_i51tq"]
 [ext_resource type="Texture2D" uid="uid://cny5vlfq1voyw" path="res://assets/sprites/buttons/b_button.png" id="4_kxs8b"]
@@ -82,67 +83,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_i51tq")
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Settings"]
+[node name="PauseMenu" parent="CanvasLayer/Settings" instance=ExtResource("3_2pykj")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Settings/CenterContainer"]
-custom_minimum_size = Vector2(400, 300)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Settings/CenterContainer/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Settings/CenterContainer/PanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-theme_override_constants/separation = 10
-
-[node name="Label" type="Label" parent="CanvasLayer/Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "Settings"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="CanvasLayer/Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Option..."
-horizontal_alignment = 1
-
-[node name="Label3" type="Label" parent="CanvasLayer/Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Option..."
-horizontal_alignment = 1
-
-[node name="Label4" type="Label" parent="CanvasLayer/Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Option..."
-horizontal_alignment = 1
-
-[node name="Label5" type="Label" parent="CanvasLayer/Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Option..."
-horizontal_alignment = 1
-
-[node name="SettingsBackButton" type="Button" parent="CanvasLayer/Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Back"
 
 [node name="AddPlayers" type="Control" parent="CanvasLayer"]
 visible = false
@@ -293,6 +235,5 @@ color = Color(0, 0, 0, 1)
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MainPlayButton" to="CanvasLayer" method="_on_main_play_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MainOptionsButton" to="CanvasLayer" method="_on_main_options_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MainQuitButton" to="CanvasLayer" method="_on_main_quit_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SettingsBackButton" to="CanvasLayer" method="_on_settings_back_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/AddPlayers/CenterContainer/VBoxContainer/HoldXToStartGraphic/AddPlayersBackButton" to="CanvasLayer" method="_on_add_players_back_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/AddPlayers/PanelContainer/AddPlayersBackButton" to="CanvasLayer" method="_on_add_players_back_button_pressed"]

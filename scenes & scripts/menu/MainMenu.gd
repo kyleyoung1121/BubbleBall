@@ -22,14 +22,14 @@ var player_nodes = {}
 
 # When the player decide to start a match, call the relevant methods on the LoadMatch singleton
 func start_match():
-	SoundManager.play_sound("start02", -3)
+	SoundManager.play_sound("start02")
 	LoadMatch.store_players(player_nodes)
 	LoadMatch.begin_game_preparations()
 
 
 # Add a new card representing a new player
 func add_player_card(player_num):
-	play_ui_next_sound(-8, 1)
+	play_ui_next_sound(0, 0.83)
 	# Create a player card
 	var player_card_instance = PLAYER_CARD_SCENE.instantiate()
 	
@@ -55,7 +55,7 @@ func add_player_card(player_num):
 
 # If a player backs out, remove their card.
 func remove_player_card(player_num):
-	play_ui_back_sound(-8, 1)
+	play_ui_back_sound(0, 0.83)
 	# Remove the associated card
 	player_nodes[player_num].queue_free()
 	player_nodes.erase(player_num)
@@ -125,12 +125,12 @@ func update_player_card_colors():
 			player_instance.add_theme_stylebox_override("panel", PLAYER_CARD_TEAM_TWO_THEME) 
 
 
-func play_ui_next_sound(volume = -8, pitch = 1.2):
-	SoundManager.play_sound("ui_next", volume, pitch)
+func play_ui_next_sound(volume_change = 0, pitch_change = 1):
+	SoundManager.play_sound("ui_next", volume_change, pitch_change)
 
 
-func play_ui_back_sound(volume = -8, pitch = 1.2):
-	SoundManager.play_sound("ui_back", volume, pitch)
+func play_ui_back_sound(volume_change = 0, pitch_change = 1):
+	SoundManager.play_sound("ui_back", volume_change, pitch_change)
 
 
 func _on_main_play_button_pressed():

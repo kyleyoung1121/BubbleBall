@@ -82,6 +82,7 @@ func _process(delta):
 			map_iterator += 1
 			if map_iterator > map_paths.size() - 1:
 				map_iterator = 0
+			SoundManager.play_sound("ui_next")
 			remove_map()
 			show_map(map_paths[map_iterator])
 		
@@ -89,6 +90,7 @@ func _process(delta):
 			map_iterator -= 1
 			if map_iterator < 0:
 				map_iterator = map_paths.size() - 1
+			SoundManager.play_sound("ui_next")
 			remove_map()
 			show_map(map_paths[map_iterator])
 		
@@ -103,6 +105,7 @@ func _process(delta):
 			LoadMatch.remove_all_players()
 			remove_players()
 			remove_map()
+			SoundManager.play_sound("ui_back")
 			get_tree().change_scene_to_file(MAIN_MENU_SCENE_PATH)
 	
 	# Input handling during the match
@@ -218,12 +221,14 @@ func toggle_pause():
 		max_lives = GameSettings.team_lives
 		# Update hearts to match current settings
 		update_all_hearts()
+		SoundManager.play_sound("ui_back")
 	else:
 		# Pause
 		Engine.time_scale = 0
 		pause_menu.visible = true
 		pause_menu.reload_slider_values()
 		round_paused = true
+		SoundManager.play_sound("ui_next")
 
 
 # Function to update hearts for a given team

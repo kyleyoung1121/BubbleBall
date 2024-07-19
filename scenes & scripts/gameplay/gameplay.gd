@@ -143,7 +143,7 @@ func reset_round():
 		team_one_lives = GameSettings.team_lives
 		team_two_lives = GameSettings.team_lives
 		update_all_hearts()
-		SoundManager.play_sound("win", -2)
+		SoundManager.play_sound("win")
 		next_map_symbol.visible = true
 		previous_map_symbol.visible = true
 		block_match_start = true
@@ -201,7 +201,7 @@ func prepare_match():
 	# Set time scale to normal
 	Engine.time_scale = 1
 	start_timer.start()
-	SoundManager.play_sound("countdown", -8)
+	SoundManager.play_sound("countdown")
 
 
 # Pause the game. Uses game_time_scale instead of freezing to preserve momentum

@@ -130,12 +130,12 @@ func handle_power_jump():
 			ball_instance.apply_central_impulse(Vector2(0, ball_mass_ratio * JUMP_VELOCITY))
 			# In addition to jumping, the ball should have a slight horizontal push 
 			ball_instance.apply_central_impulse(Vector2(linear_velocity.x * ball_mass_ratio * 0.3, 0))
-			SoundManager.play_sound("bounce03", -10)
+			SoundManager.play_sound("pjump")
 	else:
 		play_jump_sound()
 
 func handle_start_slide():
-	SoundManager.play_sound("bounce06", -20, 0.5)
+	SoundManager.play_sound("slide")
 	# Start the slide with an impulse
 	if facing_right:
 		apply_central_impulse(Vector2(SLIDE_SPEED_IMPULSE, 0))
@@ -189,7 +189,7 @@ func summon_bubble():
 
 
 func play_jump_sound():
-	SoundManager.play_sound("bounce06", -25)
+	SoundManager.play_sound("jump")
 
 
 func apply_screen_wrap():

@@ -20,7 +20,7 @@ MultiplayerInput="*res://addons/plugins/multiplayer_input.gd"
 PlayerManager="*res://scenes & scripts/multiplayer/player_manager.gd"
 LoadMatch="*res://scenes & scripts/global/load_match.gd"
 GameSettings="*res://scenes & scripts/global/game_settings.gd"
-SoundManager="*res://scenes & scripts/gameplay/SoundManager.gd"
+SoundManager="*res://scenes & scripts/global/sound_manager.gd"
 
 [display]
 

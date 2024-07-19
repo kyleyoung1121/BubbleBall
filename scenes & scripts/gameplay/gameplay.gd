@@ -9,6 +9,7 @@ extends Node2D
 @onready var post_match_timer = $PostMatchTimer
 @onready var orange_hearts = $OrangeHearts
 @onready var blue_hearts = $BlueHearts
+@onready var pause_menu = $PauseMenu
 
 
 const MAIN_MENU_SCENE_PATH = "res://scenes & scripts/menu/main_menu.tscn"
@@ -33,6 +34,7 @@ var round_in_progress = false
 var block_match_start = false
 var ball_instance
 
+var max_lives = GameSettings.team_lives
 var team_one_lives
 var team_two_lives
 
@@ -69,6 +71,7 @@ func _ready():
 	# Make sure the next and previous map symbols are visible to start
 	next_map_symbol.visible = true
 	previous_map_symbol.visible = true
+	pause_menu.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -204,10 +207,22 @@ func prepare_match():
 # Pause the game. Uses game_time_scale instead of freezing to preserve momentum
 func toggle_pause():
 	if round_paused:
+		# Unpause
 		Engine.time_scale = GameSettings.game_time_scale
+		pause_menu.visible = false
 		round_paused = false
+		# Check to see if the team_lives changed. If so, add/remove lives.
+		if not GameSettings.team_lives == max_lives:
+			team_one_lives += GameSettings.team_lives - max_lives
+			team_two_lives += GameSettings.team_lives - max_lives
+		max_lives = GameSettings.team_lives
+		# Update hearts to match current settings
+		update_all_hearts()
 	else:
+		# Pause
 		Engine.time_scale = 0
+		pause_menu.visible = true
+		pause_menu.reload_slider_values()
 		round_paused = true
 
 

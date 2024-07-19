@@ -9,7 +9,6 @@ extends CanvasLayer
 @onready var players_and_prompt = $AddPlayers/CenterContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PlayersAndPrompt
 @onready var add_players_graphic = $AddPlayers/CenterContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PlayersAndPrompt/AddPlayersGraphic
 @onready var main_play_button = $Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MainPlayButton
-@onready var setting_back_button = $Settings/CenterContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SettingsBackButton
 
 const PLAYER_CARD_SCENE = preload("res://scenes & scripts/menu/player_card.tscn")
 const PLAYER_CARD_TEAM_ONE_THEME = preload("res://assets/themes/team_one_player_card.tres")
@@ -145,7 +144,7 @@ func _on_main_play_button_pressed():
 func _on_main_options_button_pressed():
 	main_menu.visible = false
 	settings_menu.visible = true
-	setting_back_button.grab_focus()
+	#setting_back_button.grab_focus()
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
 	play_ui_next_sound()

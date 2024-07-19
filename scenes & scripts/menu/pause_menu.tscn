@@ -1,0 +1,334 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7eltkbk00sxq"]
+
+[ext_resource type="Script" path="res://scenes & scripts/menu/pause_menu.gd" id="1_d28cu"]
+[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="1_ts7t4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pbo0a"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d28cu")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -150.0
+offset_right = 125.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pbo0a")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 2
+offset_left = 51.0
+offset_right = 199.0
+offset_bottom = 47.0
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 36
+text = "Pause"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+layout_mode = 2
+offset_left = 3.0
+offset_top = 51.0
+offset_right = 247.0
+offset_bottom = 297.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+alignment = 1
+
+[node name="MasterVolumeContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterVolumeText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MasterVolumeContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Master Volume"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MasterVolumeSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/MasterVolumeContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 5.0
+value = 100.0
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/MasterVolumeContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="MasterVolumeValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MasterVolumeContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicVolumeContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicVolumeText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MusicVolumeContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Music Volume"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/MusicVolumeContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MusicVolumeSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/MusicVolumeContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 5.0
+value = 100.0
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/MusicVolumeContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="MusicVolumeValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MusicVolumeContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SfxVolumeContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SfxVolumeText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Sfx Volume"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SfxVolumeSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 5.0
+value = 100.0
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SfxVolumeValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ColorRect" type="ColorRect" parent="Panel/ScrollContainer/VBoxContainer/Spacer"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.74558, 0.74558, 0.74558, 1)
+
+[node name="TeamLivesContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TeamLivesText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/TeamLivesContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Life Count"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/TeamLivesContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TeamLivesSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/TeamLivesContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 10.0
+value = 3.0
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/TeamLivesContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TeamLivesValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/TeamLivesContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameSpeedContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GameSpeedText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/GameSpeedContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Game Speed"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/GameSpeedContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GameSpeedSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/GameSpeedContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.25
+max_value = 1.25
+step = 0.05
+value = 0.85
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/GameSpeedContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="GameSpeedValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/GameSpeedContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "0.85"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SlowMoSpeedContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SlowMoSpeedText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SlowMoSpeedContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Slow Mo Speed"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/SlowMoSpeedContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SlowMoSpeedSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/SlowMoSpeedContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.25
+max_value = 1.25
+step = 0.05
+value = 0.45
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/SlowMoSpeedContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SlowMoSpeedValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SlowMoSpeedContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "0.45"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BubbleSizeContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BubbleSizeText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Bubble Size"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BubbleSizeSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.5
+max_value = 2.5
+step = 0.1
+value = 1.4
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="BubbleSizeValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "1.4"
+horizontal_alignment = 1
+vertical_alignment = 1

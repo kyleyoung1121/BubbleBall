@@ -9,6 +9,7 @@ bounce = 0.1
 [sub_resource type="CircleShape2D" id="CircleShape2D_ol2h7"]
 
 [node name="Player" type="RigidBody2D"]
+z_index = 9
 collision_mask = 15
 mass = 0.4
 physics_material_override = SubResource("PhysicsMaterial_ld8eo")

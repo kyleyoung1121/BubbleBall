@@ -3,6 +3,8 @@ extends Node2D
 
 @onready var start_timer = $CountDownText/StartTimer
 @onready var count_down_text = $CountDownText
+@onready var next_map_symbol = $NextMapSymbol
+@onready var previous_map_symbol = $PreviousMapSymbol
 @onready var post_round_timer = $PostRoundTimer
 @onready var post_match_timer = $PostMatchTimer
 @onready var orange_hearts = $OrangeHearts
@@ -61,6 +63,10 @@ func _ready():
 	team_one_lives = GameSettings.team_lives
 	team_two_lives = GameSettings.team_lives
 	update_all_hearts()
+	
+	# Make sure the next and previous map symbols are visible to start
+	next_map_symbol.visible = true
+	previous_map_symbol.visible = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -82,6 +88,8 @@ func _process(delta):
 		
 		if PlayerManager.player_button_pressed("ui_accept"):
 			prepare_match()
+			next_map_symbol.visible = false
+			previous_map_symbol.visible = false
 			SoundManager.play_sound("start01")
 		
 		if PlayerManager.player_button_pressed("back"):
@@ -121,6 +129,8 @@ func reset_round():
 		team_two_lives = GameSettings.team_lives
 		update_all_hearts()
 		SoundManager.play_sound("win", -2)
+		next_map_symbol.visible = true
+		previous_map_symbol.visible = true
 		block_match_start = true
 		post_match_timer.start()
 	

@@ -26,6 +26,8 @@ var player_nodes = {}
 var map_paths = []
 var map_selected = null
 var map_iterator = 0
+var round_paused = false
+var block_pause = true
 var match_in_progress = false
 var round_in_progress = false
 var block_match_start = false
@@ -71,6 +73,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# Input handling before the match, during match select
 	if not match_in_progress and not block_match_start:
 		if PlayerManager.player_button_pressed("map_select_next"):
 			map_iterator += 1
@@ -98,6 +101,12 @@ func _process(delta):
 			remove_players()
 			remove_map()
 			get_tree().change_scene_to_file(MAIN_MENU_SCENE_PATH)
+	
+	# Input handling during the match
+	if round_in_progress:
+		# If the player presses pause and is allowed, pause. (Time scale becomes 0)
+		if not block_pause and PlayerManager.player_button_pressed("pause"):
+			toggle_pause()
 
 
 func goal_scored(team):
@@ -121,6 +130,9 @@ func reset_round():
 	remove_ball()
 	remove_bubbles()
 	add_ball()
+	
+	# Do not allow players to pause until they are able to move
+	block_pause = true
 	
 	# If the match is over, prepare for map selection
 	if team_one_lives <= 0 or team_two_lives <= 0:
@@ -187,6 +199,16 @@ func prepare_match():
 	Engine.time_scale = 1
 	start_timer.start()
 	SoundManager.play_sound("countdown", -8)
+
+
+# Pause the game. Uses game_time_scale instead of freezing to preserve momentum
+func toggle_pause():
+	if round_paused:
+		Engine.time_scale = GameSettings.game_time_scale
+		round_paused = false
+	else:
+		Engine.time_scale = 0
+		round_paused = true
 
 
 # Function to update hearts for a given team
@@ -280,6 +302,8 @@ func remove_players():
 func match_begin():
 	# Set time scale to game settings
 	Engine.time_scale = GameSettings.game_time_scale
+	# Players may now pause
+	block_pause = false
 	# Ensure each player & ball knows the bounds of the screenwrap
 	for player_num in player_nodes.keys():
 			player_nodes[player_num].set_bounds(bounds)

@@ -1,7 +1,7 @@
 extends Node
 
 # General
-var team_lives = 5
+var team_lives = 3
 var game_time_scale = 0.85
 var slow_mo_scale = 0.45
 
@@ -12,6 +12,6 @@ var player_mass = 0.4
 var bubble_size = 1.4
 
 # Audio
-var master_volume = 50
-var music_volume = 50
-var sfx_volume = 50
+var master_volume = 100
+var music_volume = 100
+var sfx_volume = 100

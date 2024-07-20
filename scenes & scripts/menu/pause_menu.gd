@@ -4,13 +4,17 @@ extends Control
 # Declare the dictionary with sliders and their corresponding GameSettings values
 @onready var sliders = {
 	"MasterVolumeSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/MasterVolumeContainer/SliderBox/MasterVolumeSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/MasterVolumeContainer/SliderBox/SliderValueBox/MasterVolumeValueText, "setting": "master_volume" },
-	"MusicVolumeSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/MusicVolumeContainer/SliderBox/MusicVolumeSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/MusicVolumeContainer/SliderBox/SliderValueBox/MusicVolumeValueText, "setting": "music_volume" },
 	"SfxVolumeSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox/SfxVolumeSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox/SliderValueBox/SfxVolumeValueText, "setting": "sfx_volume" },
+	"MusicVolumeSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/MusicVolumeContainer/SliderBox/MusicVolumeSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/MusicVolumeContainer/SliderBox/SliderValueBox/MusicVolumeValueText, "setting": "music_volume" },
+	"TrackSelectSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/TrackSelectContainer/SliderBox/TrackSelectSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/TrackSelectContainer/SliderBox/SliderValueBox/TrackSelectValueText, "setting": "music_track" },
 	"TeamLivesSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/TeamLivesContainer/SliderBox/TeamLivesSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/TeamLivesContainer/SliderBox/SliderValueBox/TeamLivesValueText, "setting": "team_lives" },
 	"GameSpeedSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/GameSpeedContainer/SliderBox/GameSpeedSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/GameSpeedContainer/SliderBox/SliderValueBox/GameSpeedValueText, "setting": "game_time_scale" },
 	"SlowMoSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/SlowMoSpeedContainer/SliderBox/SlowMoSpeedSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/SlowMoSpeedContainer/SliderBox/SliderValueBox/SlowMoSpeedValueText, "setting": "slow_mo_scale" },
 	"BubbleSizeSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer/SliderBox/BubbleSizeSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer/SliderBox/SliderValueBox/BubbleSizeValueText, "setting": "bubble_size" }
 }
+
+
+var audio_slider_names = ["MasterVolumeSlider", "SfxVolumeSlider", "MusicVolumeSlider", "TrackSelectSlider"]
 
 
 func _ready():
@@ -35,6 +39,7 @@ func reload_slider_values():
 func connect_sliders():
 	for key in sliders.keys():
 		var slider_info = sliders[key]
+		# Otherwise, get the slider attach a function to handle when it is updated
 		var slider = slider_info["slider"]
 		slider.value_changed.connect(build_slider_changed_callback(key))
 
@@ -47,5 +52,8 @@ func build_slider_changed_callback(key):
 		var value_text = slider_info["value_text"]
 		var setting_name = slider_info["setting"]
 		# Update the UI and set the game variables.
-		value_text.text = str(value)
+		value_text.text = str(value) 
 		GameSettings.set(setting_name, value)
+		# If the slider was a music slider, send an update to the SoundManager
+		if key in audio_slider_names:
+			SoundManager.update_settings()

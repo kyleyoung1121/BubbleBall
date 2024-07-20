@@ -81,7 +81,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3_i51tq")
 
 [node name="PauseMenu" parent="CanvasLayer/Settings" instance=ExtResource("3_2pykj")]
 layout_mode = 1

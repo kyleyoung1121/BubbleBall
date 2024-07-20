@@ -10,25 +10,30 @@ func _ready():
 	preload_sounds()
 
 func preload_sounds():
-	sounds["ball_bounce"] = preload("res://assets/audio/ball_bounce.mp3")
-	sounds["countdown"] = preload("res://assets/audio/countdown.mp3")
-	sounds["goal"] = preload("res://assets/audio/goal01.mp3")
-	sounds["jump"] = preload("res://assets/audio/jump.mp3")
-	sounds["pjump"] = preload("res://assets/audio/pjump.mp3")
-	sounds["slide"] = preload("res://assets/audio/slide.mp3")
-	sounds["start01"] = preload("res://assets/audio/start01.mp3")
-	sounds["start02"] = preload("res://assets/audio/start02.mp3")
-	sounds["ui_next"] = preload("res://assets/audio/ui_next.mp3")
-	sounds["ui_back"] = preload("res://assets/audio/ui_back.mp3")
-	sounds["win"] = preload("res://assets/audio/win01.mp3")
+	sounds["ball_bounce"] = {"file": preload("res://assets/audio/ball_bounce.mp3"), "type": "sfx"}
+	sounds["countdown"] = {"file": preload("res://assets/audio/countdown.mp3"), "type": "sfx"}
+	sounds["goal"] = {"file": preload("res://assets/audio/goal01.mp3"), "type": "sfx"}
+	sounds["jump"] = {"file": preload("res://assets/audio/jump.mp3"), "type": "sfx"}
+	sounds["pjump"] = {"file": preload("res://assets/audio/pjump.mp3"), "type": "sfx"}
+	sounds["slide"] = {"file": preload("res://assets/audio/slide.mp3"), "type": "sfx"}
+	sounds["start01"] = {"file": preload("res://assets/audio/start01.mp3"), "type": "sfx"}
+	sounds["start02"] = {"file": preload("res://assets/audio/start02.mp3"), "type": "sfx"}
+	sounds["ui_next"] = {"file": preload("res://assets/audio/ui_next.mp3"), "type": "sfx"}
+	sounds["ui_back"] = {"file": preload("res://assets/audio/ui_back.mp3"), "type": "sfx"}
+	sounds["win"] = {"file": preload("res://assets/audio/win01.mp3"), "type": "music"}
 
 
 func play_sound(sound_name: String, volume_db: float = 0.0, pitch_scale: float = 1.0):
 	if sounds.has(sound_name):
 		var sound_instance = AudioStreamPlayer.new()
-		sound_instance.stream = sounds[sound_name]
-		# Further adjust the volume based on the master volume. dB change should be between -10 and +15
+		sound_instance.stream = sounds[sound_name]["file"]
+		# Adjust the volume based on the master volume.
 		sound_instance.volume_db = volume_db + (30 * GameSettings.get("master_volume") / 100) - 30
+		# Further adjust the volume based on the sound type
+		if sounds[sound_name]["type"] == "music":
+			sound_instance.volume_db += (30 * GameSettings.get("music_volume") / 100) - 10
+		elif sounds[sound_name]["type"] == "sfx":
+			sound_instance.volume_db += (30 * GameSettings.get("sfx_volume") / 100) - 10
 		sound_instance.pitch_scale = pitch_scale
 		add_child(sound_instance)
 		sound_instance.play()

@@ -34,11 +34,12 @@ func handle_team_change_requests():
 	# Check each player. Get input data regarding if they pressed next or previous
 	for player in player_data.keys():
 		var device = get_player_device(player)
+		var pressed_team_swap = MultiplayerInput.is_action_just_pressed(device, "team_swap")
 		var pressed_next = MultiplayerInput.is_action_just_pressed(device, "map_select_next")
 		var pressed_previous = MultiplayerInput.is_action_just_pressed(device, "map_select_previous")
 		
 		# If this player has pressed next or previous, we can swap their team
-		if pressed_next or pressed_previous:
+		if pressed_team_swap or pressed_next or pressed_previous:
 			var current_team = get_player_data(player, "team")
 			var new_team = (current_team % 2) + 1
 			set_player_data(player, "team", new_team)

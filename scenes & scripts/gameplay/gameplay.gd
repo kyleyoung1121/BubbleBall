@@ -113,6 +113,9 @@ func _process(delta):
 		# If the player presses pause and is allowed, pause. (Time scale becomes 0)
 		if not block_pause and PlayerManager.player_button_pressed("pause"):
 			toggle_pause()
+		# Allow back button to unpause
+		if round_paused and PlayerManager.player_button_pressed("back"):
+			toggle_pause()
 
 
 func goal_scored(team):

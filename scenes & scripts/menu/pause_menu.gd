@@ -12,7 +12,7 @@ extends Control
 	"SlowMoSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/SlowMoSpeedContainer/SliderBox/SlowMoSpeedSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/SlowMoSpeedContainer/SliderBox/SliderValueBox/SlowMoSpeedValueText, "setting": "slow_mo_scale" },
 	"BubbleSizeSlider": { "slider": $Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer/SliderBox/BubbleSizeSlider, "value_text": $Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer/SliderBox/SliderValueBox/BubbleSizeValueText, "setting": "bubble_size" }
 }
-
+@onready var scroll_container = $Panel/ScrollContainer
 
 var audio_slider_names = ["MasterVolumeSlider", "SfxVolumeSlider", "MusicVolumeSlider", "TrackSelectSlider"]
 
@@ -42,6 +42,7 @@ func connect_sliders():
 		# Otherwise, get the slider attach a function to handle when it is updated
 		var slider = slider_info["slider"]
 		slider.value_changed.connect(build_slider_changed_callback(key))
+		slider.focus_entered.connect(build_slider_focused_callback(key))
 
 
 # Given a specific slider, build a function that will adjust the correct variables on slider change
@@ -57,3 +58,22 @@ func build_slider_changed_callback(key):
 		# If the slider was a music slider, send an update to the SoundManager
 		if key in audio_slider_names:
 			SoundManager.update_settings()
+
+
+# Given a specific slider, build a function that will adjust the correct variables on slider change
+func build_slider_focused_callback(key):
+	# Each time the slider changes, it will call this function
+	return func on_slider_focused():
+		var slider_info = sliders[key]
+		# Check if this slider is one that requires the scrollbar to change
+		if key == "TrackSelectSlider":
+			scroll_container.scroll_vertical = 0
+		elif key == "TeamLivesSlider":
+			scroll_container.scroll_vertical = 279
+
+
+func focus_first_slider():
+	# When the settings menu is opened, focus on the first slider
+	var first_slider_name = sliders.keys()[0]
+	var first_slider = sliders[first_slider_name]["slider"]
+	first_slider.grab_focus()

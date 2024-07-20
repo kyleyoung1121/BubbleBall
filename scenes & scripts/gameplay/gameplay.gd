@@ -227,6 +227,7 @@ func toggle_pause():
 		Engine.time_scale = 0
 		pause_menu.visible = true
 		pause_menu.reload_slider_values()
+		pause_menu.focus_first_slider()
 		round_paused = true
 		SoundManager.play_sound("ui_next")
 

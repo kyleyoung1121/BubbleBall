@@ -3,7 +3,7 @@ extends CanvasLayer
 
 # Declare onready variables for UI components
 @onready var main_menu = $Main
-@onready var settings_menu = $Settings
+@onready var settings_menu = $Settings/PauseMenu
 @onready var add_players_menu = $AddPlayers
 @onready var hold_x_to_start_graphic = $AddPlayers/CenterContainer/VBoxContainer/HoldXToStartGraphic
 @onready var players_and_prompt = $AddPlayers/CenterContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PlayersAndPrompt
@@ -144,7 +144,7 @@ func _on_main_play_button_pressed():
 func _on_main_options_button_pressed():
 	main_menu.visible = false
 	settings_menu.visible = true
-	#setting_back_button.grab_focus()
+	settings_menu.focus_first_slider()
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
 	play_ui_next_sound()

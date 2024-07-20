@@ -12,6 +12,6 @@ var player_mass = 0.4
 var bubble_size = 1.4
 
 # Audio
-var master_volume = 100
+var master_volume = 50
 var music_volume = 100
 var sfx_volume = 100

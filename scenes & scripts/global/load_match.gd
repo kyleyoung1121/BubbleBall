@@ -27,6 +27,7 @@ func remove_all_players():
 		if player_nodes.has(player_num):
 			player_nodes.erase(player_num)
 
+
 # Start the match by changing scenes to the gameplay & spawning in the players
 func begin_game_preparations():
 	# First, change the scene to the gameplay scene

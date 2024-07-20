@@ -13,5 +13,6 @@ var bubble_size = 1.4
 
 # Audio
 var master_volume = 50
-var music_volume = 100
-var sfx_volume = 100
+var music_volume = 50
+var sfx_volume = 50
+var music_track = 1

@@ -100,6 +100,42 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SfxVolumeContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SfxVolumeText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Sfx Volume"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SfxVolumeSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 5.0
+value = 100.0
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SfxVolumeValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="MusicVolumeContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -136,39 +172,41 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SfxVolumeContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="TrackSelectContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="SfxVolumeText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
+[node name="TrackSelectText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/TrackSelectContainer"]
 layout_mode = 2
 theme = ExtResource("1_ts7t4")
 theme_override_font_sizes/font_size = 16
-text = "Sfx Volume"
+text = "Track Select"
 horizontal_alignment = 1
 
-[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/TrackSelectContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SfxVolumeSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox"]
+[node name="TrackSelectSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/TrackSelectContainer/SliderBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-step = 5.0
-value = 100.0
+min_value = 1.0
+max_value = 7.0
+value = 1.0
 scrollable = false
 
-[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox"]
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/TrackSelectContainer/SliderBox"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="SfxVolumeValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SfxVolumeContainer/SliderBox/SliderValueBox"]
+[node name="TrackSelectValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/TrackSelectContainer/SliderBox/SliderValueBox"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_ts7t4")
 theme_override_font_sizes/font_size = 21
-text = "100"
+text = "1
+"
 horizontal_alignment = 1
 vertical_alignment = 1
 

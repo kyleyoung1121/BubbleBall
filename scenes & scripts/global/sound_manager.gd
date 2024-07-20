@@ -11,7 +11,9 @@ var sounds = {}
 var tracks = {}
 var track_list = []
 var track_number_playing = 0
-
+var track_dimmed = false
+var track_dim_amount = -10
+var sfx_that_dim = ["goal", "win"]
 
 func _ready():
 	# Preload all sound effects
@@ -65,6 +67,11 @@ func play_sound(sound_name: String, volume_db: float = 0.0, pitch_scale: float =
 		
 		# Connect the finished signal to remove the sound instance after it plays
 		sound_instance.finished.connect(_on_sound_finished.bind(sound_instance))
+		
+		# If this sfx wants to dim the music track, do so, and make it promise to undo it after completion
+		if sound_name in sfx_that_dim:
+			dim_track()
+			sound_instance.finished.connect(undim_track)
 
 
 # If the game settings pertaining to audio are modified, update our audio accordingly
@@ -88,6 +95,19 @@ func play_track(requested_track_number):
 	background_music_player.stream = tracks[track_list[requested_track_number-1]]
 	background_music_player.play()
 	track_number_playing = requested_track_number
+
+
+func dim_track():
+	if not track_dimmed:
+		background_music_player.volume_db += track_dim_amount
+		track_dimmed = true
+
+
+func undim_track():
+	# Restore to normal volume (remove the dim effect)
+	if track_dimmed:
+		background_music_player.volume_db -= track_dim_amount
+		track_dimmed = false
 
 
 func _on_sound_finished(sound_instance: AudioStreamPlayer):

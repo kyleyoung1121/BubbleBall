@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://6mytvone5yik"]
+
+[ext_resource type="Script" path="res://scenes-and-scripts/gameplay/player.gd" id="1_7rfqs"]
+[ext_resource type="Texture2D" uid="uid://crxsbserfg7oi" path="res://assets/sprites/basic_ball.png" id="2_b3bh1"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ld8eo"]
+bounce = 0.1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ol2h7"]
+
+[node name="Player" type="RigidBody2D"]
+z_index = 9
+collision_mask = 15
+mass = 0.4
+physics_material_override = SubResource("PhysicsMaterial_ld8eo")
+script = ExtResource("1_7rfqs")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.785, 0.785)
+shape = SubResource("CircleShape2D_ol2h7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("2_b3bh1")
+
+[node name="GroundedRayCast" type="RayCast2D" parent="."]
+target_position = Vector2(0, 10)
+collision_mask = 8
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="SlideDurationTimer" type="Timer" parent="."]
+wait_time = 0.55
+one_shot = true
+
+[connection signal="timeout" from="SlideDurationTimer" to="." method="_on_slide_duration_timer_timeout"]

@@ -1,0 +1,184 @@
+[gd_scene load_steps=9 format=3 uid="uid://boct4p02xk80b"]
+
+[ext_resource type="PackedScene" uid="uid://c6bxmscqkvlgl" path="res://scenes-and-scripts/gameplay/slow_mo_zone.tscn" id="1_enj4e"]
+[ext_resource type="PackedScene" uid="uid://ceeixme1jgg1c" path="res://scenes-and-scripts/gameplay/goal.tscn" id="2_xc0mt"]
+[ext_resource type="Texture2D" uid="uid://bamflliahetpk" path="res://assets/sprites/orange_goal.png" id="3_x5k3q"]
+[ext_resource type="Texture2D" uid="uid://dihqj0do5ja06" path="res://assets/sprites/blue_goal.png" id="4_il2ii"]
+[ext_resource type="Texture2D" uid="uid://b0sfaanp0iyte" path="res://assets/sprites/map_borders/map04_border.png" id="5_1j8fv"]
+[ext_resource type="PackedScene" uid="uid://eujlr4ydhdn" path="res://scenes-and-scripts/gameplay/platforms/spinning_platform_rb2D.tscn" id="9_x6rer"]
+[ext_resource type="PackedScene" uid="uid://4xcvg367crpo" path="res://scenes-and-scripts/gameplay/spawn_point.tscn" id="10_di2ti"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6jqs6"]
+size = Vector2(24.7939, 50.4451)
+
+[node name="Map03" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="SlowMoZone1" parent="." instance=ExtResource("1_enj4e")]
+position = Vector2(604, 238)
+
+[node name="SlowMoZone2" parent="." instance=ExtResource("1_enj4e")]
+position = Vector2(36, 238)
+
+[node name="Goal" parent="." instance=ExtResource("2_xc0mt")]
+position = Vector2(-13, 237)
+rotation = 3.14159
+scale = Vector2(1.125, 1.125)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="Goal" index="0"]
+texture = ExtResource("3_x5k3q")
+
+[node name="StaticBody2D" parent="Goal" index="1"]
+team_name = 1
+
+[node name="CollisionShape2D" parent="Goal/StaticBody2D" index="0"]
+position = Vector2(0.444461, 0.5)
+shape = SubResource("RectangleShape2D_6jqs6")
+
+[node name="Goal2" parent="." instance=ExtResource("2_xc0mt")]
+position = Vector2(652, 240)
+rotation = -3.14159
+scale = Vector2(1.115, 1.115)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="Goal2" index="0"]
+texture = ExtResource("4_il2ii")
+
+[node name="StaticBody2D" parent="Goal2" index="1"]
+team_name = 2
+
+[node name="CollisionShape2D" parent="Goal2/StaticBody2D" index="0"]
+position = Vector2(0.690613, 0)
+shape = SubResource("RectangleShape2D_6jqs6")
+
+[node name="LevelBounds" type="StaticBody2D" parent="."]
+position = Vector2(320, 180)
+collision_layer = 8
+collision_mask = 7
+
+[node name="Sprite2D" type="Sprite2D" parent="LevelBounds"]
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("5_1j8fv")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LevelBounds"]
+position = Vector2(267, 118)
+polygon = PackedVector2Array(-562, -103, -562, -258, -559, -270, -554, -278, -545, -287, -533, -293, -525, -295, -7, -294, 8, -290, 21, -280, 28, -268, 30, -254, 30, -103, 53, -103, 149, -103, 150, -411, -691, -410, -690, -103)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="LevelBounds"]
+position = Vector2(285, 455)
+polygon = PackedVector2Array(-580, -354, -580, -320, -576, -307, -569, -296, -557, -288, -543, -284, -24, -284, -9, -289, 3, -298, 9, -310, 12, -323, 12, -354, 35, -354, 100, -354, 100, -199, -676, -185, -676, -354)
+
+[node name="SpinningPlatformRB" parent="." instance=ExtResource("9_x6rer")]
+position = Vector2(320, 219)
+rotation = -0.785398
+spin_speed = 8.0
+
+[node name="SpinningPlatformRB3" parent="." instance=ExtResource("9_x6rer")]
+position = Vector2(320, 219)
+rotation = -0.785398
+spin_speed = -8.0
+
+[node name="SpinningPlatformRB2" parent="." instance=ExtResource("9_x6rer")]
+position = Vector2(320, 219)
+rotation = 0.785398
+spin_speed = -8.0
+
+[node name="SpinningPlatformRB4" parent="." instance=ExtResource("9_x6rer")]
+position = Vector2(320, 219)
+rotation = 0.785398
+spin_speed = 8.0
+
+[node name="SpawnPointBall" parent="." groups=["BallSpawn"] instance=ExtResource("10_di2ti")]
+position = Vector2(320, 86)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPointBall" index="0"]
+text = "B
+"
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint1-1" parent="." groups=["TeamOneSpawn"] instance=ExtResource("10_di2ti")]
+position = Vector2(55, 331)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint1-1" index="0"]
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint1-2" parent="." groups=["TeamOneSpawn"] instance=ExtResource("10_di2ti")]
+position = Vector2(105, 331)
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint1-3" parent="." groups=["TeamOneSpawn"] instance=ExtResource("10_di2ti")]
+position = Vector2(155, 331)
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint2-1" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("10_di2ti")]
+position = Vector2(580, 331)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint2-1" index="0"]
+text = "2"
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint2-2" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("10_di2ti")]
+position = Vector2(530, 331)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint2-2" index="0"]
+text = "2"
+
+[node name="SpawnPoint2-3" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("10_di2ti")]
+position = Vector2(480, 331)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint2-3" index="0"]
+text = "2"
+
+[node name="MaxX" parent="." groups=["MaxX"] instance=ExtResource("10_di2ti")]
+position = Vector2(640, 185)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="MaxX" index="0"]
+text = "X+"
+metadata/_edit_group_ = true
+
+[node name="MinX" parent="." groups=["MinX"] instance=ExtResource("10_di2ti")]
+position = Vector2(0, 185)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="MinX" index="0"]
+text = "X-"
+metadata/_edit_group_ = true
+
+[node name="MaxY" parent="." groups=["MaxY"] instance=ExtResource("10_di2ti")]
+position = Vector2(324, 360)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="MaxY" index="0"]
+text = "Y+"
+metadata/_edit_group_ = true
+
+[node name="MinY" parent="." groups=["MinY"] instance=ExtResource("10_di2ti")]
+position = Vector2(324, 0)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="MinY" index="0"]
+text = "Y-"
+metadata/_edit_group_ = true
+
+[editable path="Goal"]
+[editable path="Goal2"]
+[editable path="SpawnPointBall"]
+[editable path="SpawnPoint1-1"]
+[editable path="SpawnPoint1-2"]
+[editable path="SpawnPoint1-3"]
+[editable path="SpawnPoint2-1"]
+[editable path="SpawnPoint2-2"]
+[editable path="SpawnPoint2-3"]
+[editable path="MaxX"]
+[editable path="MinX"]
+[editable path="MaxY"]
+[editable path="MinY"]

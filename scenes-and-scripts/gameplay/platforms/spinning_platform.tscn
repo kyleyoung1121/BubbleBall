@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bbl3bp8mdptse"]
 
 [ext_resource type="Texture2D" uid="uid://j77nf6e28f20" path="res://assets/sprites/platforms/adjustable/platform_middle.png" id="1_3w8vp"]
-[ext_resource type="Script" path="res://scenes-and-scripts/gameplay/spin_simple.gd" id="1_5sdrq"]
+[ext_resource type="Script" path="res://scenes-and-scripts/gameplay/platforms/spin_simple.gd" id="1_5sdrq"]
 [ext_resource type="Texture2D" uid="uid://god11bdosi4i" path="res://assets/sprites/platforms/adjustable/platform_right.png" id="2_bus0s"]
 [ext_resource type="Texture2D" uid="uid://ckxpq8gd5ptla" path="res://assets/sprites/platforms/adjustable/platform_left.png" id="3_hbpf5"]
 

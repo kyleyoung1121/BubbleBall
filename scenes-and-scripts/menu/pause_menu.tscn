@@ -56,6 +56,7 @@ offset_right = 247.0
 offset_bottom = 297.0
 grow_horizontal = 2
 grow_vertical = 2
+scroll_vertical_custom_step = 10.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
@@ -378,6 +379,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../../../SlowMoSpeedContainer/SliderBox/SlowMoSpeedSlider")
+focus_neighbor_bottom = NodePath("../../../SpinSpeedContainer/SliderBox/SpinSpeedSlider")
+focus_next = NodePath("../../../SpinSpeedContainer/SliderBox/SpinSpeedSlider")
 focus_previous = NodePath("../../../SlowMoSpeedContainer/SliderBox/SlowMoSpeedSlider")
 min_value = 0.5
 max_value = 2.5
@@ -396,5 +399,44 @@ size_flags_horizontal = 4
 theme = ExtResource("1_ts7t4")
 theme_override_font_sizes/font_size = 21
 text = "1.4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpinSpeedContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SpinSpeedText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SpinSpeedContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Platform Spin"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/SpinSpeedContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SpinSpeedSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/SpinSpeedContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../../../BubbleSizeContainer/SliderBox/BubbleSizeSlider")
+focus_previous = NodePath("../../../BubbleSizeContainer/SliderBox/BubbleSizeSlider")
+max_value = 5.0
+step = 0.25
+value = 1.0
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/SpinSpeedContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SpinSpeedValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SpinSpeedContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1

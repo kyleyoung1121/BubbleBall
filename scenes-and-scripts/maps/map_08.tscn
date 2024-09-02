@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://60kh66m4vqbe"]
 
 [ext_resource type="PackedScene" uid="uid://c6bxmscqkvlgl" path="res://scenes-and-scripts/gameplay/slow_mo_zone.tscn" id="1_5x8uo"]
-[ext_resource type="Script" path="res://scenes-and-scripts/gameplay/spin_simple.gd" id="1_ajlf4"]
+[ext_resource type="Script" path="res://scenes-and-scripts/gameplay/platforms/spin_simple.gd" id="1_ajlf4"]
 [ext_resource type="Texture2D" uid="uid://dyjxtoj7clmvb" path="res://assets/sprites/map_borders/basic_border.png" id="2_6gqut"]
 [ext_resource type="PackedScene" uid="uid://ceeixme1jgg1c" path="res://scenes-and-scripts/gameplay/goal.tscn" id="3_0uli1"]
 [ext_resource type="Texture2D" uid="uid://bamflliahetpk" path="res://assets/sprites/orange_goal.png" id="4_amcab"]

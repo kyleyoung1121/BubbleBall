@@ -141,7 +141,7 @@ texture = ExtResource("8_2ahvt")
 shape = SubResource("RectangleShape2D_pt1pl")
 
 [node name="SpawnPointBall" parent="." groups=["BallSpawn"] instance=ExtResource("8_0x018")]
-position = Vector2(50, 65)
+position = Vector2(320, 65)
 metadata/_edit_group_ = true
 
 [node name="Label" parent="SpawnPointBall" index="0"]

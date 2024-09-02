@@ -12,4 +12,4 @@ func _ready():
 
 func _integrate_forces(state: PhysicsDirectBodyState2D):
 	# Continuously apply torque to maintain spin, even in case of small collisions
-	angular_velocity = spin_speed
+	angular_velocity = spin_speed * GameSettings.spin_speed

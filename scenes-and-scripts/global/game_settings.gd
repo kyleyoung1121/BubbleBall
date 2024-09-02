@@ -12,6 +12,9 @@ var jump_mode = 0
 # Bubbles
 var bubble_size = 1.4
 
+# Platforms
+var spin_speed = 1
+
 # Audio
 var master_volume = 50
 var music_volume = 50

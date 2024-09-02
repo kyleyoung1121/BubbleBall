@@ -276,13 +276,32 @@ func update_all_hearts():
 	update_team_hearts(team_two_lives, blue_heart_nodes, BLUE_HEART_TEXTURE)
 
 
+func show_map(map_path):
+	# Add map to scene
+	var loaded_map = load(map_path)
+	map_selected = loaded_map.instantiate()
+	get_parent().add_child(map_selected)
+	bounds["max_x"] = get_tree().get_nodes_in_group("MaxX")[0].position.x
+	bounds["min_x"] = get_tree().get_nodes_in_group("MinX")[0].position.x
+	bounds["max_y"] = get_tree().get_nodes_in_group("MaxY")[0].position.y
+	bounds["min_y"] = get_tree().get_nodes_in_group("MinY")[0].position.y
+	freeze_time()
+	add_ball()
+
+
+func remove_map():
+	map_selected.queue_free()
+	map_selected = null
+	remove_ball()
+
+
 func add_ball():
 	ball_instance = BALL_SCENE.instantiate()
 	map_selected.add_child(ball_instance)
 	
 	var ball_spawns = get_tree().get_nodes_in_group("BallSpawn")
-	if ball_spawns:
-		ball_instance.position = ball_spawns[0].position
+	if ball_spawns and ball_spawns.size() >= 1:
+		ball_instance.position = ball_spawns.pop_back().position
 	else:
 		ball_instance.position = Vector2(323, 55)
 	
@@ -298,28 +317,9 @@ func remove_ball():
 	ball_instance = null
 
 
-func show_map(map_path):
-	# Add map to scene
-	var loaded_map = load(map_path)
-	map_selected = loaded_map.instantiate()
-	get_parent().add_child(map_selected)
-	bounds["max_x"] = get_tree().get_nodes_in_group("MaxX")[0].position.x
-	bounds["min_x"] = get_tree().get_nodes_in_group("MinX")[0].position.x
-	bounds["max_y"] = get_tree().get_nodes_in_group("MaxY")[0].position.y
-	bounds["min_y"] = get_tree().get_nodes_in_group("MinY")[0].position.y
-	freeze_time()
-	add_ball()
-
-
 func remove_bubbles():
 	for bubble in get_tree().get_nodes_in_group("Bubble"):
 		bubble.queue_free()
-
-
-func remove_map():
-	map_selected.queue_free()
-	map_selected = null
-	remove_ball()
 
 
 func remove_players():

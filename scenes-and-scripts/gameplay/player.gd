@@ -119,7 +119,8 @@ func handle_jump():
 			# Apply impulse downwards 
 			apply_central_impulse(Vector2(0, JUMP_VELOCITY * -0.5))
 	
-	# Alternative jump mode
+	# Alternative jump mode (unimplemented)
+	# To Do: Instead of jumping up, jump towards where the player is pushing joystick
 	else:
 		var jump_direction = Vector2(
 			Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
@@ -129,6 +130,7 @@ func handle_jump():
 			jump_direction = jump_direction.normalized()
 		print(jump_direction * JUMP_VELOCITY)
 		apply_central_impulse(jump_direction * JUMP_VELOCITY)
+
 
 func handle_power_jump():
 	var ball_instance = get_tree().get_nodes_in_group("ball")[0]
@@ -145,6 +147,7 @@ func handle_power_jump():
 			SoundManager.play_sound("pjump")
 	else:
 		play_jump_sound()
+
 
 func handle_start_slide():
 	SoundManager.play_sound("slide")

@@ -40,7 +40,7 @@ func handle_team_change_requests():
 		
 		# If this player has pressed next or previous, we can swap their team
 		if pressed_team_swap or pressed_next or pressed_previous:
-			print("device:", device, " pressed next team")
+			#print("device:", device, " pressed next team")
 			var current_team = get_player_data(player, "team")
 			var new_team = (current_team % 2) + 1
 			set_player_data(player, "team", new_team)
@@ -52,7 +52,7 @@ func handle_team_change_requests():
 func device_button_pressed(button) -> bool:
 	for device in get_unjoined_devices():
 		if MultiplayerInput.is_action_just_pressed(device, button):
-			print("device: ", device, " pressed ", button)
+			#print("device: ", device, " pressed ", button)
 			return true
 	return false
 
@@ -62,7 +62,7 @@ func player_button_pressed(button) -> int:
 	for player in player_data:
 		var device = get_player_device(player)
 		if MultiplayerInput.is_action_just_pressed(device, button):
-			print("player: ", player, " pressed ", button)
+			#print("player: ", player, " pressed ", button)
 			return player
 	# If no player is pressing the button, return 0
 	return 0

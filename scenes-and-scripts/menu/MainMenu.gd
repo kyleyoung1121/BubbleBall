@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-
 # Declare onready variables for UI components
 @onready var main_menu = $Main
 @onready var settings_menu = $Settings/PauseMenu

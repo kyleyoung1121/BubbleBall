@@ -1,11 +1,8 @@
 extends RigidBody2D
 
-
 signal goal_scored(team)
 
-
 const MAX_SPEED = 550
-
 
 var has_played_collision_sound = false
 var bounds = {

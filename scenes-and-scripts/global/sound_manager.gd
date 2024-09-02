@@ -2,9 +2,7 @@
 
 extends Node
 
-
 @onready var background_music_player = $BackgroundMusicPlayer
-
 
 # Dictionary to store preloaded sounds
 var sounds = {}
@@ -14,6 +12,7 @@ var track_number_playing = 0
 var track_dimmed = false
 var track_dim_amount = -10
 var sfx_that_dim = ["goal", "win"]
+
 
 func _ready():
 	# Preload all sound effects

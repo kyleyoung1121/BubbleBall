@@ -1,6 +1,5 @@
 extends Node2D
 
-
 @onready var start_timer = $CountDownText/StartTimer
 @onready var count_down_text = $CountDownText
 @onready var next_map_symbol = $NextMapSymbol
@@ -11,7 +10,6 @@ extends Node2D
 @onready var blue_hearts = $BlueHearts
 @onready var pause_menu = $PauseMenu
 
-
 const MAIN_MENU_SCENE_PATH = "res://scenes-and-scripts/menu/main_menu.tscn"
 const ORANGE_TEAM_TEXTURE = preload("res://assets/sprites/players/orange_player.png")
 const BLUE_TEAM_TEXTURE = preload("res://assets/sprites/players/blue_player.png")
@@ -20,7 +18,6 @@ const BLUE_HEART_TEXTURE = preload("res://assets/sprites/blue_heart.png")
 const EMPTY_HEART_TEXTURE = preload("res://assets/sprites/empty_heart.png")
 const BALL_SCENE = preload("res://scenes-and-scripts/gameplay/ball.tscn")
 const MAPS_FOLDER = "res://scenes-and-scripts/maps/"
-
 
 # Keep track of the player nums and their corresponding player instances
 var player_nodes = {}

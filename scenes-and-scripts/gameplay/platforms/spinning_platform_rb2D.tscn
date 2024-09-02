@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://eujlr4ydhdn"]
+
+[ext_resource type="Script" path="res://scenes-and-scripts/gameplay/spin_rigid_body.gd" id="1_bxfr1"]
+[ext_resource type="Texture2D" uid="uid://j77nf6e28f20" path="res://assets/sprites/platforms/adjustable/platform_middle.png" id="2_0nkr8"]
+[ext_resource type="Texture2D" uid="uid://god11bdosi4i" path="res://assets/sprites/platforms/adjustable/platform_right.png" id="3_pvfj2"]
+[ext_resource type="Texture2D" uid="uid://ckxpq8gd5ptla" path="res://assets/sprites/platforms/adjustable/platform_left.png" id="4_cohoy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qijxq"]
+size = Vector2(20.3787, 20)
+
+[sub_resource type="Gradient" id="Gradient_33b4g"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tmcp2"]
+gradient = SubResource("Gradient_33b4g")
+width = 99
+height = 9
+
+[node name="SpinningPlatformRB" type="RigidBody2D"]
+position = Vector2(318, 259)
+collision_layer = 8
+collision_mask = 7
+mass = 1000.0
+gravity_scale = 0.0
+linear_damp = 100000.0
+script = ExtResource("1_bxfr1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.499969, 0)
+scale = Vector2(5.545, 0.487)
+shape = SubResource("RectangleShape2D_qijxq")
+
+[node name="BlackBackground" type="Sprite2D" parent="."]
+position = Vector2(1.19209e-07, 0)
+scale = Vector2(1.0996, 1.24)
+texture = SubResource("GradientTexture2D_tmcp2")
+
+[node name="BlackBackground2" type="Sprite2D" parent="."]
+position = Vector2(55, 0)
+scale = Vector2(0.0204081, 0.88889)
+texture = SubResource("GradientTexture2D_tmcp2")
+
+[node name="BlackBackground3" type="Sprite2D" parent="."]
+position = Vector2(-55, 0)
+scale = Vector2(0.0204081, 0.88889)
+texture = SubResource("GradientTexture2D_tmcp2")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="middle" type="Sprite2D" parent="Node2D"]
+scale = Vector2(0.160164, 0.428573)
+texture = ExtResource("2_0nkr8")
+
+[node name="right" type="Sprite2D" parent="Node2D"]
+position = Vector2(43, 0)
+scale = Vector2(0.429, 0.429)
+texture = ExtResource("3_pvfj2")
+
+[node name="left" type="Sprite2D" parent="Node2D"]
+position = Vector2(-43, 0)
+scale = Vector2(0.45, 0.429)
+texture = ExtResource("4_cohoy")

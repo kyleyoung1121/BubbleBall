@@ -1,0 +1,275 @@
+[gd_scene load_steps=12 format=3 uid="uid://3y3agpnigblx"]
+
+[ext_resource type="PackedScene" uid="uid://c6bxmscqkvlgl" path="res://scenes-and-scripts/gameplay/slow_mo_zone.tscn" id="1_v7wnc"]
+[ext_resource type="PackedScene" uid="uid://ceeixme1jgg1c" path="res://scenes-and-scripts/gameplay/goal.tscn" id="2_qg0wb"]
+[ext_resource type="Texture2D" uid="uid://bamflliahetpk" path="res://assets/sprites/orange_goal.png" id="3_5xrnn"]
+[ext_resource type="Texture2D" uid="uid://dihqj0do5ja06" path="res://assets/sprites/blue_goal.png" id="4_d3bu3"]
+[ext_resource type="Texture2D" uid="uid://wcs355d610m3" path="res://assets/sprites/map_borders/map05_border.png" id="5_0x5as"]
+[ext_resource type="PackedScene" uid="uid://4xcvg367crpo" path="res://scenes-and-scripts/gameplay/spawn_point.tscn" id="6_t77re"]
+[ext_resource type="PackedScene" uid="uid://dqy2gsxx7qh15" path="res://scenes-and-scripts/gameplay/platforms/adjustable_platform.tscn" id="7_3g60j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pufka"]
+size = Vector2(24.5961, 50.1155)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6jdrt"]
+size = Vector2(25.2372, 50.0326)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wl7w7"]
+size = Vector2(24.1659, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1hgc"]
+size = Vector2(10.0546, 20)
+
+[node name="Map03" type="Node2D"]
+
+[node name="SlowMoZone1" parent="." instance=ExtResource("1_v7wnc")]
+position = Vector2(538, 46)
+
+[node name="SlowMoZone2" parent="." instance=ExtResource("1_v7wnc")]
+position = Vector2(98, 46)
+
+[node name="Goal" parent="." instance=ExtResource("2_qg0wb")]
+position = Vector2(46, 44)
+rotation = 3.14159
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="Goal" index="0"]
+texture = ExtResource("3_5xrnn")
+flip_h = true
+
+[node name="StaticBody2D" parent="Goal" index="1"]
+team_name = 1
+
+[node name="CollisionShape2D" parent="Goal/StaticBody2D" index="0"]
+position = Vector2(0.277802, 0.444458)
+shape = SubResource("RectangleShape2D_pufka")
+
+[node name="Goal2" parent="." instance=ExtResource("2_qg0wb")]
+position = Vector2(599, 41)
+rotation = -3.14159
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="Goal2" index="0"]
+texture = ExtResource("4_d3bu3")
+flip_h = true
+
+[node name="StaticBody2D" parent="Goal2" index="1"]
+team_name = 2
+
+[node name="CollisionShape2D" parent="Goal2/StaticBody2D" index="0"]
+position = Vector2(0.262329, 0)
+shape = SubResource("RectangleShape2D_6jdrt")
+
+[node name="LevelBounds" type="StaticBody2D" parent="."]
+position = Vector2(320, 180)
+collision_layer = 8
+collision_mask = 7
+
+[node name="Sprite2D" type="Sprite2D" parent="LevelBounds"]
+scale = Vector2(0.333, 0.333)
+texture = ExtResource("5_0x5as")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LevelBounds"]
+position = Vector2(267, 118)
+polygon = PackedVector2Array(-439, 54, -440, 53, -529, 53, -543, 47, -552, 40, -559, 28, -562, 17, -562, -261, -557, -274, -551, -282, -540, -290, -527, -295, -440, -295, -440, -368, -733, -368, -735, 160, -439, 160)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="LevelBounds"]
+position = Vector2(267, 118)
+polygon = PackedVector2Array(-389, -295, -388, -294, -144, -294, -144, -298, -144, -411, -389, -411)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="LevelBounds"]
+position = Vector2(267, 582)
+polygon = PackedVector2Array(-389, -295, -388, -294, -144, -294, -144, -298, -144, -411, -389, -411)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="LevelBounds"]
+position = Vector2(587, 335)
+polygon = PackedVector2Array(-414, -511, -322, -511, -311, -506, -300, -498, -293, -487, -290, -475, -290, -199, -293, -187, -300, -177, -312, -168, -327, -164, -414, -164, -414, -155, -414, -51, -119, -52, -117, -616, -414, -618)
+
+[node name="SpawnPointBall" parent="." groups=["BallSpawn"] instance=ExtResource("6_t77re")]
+position = Vector2(320, 50)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPointBall" index="0"]
+text = "B
+"
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint1-1" parent="." groups=["TeamOneSpawn"] instance=ExtResource("6_t77re")]
+position = Vector2(55, 331)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint1-1" index="0"]
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint1-2" parent="." groups=["TeamOneSpawn"] instance=ExtResource("6_t77re")]
+position = Vector2(105, 331)
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint1-3" parent="." groups=["TeamOneSpawn"] instance=ExtResource("6_t77re")]
+position = Vector2(155, 331)
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint2-1" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("6_t77re")]
+position = Vector2(580, 331)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint2-1" index="0"]
+text = "2"
+metadata/_edit_group_ = true
+
+[node name="SpawnPoint2-2" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("6_t77re")]
+position = Vector2(530, 331)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint2-2" index="0"]
+text = "2"
+
+[node name="SpawnPoint2-3" parent="." groups=["TeamTwoSpawn"] instance=ExtResource("6_t77re")]
+position = Vector2(480, 331)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="SpawnPoint2-3" index="0"]
+text = "2"
+
+[node name="sym_platforms01" type="Node2D" parent="."]
+position = Vector2(320, 173.635)
+
+[node name="Platform3" parent="sym_platforms01" instance=ExtResource("7_3g60j")]
+position = Vector2(117, -118.635)
+rotation = 1.5708
+
+[node name="CollisionShape2D" parent="sym_platforms01/Platform3" index="0"]
+scale = Vector2(4.575, 0.487)
+shape = SubResource("RectangleShape2D_wl7w7")
+
+[node name="middle" parent="sym_platforms01/Platform3/Node2D" index="0"]
+scale = Vector2(0.178, 0.333)
+
+[node name="right" parent="sym_platforms01/Platform3/Node2D" index="1"]
+position = Vector2(45, 0)
+
+[node name="left" parent="sym_platforms01/Platform3/Node2D" index="2"]
+position = Vector2(-45, 0)
+
+[node name="Platform4" parent="sym_platforms01" instance=ExtResource("7_3g60j")]
+position = Vector2(-118, -117.635)
+rotation = 1.5708
+
+[node name="CollisionShape2D" parent="sym_platforms01/Platform4" index="0"]
+scale = Vector2(4.575, 0.487)
+shape = SubResource("RectangleShape2D_wl7w7")
+
+[node name="middle" parent="sym_platforms01/Platform4/Node2D" index="0"]
+scale = Vector2(0.178, 0.333)
+
+[node name="right" parent="sym_platforms01/Platform4/Node2D" index="1"]
+position = Vector2(45, 0)
+
+[node name="left" parent="sym_platforms01/Platform4/Node2D" index="2"]
+position = Vector2(-45, 0)
+
+[node name="platform02" type="Node2D" parent="."]
+position = Vector2(320, 203)
+
+[node name="Platform4" parent="platform02" instance=ExtResource("7_3g60j")]
+position = Vector2(0, 0)
+rotation = 1.5708
+
+[node name="CollisionShape2D" parent="platform02/Platform4" index="0"]
+scale = Vector2(4.575, 0.487)
+shape = SubResource("RectangleShape2D_wl7w7")
+
+[node name="middle" parent="platform02/Platform4/Node2D" index="0"]
+scale = Vector2(0.178, 0.333)
+
+[node name="right" parent="platform02/Platform4/Node2D" index="1"]
+position = Vector2(45, 0)
+
+[node name="left" parent="platform02/Platform4/Node2D" index="2"]
+position = Vector2(-45, 0)
+
+[node name="platform03" type="Node2D" parent="."]
+position = Vector2(320, 262.87)
+
+[node name="Platform4" parent="platform03" instance=ExtResource("7_3g60j")]
+position = Vector2(278, -175.87)
+
+[node name="CollisionShape2D" parent="platform03/Platform4" index="0"]
+scale = Vector2(4.575, 0.487)
+shape = SubResource("RectangleShape2D_x1hgc")
+
+[node name="middle" parent="platform03/Platform4/Node2D" index="0"]
+scale = Vector2(0.078, 0.333)
+
+[node name="right" parent="platform03/Platform4/Node2D" index="1"]
+position = Vector2(13, 0)
+
+[node name="left" parent="platform03/Platform4/Node2D" index="2"]
+position = Vector2(-13, 0)
+
+[node name="Platform5" parent="platform03" instance=ExtResource("7_3g60j")]
+position = Vector2(-274, -171.87)
+
+[node name="CollisionShape2D" parent="platform03/Platform5" index="0"]
+scale = Vector2(4.575, 0.487)
+shape = SubResource("RectangleShape2D_x1hgc")
+
+[node name="middle" parent="platform03/Platform5/Node2D" index="0"]
+scale = Vector2(0.078, 0.333)
+
+[node name="right" parent="platform03/Platform5/Node2D" index="1"]
+position = Vector2(13, 0)
+
+[node name="left" parent="platform03/Platform5/Node2D" index="2"]
+position = Vector2(-13, 0)
+
+[node name="MaxX" parent="." groups=["MaxX"] instance=ExtResource("6_t77re")]
+position = Vector2(640, 185)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="MaxX" index="0"]
+text = "X+"
+metadata/_edit_group_ = true
+
+[node name="MinX" parent="." groups=["MinX"] instance=ExtResource("6_t77re")]
+position = Vector2(0, 185)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="MinX" index="0"]
+text = "X-"
+metadata/_edit_group_ = true
+
+[node name="MaxY" parent="." groups=["MaxY"] instance=ExtResource("6_t77re")]
+position = Vector2(324, 360)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="MaxY" index="0"]
+text = "Y+"
+metadata/_edit_group_ = true
+
+[node name="MinY" parent="." groups=["MinY"] instance=ExtResource("6_t77re")]
+position = Vector2(324, 0)
+metadata/_edit_group_ = true
+
+[node name="Label" parent="MinY" index="0"]
+text = "Y-"
+metadata/_edit_group_ = true
+
+[editable path="Goal"]
+[editable path="Goal2"]
+[editable path="SpawnPointBall"]
+[editable path="SpawnPoint1-1"]
+[editable path="SpawnPoint1-2"]
+[editable path="SpawnPoint1-3"]
+[editable path="SpawnPoint2-1"]
+[editable path="SpawnPoint2-2"]
+[editable path="SpawnPoint2-3"]
+[editable path="sym_platforms01/Platform3"]
+[editable path="sym_platforms01/Platform4"]
+[editable path="platform02/Platform4"]
+[editable path="platform03/Platform4"]
+[editable path="platform03/Platform5"]
+[editable path="MaxX"]
+[editable path="MinX"]
+[editable path="MaxY"]
+[editable path="MinY"]

@@ -2,6 +2,12 @@ extends RigidBody2D
 
 signal goal_scored(team)
 
+@onready var basic_ball_sprite = preload("res://assets/sprites/basic_ball.png")
+@onready var white_ball_sprite = preload("res://assets/sprites/white_ball.png")
+@onready var sprite2D = $Sprite2D
+@onready var particles = $GPUParticles2D
+@onready var impact_timer = $ImpactTimer
+
 const MAX_SPEED = 550
 
 var has_played_collision_sound = false
@@ -16,6 +22,8 @@ var bounds = {
 func _ready():
 	set_contact_monitor(true)  # Enable contact monitoring
 	set_max_contacts_reported(5)
+	sprite2D.texture = basic_ball_sprite
+	sprite2D.visible = true
 
 
 func _process(delta):
@@ -31,6 +39,11 @@ func _process(delta):
 				emit_signal("goal_scored", 1)
 			elif team_name == 2:
 				emit_signal("goal_scored", 2)
+			
+			# Freeze and briefly change to the white ball sprite
+			sprite2D.texture = white_ball_sprite
+			self.freeze = true
+			impact_timer.start()
 	
 	# If there was any collision, play a sound
 	if colliding_bodies.size() > 0:
@@ -60,3 +73,8 @@ func _integrate_forces(state):
 
 func set_bounds(given_bounds):
 	bounds = given_bounds
+
+
+func _on_impact_timer_timeout():
+	sprite2D.visible = false
+	particles.emitting = true

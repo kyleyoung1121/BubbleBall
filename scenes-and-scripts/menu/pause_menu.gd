@@ -1,6 +1,5 @@
 extends Control
 
-
 # Declare the dictionary with sliders and their corresponding GameSettings values
 @onready var sliders = {
 	"MasterVolumeSlider": { 
@@ -50,6 +49,18 @@ extends Control
 		"value_text": $Panel/ScrollContainer/VBoxContainer/BubbleSizeContainer/SliderBox/SliderValueBox/BubbleSizeValueText, 
 		"scroll_page": 1,
 		"setting": "bubble_size" 
+	},
+	"BallSizeSlider": { 
+		"slider": $Panel/ScrollContainer/VBoxContainer/BallSizeContainer/SliderBox/BallSizeSlider, 
+		"value_text": $Panel/ScrollContainer/VBoxContainer/BallSizeContainer/SliderBox/SliderValueBox/BallSizeValueText, 
+		"scroll_page": 2,
+		"setting": "ball_scale" 
+	},
+	"BallMassSlider": { 
+		"slider": $Panel/ScrollContainer/VBoxContainer/BallMassContainer/SliderBox/BallMassSlider, 
+		"value_text": $Panel/ScrollContainer/VBoxContainer/BallMassContainer/SliderBox/SliderValueBox/BallMassValueText, 
+		"scroll_page": 2,
+		"setting": "ball_mass" 
 	},
 	"SpinSpeedSlider": { 
 		"slider": $Panel/ScrollContainer/VBoxContainer/SpinSpeedContainer/SliderBox/SpinSpeedSlider, 
@@ -116,7 +127,7 @@ func build_slider_focused_callback(key):
 		elif sliders[key]["scroll_page"] == 1:
 			scroll_container.scroll_vertical = 279
 		elif sliders[key]["scroll_page"] == 2:
-			scroll_container.scroll_vertical = 342
+			scroll_container.scroll_vertical = 468
 
 
 func focus_first_slider():

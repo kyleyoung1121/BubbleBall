@@ -305,6 +305,10 @@ func add_ball():
 	else:
 		ball_instance.position = Vector2(323, 55)
 	
+	# Apply game settings to the ball
+	ball_instance.resize_ball(GameSettings.ball_scale)
+	ball_instance.mass = GameSettings.ball_mass
+	
 	freeze_time()
 
 

@@ -46,7 +46,7 @@ func init(player_num: int):
 	mass = GameSettings.player_mass
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	
 	# Update which direction the player is facing
 	if input.is_action_just_pressed("move_left"):

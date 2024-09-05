@@ -72,7 +72,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	
 	# Testing: Show FPS
 	$FpsCounter.text = str(Engine.get_frames_per_second())
@@ -304,6 +304,10 @@ func add_ball():
 		ball_instance.position = ball_spawns.pop_back().position
 	else:
 		ball_instance.position = Vector2(323, 55)
+	
+	# Apply game settings to the ball
+	ball_instance.resize_ball(GameSettings.ball_scale)
+	ball_instance.mass = GameSettings.ball_mass
 	
 	freeze_time()
 

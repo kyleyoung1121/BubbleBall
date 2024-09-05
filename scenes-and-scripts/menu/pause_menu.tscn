@@ -56,6 +56,7 @@ offset_right = 247.0
 offset_bottom = 297.0
 grow_horizontal = 2
 grow_vertical = 2
+scroll_vertical = 468
 scroll_vertical_custom_step = 10.0
 horizontal_scroll_mode = 0
 
@@ -379,8 +380,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../../../SlowMoSpeedContainer/SliderBox/SlowMoSpeedSlider")
-focus_neighbor_bottom = NodePath("../../../SpinSpeedContainer/SliderBox/SpinSpeedSlider")
-focus_next = NodePath("../../../SpinSpeedContainer/SliderBox/SpinSpeedSlider")
+focus_neighbor_bottom = NodePath("../../../BallSizeContainer/SliderBox/BallSizeSlider")
+focus_next = NodePath("../../../BallSizeContainer/SliderBox/BallSizeSlider")
 focus_previous = NodePath("../../../SlowMoSpeedContainer/SliderBox/SlowMoSpeedSlider")
 min_value = 0.5
 max_value = 2.5
@@ -402,6 +403,91 @@ text = "1.4"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="BallSizeContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BallSizeText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BallSizeContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Ball Size"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/BallSizeContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BallSizeSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/BallSizeContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../../../BubbleSizeContainer/SliderBox/BubbleSizeSlider")
+focus_neighbor_bottom = NodePath("../../../BallMassContainer/SliderBox/BallMassSlider")
+focus_next = NodePath("../../../BallMassContainer/SliderBox/BallMassSlider")
+focus_previous = NodePath("../../../BubbleSizeContainer/SliderBox/BubbleSizeSlider")
+min_value = 0.4
+max_value = 2.0
+step = 0.2
+value = 0.8
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/BallSizeContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="BallSizeValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BallSizeContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "0.8
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BallMassContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BallMassText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BallMassContainer"]
+layout_mode = 2
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 16
+text = "Ball Mass"
+horizontal_alignment = 1
+
+[node name="SliderBox" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/BallMassContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BallMassSlider" type="HSlider" parent="Panel/ScrollContainer/VBoxContainer/BallMassContainer/SliderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../../../BubbleSizeContainer/SliderBox/BubbleSizeSlider")
+focus_neighbor_bottom = NodePath("../../../SpinSpeedContainer/SliderBox/SpinSpeedSlider")
+focus_next = NodePath("../../../SpinSpeedContainer/SliderBox/SpinSpeedSlider")
+focus_previous = NodePath("../../../BallSizeContainer/SliderBox/BallSizeSlider")
+min_value = 0.1
+max_value = 0.5
+step = 0.05
+value = 0.2
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="Panel/ScrollContainer/VBoxContainer/BallMassContainer/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="BallMassValueText" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BallMassContainer/SliderBox/SliderValueBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_ts7t4")
+theme_override_font_sizes/font_size = 21
+text = "0.2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SpinSpeedContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -420,8 +506,8 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-focus_neighbor_top = NodePath("../../../BubbleSizeContainer/SliderBox/BubbleSizeSlider")
-focus_previous = NodePath("../../../BubbleSizeContainer/SliderBox/BubbleSizeSlider")
+focus_neighbor_top = NodePath("../../../BallMassContainer/SliderBox/BallMassSlider")
+focus_previous = NodePath("../../../BallMassContainer/SliderBox/BallMassSlider")
 max_value = 5.0
 step = 0.25
 value = 1.0

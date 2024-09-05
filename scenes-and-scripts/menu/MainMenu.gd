@@ -28,7 +28,7 @@ func start_match():
 
 # Add a new card representing a new player
 func add_player_card(player_num):
-	play_ui_next_sound(0, 0.83)
+	play_ui_next_sound(0.0, 0.83)
 	# Create a player card
 	var player_card_instance = PLAYER_CARD_SCENE.instantiate()
 	
@@ -54,7 +54,7 @@ func add_player_card(player_num):
 
 # If a player backs out, remove their card.
 func remove_player_card(player_num):
-	play_ui_back_sound(0, 0.83)
+	play_ui_back_sound(0.0, 0.83)
 	# Remove the associated card
 	player_nodes[player_num].queue_free()
 	player_nodes.erase(player_num)
@@ -124,11 +124,11 @@ func update_player_card_colors():
 			player_instance.add_theme_stylebox_override("panel", PLAYER_CARD_TEAM_TWO_THEME) 
 
 
-func play_ui_next_sound(volume_change = 0, pitch_change = 1):
+func play_ui_next_sound(volume_change = 0.0, pitch_change = 1.0):
 	SoundManager.play_sound("ui_next", volume_change, pitch_change)
 
 
-func play_ui_back_sound(volume_change = 0, pitch_change = 1):
+func play_ui_back_sound(volume_change = 0.0, pitch_change = 1.0):
 	SoundManager.play_sound("ui_back", volume_change, pitch_change)
 
 

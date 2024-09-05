@@ -5,6 +5,7 @@ signal goal_scored(team)
 @onready var basic_ball_sprite = preload("res://assets/sprites/basic_ball.png")
 @onready var white_ball_sprite = preload("res://assets/sprites/white_ball.png")
 @onready var sprite2D = $Sprite2D
+@onready var collision_shape = $CollisionShape2D
 @onready var particles = $GPUParticles2D
 @onready var impact_timer = $ImpactTimer
 
@@ -26,7 +27,7 @@ func _ready():
 	sprite2D.visible = true
 
 
-func _process(delta):
+func _process(_delta):
 	var colliding_bodies = get_colliding_bodies()
 	
 	# Check to see if the ball has collided with a goal
@@ -69,6 +70,12 @@ func _integrate_forces(state):
 	
 	if abs(linear_velocity.y) > MAX_SPEED:
 		state.linear_velocity.y = sign(linear_velocity.y) * MAX_SPEED
+
+
+func resize_ball(given_scale):
+	collision_shape.scale = Vector2(given_scale, given_scale)
+	var DEFAULT_SPRITE_SCALE = 0.333
+	sprite2D.scale = Vector2(DEFAULT_SPRITE_SCALE * given_scale, DEFAULT_SPRITE_SCALE * given_scale)
 
 
 func set_bounds(given_bounds):

@@ -7,7 +7,7 @@ func round_to_dec(num, digit):
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if $StartTimer.time_left > 0:
 		visible = true
 		text = str(int($StartTimer.time_left)+1)

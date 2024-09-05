@@ -27,7 +27,7 @@ func _ready():
 	sprite2D.visible = true
 
 
-func _process(delta):
+func _process(_delta):
 	var colliding_bodies = get_colliding_bodies()
 	
 	# Check to see if the ball has collided with a goal

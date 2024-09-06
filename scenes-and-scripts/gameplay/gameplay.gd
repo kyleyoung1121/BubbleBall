@@ -231,7 +231,7 @@ func toggle_pause():
 		
 	else:
 		# Pause
-		Engine.time_scale = 0
+		Engine.time_scale = 0.00000000000001
 		pause_menu.visible = true
 		pause_menu.reload_slider_values()
 		pause_menu.focus_first_slider()
@@ -313,7 +313,9 @@ func add_ball():
 
 
 func remove_ball():
-	ball_instance.goal_scored.disconnect(goal_scored)
+	if ball_instance.goal_scored.is_connected(goal_scored):
+		ball_instance.goal_scored.disconnect(goal_scored)
+	
 	if ball_instance != null and is_instance_valid(ball_instance):
 		ball_instance.queue_free()
 	for ball in get_tree().get_nodes_in_group("ball"):

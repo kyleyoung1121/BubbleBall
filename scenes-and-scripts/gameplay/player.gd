@@ -48,6 +48,8 @@ func init(player_num: int):
 
 func _physics_process(_delta):
 	
+	print(global_position)
+	
 	# Update which direction the player is facing
 	if input.is_action_just_pressed("move_left"):
 		facing_right = false
@@ -212,6 +214,7 @@ func apply_screen_wrap():
 	if global_position.x < bounds["min_x"]: global_position.x = bounds["max_x"]
 	if global_position.y > bounds["max_y"]: global_position.y = bounds["min_y"]
 	if global_position.y < bounds["min_y"]: global_position.y = bounds["max_y"]
+	
 
 
 func set_bounds(given_bounds):

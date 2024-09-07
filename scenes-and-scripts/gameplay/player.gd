@@ -191,17 +191,18 @@ func _integrate_forces(state):
 
 # Summon a bubble, called upon each jump
 func summon_bubble():
-	var bubble_instance = BUBBLE_SCENE.instantiate()
-	bubble_instance.position = self.position  # Set the bubble's position to the player's position
-	bubble_instance.scale = Vector2(GameSettings.bubble_size, GameSettings.bubble_size)
-	bubble_instance.set_team(team_name)
-	get_parent().add_child(bubble_instance)  # Add the bubble to the scene tree
-	
-	# Clear this player's previous bubble (if applicable)
-	var players_old_bubble = PlayerManager.get_player_data(player, "current_bubble")
-	if players_old_bubble != null and is_instance_valid(players_old_bubble):
-		PlayerManager.get_player_data(player, "current_bubble").queue_free()
-	PlayerManager.set_player_data(player, "current_bubble", bubble_instance)
+	if GameSettings.allow_bubbles:
+		var bubble_instance = BUBBLE_SCENE.instantiate()
+		bubble_instance.position = self.position  # Set the bubble's position to the player's position
+		bubble_instance.scale = Vector2(GameSettings.bubble_size, GameSettings.bubble_size)
+		bubble_instance.set_team(team_name)
+		get_parent().add_child(bubble_instance)  # Add the bubble to the scene tree
+		
+		# Clear this player's previous bubble (if applicable)
+		var players_old_bubble = PlayerManager.get_player_data(player, "current_bubble")
+		if players_old_bubble != null and is_instance_valid(players_old_bubble):
+			PlayerManager.get_player_data(player, "current_bubble").queue_free()
+		PlayerManager.set_player_data(player, "current_bubble", bubble_instance)
 
 
 func play_jump_sound():

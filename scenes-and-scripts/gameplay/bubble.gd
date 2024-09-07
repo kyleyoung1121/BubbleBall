@@ -5,7 +5,7 @@ signal exploded
 
 # Define the impulse to apply to the ball
 const IMPULSE = 60.0
-const ROTATION_SPEED = 0.01
+const ROTATION_SPEED = 0.001
 
 # Load scene components
 # NOTE: when the bubble is created in the player script, these must be referred to manually

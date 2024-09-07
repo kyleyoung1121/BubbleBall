@@ -79,6 +79,7 @@ func join(device: int):
 			"device": device,
 			"team": ((player + 1) % 2) + 1, # Alternate between team 1 and team 2
 			"current_bubble": null
+			
 		}
 		player_joined.emit(player)
 

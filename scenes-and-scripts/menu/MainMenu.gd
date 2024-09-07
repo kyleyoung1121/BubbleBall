@@ -2,7 +2,7 @@ extends CanvasLayer
 
 # Declare onready variables for UI components
 @onready var main_menu = $Main
-@onready var settings_menu = $Settings/PauseMenu
+@onready var settings_menu = $Settings/SettingsMenu
 @onready var add_players_menu = $AddPlayers
 @onready var hold_x_to_start_graphic = $AddPlayers/CenterContainer/VBoxContainer/HoldXToStartGraphic
 @onready var players_and_prompt = $AddPlayers/CenterContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PlayersAndPrompt
@@ -108,7 +108,6 @@ func _process(_delta):
 
 	# Back out from the settings menu
 	if settings_menu.visible == true and PlayerManager.device_button_pressed("back"):
-		print("Back pressed at settings")
 		_on_settings_back_button_pressed()
 
 
@@ -143,7 +142,7 @@ func _on_main_play_button_pressed():
 func _on_main_options_button_pressed():
 	main_menu.visible = false
 	settings_menu.visible = true
-	settings_menu.focus_first_slider()
+	settings_menu.focus_first_element()
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
 	play_ui_next_sound()

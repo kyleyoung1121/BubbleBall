@@ -20,8 +20,8 @@ const MAX_SPEED_X = 500.0
 const SOFT_MAX_SPEED_X = 270.0
 const MAX_SPEED_Y_RISING = 300.0
 const MAX_SPEED_Y_FALLING = 600.0
-const BALL_JUMP_RANGE_X = 40.0
-const BALL_JUMP_RANGE_Y = 10.0
+const BALL_JUMP_RANGE_X = 50.0
+const BALL_JUMP_RANGE_Y = 20.0
 
 
 var team_name = 0

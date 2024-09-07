@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkaskjofg0e42"]
+[gd_scene load_steps=8 format=3 uid="uid://bkaskjofg0e42"]
 
 [ext_resource type="Script" path="res://scenes-and-scripts/gameplay/gameplay.gd" id="1_wjm3a"]
 [ext_resource type="Texture2D" uid="uid://d01on1qdeiasv" path="res://assets/sprites/orange_heart.png" id="5_ckosj"]
 [ext_resource type="Texture2D" uid="uid://c2h78hpnumckf" path="res://assets/sprites/blue_heart.png" id="6_amfrv"]
-[ext_resource type="PackedScene" uid="uid://c7eltkbk00sxq" path="res://scenes-and-scripts/menu/pause_menu.tscn" id="6_emvep"]
+[ext_resource type="PackedScene" uid="uid://d3e854fh010ou" path="res://scenes-and-scripts/menu/pause_menu.tscn" id="6_emvep"]
+[ext_resource type="PackedScene" uid="uid://c43kajtyykd4t" path="res://scenes-and-scripts/menu/settings_menu/settings_menu.tscn" id="7_atku3"]
 [ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="10_y65wx"]
 [ext_resource type="Script" path="res://scenes-and-scripts/gameplay/count_down_text.gd" id="11_hh4ss"]
 
@@ -177,23 +178,36 @@ theme_override_font_sizes/font_size = 11
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
 [node name="PauseMenu" parent="." instance=ExtResource("6_emvep")]
 visible = false
-z_index = 30
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 324.0
-offset_top = 175.0
-offset_right = 324.0
-offset_bottom = 175.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
+z_index = 15
+custom_minimum_size = Vector2(640, 360)
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="SettingsMenu" parent="." instance=ExtResource("7_atku3")]
+visible = false
+z_index = 30
+custom_minimum_size = Vector2(640, 360)
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="timeout" from="CountDownText/StartTimer" to="." method="match_begin"]
 [connection signal="timeout" from="PostRoundTimer" to="." method="reset_round"]
 [connection signal="timeout" from="PostMatchTimer" to="." method="_on_post_match_timer_timeout"]
+[connection signal="open_settings" from="PauseMenu" to="." method="_on_pause_menu_open_settings"]
+[connection signal="quit_match" from="PauseMenu" to="." method="_on_pause_menu_quit_match"]
+[connection signal="resume_match" from="PauseMenu" to="." method="_on_pause_menu_resume_match"]
+[connection signal="close_settings" from="SettingsMenu" to="." method="_on_settings_menu_close_settings"]

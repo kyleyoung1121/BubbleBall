@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://b20qyvib4hu52"]
 
 [ext_resource type="Script" path="res://scenes-and-scripts/menu/MainMenu.gd" id="2_ti8ij"]
-[ext_resource type="PackedScene" uid="uid://c7eltkbk00sxq" path="res://scenes-and-scripts/menu/pause_menu.tscn" id="3_2pykj"]
 [ext_resource type="Texture2D" uid="uid://cgnxp0jjepcym" path="res://assets/sprites/buttons/a_button.png" id="3_7sh2c"]
 [ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="3_i51tq"]
+[ext_resource type="PackedScene" uid="uid://c43kajtyykd4t" path="res://scenes-and-scripts/menu/settings_menu/settings_menu.tscn" id="3_uuuli"]
 [ext_resource type="Texture2D" uid="uid://cny5vlfq1voyw" path="res://assets/sprites/buttons/b_button.png" id="4_kxs8b"]
 [ext_resource type="Texture2D" uid="uid://mgb8xxk30hnr" path="res://assets/sprites/buttons/x_button.png" id="4_nkhm6"]
 [ext_resource type="Texture2D" uid="uid://k5ywaxkfldte" path="res://assets/sprites/buttons/y_button.png" id="7_ptj8d"]
@@ -18,6 +18,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("2_ti8ij")
@@ -61,16 +70,19 @@ text = "Bubble Ball"
 horizontal_alignment = 1
 
 [node name="MainPlayButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+z_index = 10
 layout_mode = 2
 size_flags_vertical = 3
 text = "Play"
 
 [node name="MainOptionsButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+z_index = 10
 layout_mode = 2
 size_flags_vertical = 3
 text = "Options"
 
 [node name="MainQuitButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+z_index = 10
 layout_mode = 2
 size_flags_vertical = 3
 text = "Quit"
@@ -83,7 +95,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PauseMenu" parent="CanvasLayer/Settings" instance=ExtResource("3_2pykj")]
+[node name="SettingsMenu" parent="CanvasLayer/Settings" instance=ExtResource("3_uuuli")]
 visible = false
 layout_mode = 1
 
@@ -258,16 +270,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ijri5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ijri5")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_ijri5")
 theme_override_styles/focus = SubResource("StyleBoxFlat_ijri5")
-
-[node name="Background" type="ColorRect" parent="."]
-z_index = -10
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
 
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MainPlayButton" to="CanvasLayer" method="_on_main_play_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MainOptionsButton" to="CanvasLayer" method="_on_main_options_button_pressed"]

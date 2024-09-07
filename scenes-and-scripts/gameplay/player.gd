@@ -33,6 +33,7 @@ var bounds = {
 }
 var facing_right = true
 var is_sliding = false
+var restrict_movement_controls = false
 var player: int
 var input
 
@@ -48,8 +49,6 @@ func init(player_num: int):
 
 func _physics_process(_delta):
 	
-	print(global_position)
-	
 	# Update which direction the player is facing
 	if input.is_action_just_pressed("move_left"):
 		facing_right = false
@@ -57,7 +56,7 @@ func _physics_process(_delta):
 		facing_right = true
 	
 	# Jump: Determine which action is appropriate: jump, power jump, slide
-	if input.is_action_just_pressed("jump"):
+	if input.is_action_just_pressed("jump") and not restrict_movement_controls:
 		
 		# Player is holding down
 		if input.is_action_pressed("dive") and grounded_ray_cast.is_colliding():
@@ -214,7 +213,6 @@ func apply_screen_wrap():
 	if global_position.x < bounds["min_x"]: global_position.x = bounds["max_x"]
 	if global_position.y > bounds["max_y"]: global_position.y = bounds["min_y"]
 	if global_position.y < bounds["min_y"]: global_position.y = bounds["max_y"]
-	
 
 
 func set_bounds(given_bounds):

@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://fx5kk0fguxdv"]
+
+[ext_resource type="Script" path="res://scenes-and-scripts/menu/settings_menu/template_slider.gd" id="1_5jt6v"]
+[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="1_nh40a"]
+
+[node name="TemplateSlider" type="MarginContainer"]
+script = ExtResource("1_5jt6v")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SliderTitle" type="Label" parent="HBox"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme = ExtResource("1_nh40a")
+theme_override_font_sizes/font_size = 16
+text = "Game Setting"
+
+[node name="SliderBox" type="HBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Slider" type="HSlider" parent="HBox/SliderBox"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+scrollable = false
+
+[node name="SliderValueBox" type="MarginContainer" parent="HBox/SliderBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SliderValueText" type="Label" parent="HBox/SliderBox/SliderValueBox"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_nh40a")
+theme_override_font_sizes/font_size = 21
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[connection signal="value_changed" from="HBox/SliderBox/Slider" to="." method="_on_slider_value_changed"]

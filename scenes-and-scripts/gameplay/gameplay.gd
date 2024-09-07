@@ -8,7 +8,9 @@ extends Node2D
 @onready var post_match_timer = $PostMatchTimer
 @onready var orange_hearts = $OrangeHearts
 @onready var blue_hearts = $BlueHearts
+
 @onready var pause_menu = $PauseMenu
+@onready var settings_menu = $SettingsMenu
 
 const MAIN_MENU_SCENE_PATH = "res://scenes-and-scripts/menu/main_menu.tscn"
 const ORANGE_TEAM_TEXTURE = preload("res://assets/sprites/players/orange_player.png")
@@ -69,6 +71,7 @@ func _ready():
 	next_map_symbol.visible = true
 	previous_map_symbol.visible = true
 	pause_menu.visible = false
+	settings_menu.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -102,15 +105,10 @@ func _process(_delta):
 			SoundManager.play_sound("start01")
 		
 		if PlayerManager.player_button_pressed("back"):
-			PlayerManager.remove_all_players()
-			LoadMatch.remove_all_players()
-			remove_players()
-			remove_map()
-			SoundManager.play_sound("ui_back")
-			get_tree().change_scene_to_file(MAIN_MENU_SCENE_PATH)
+			return_to_main_menu()
 	
 	# Input handling during the match
-	if round_in_progress:
+	if (round_in_progress or round_paused) and not settings_menu.visible:
 		# If the player presses pause and is allowed, pause. (Time scale becomes 0)
 		if not block_pause and PlayerManager.player_button_pressed("pause"):
 			toggle_pause()
@@ -225,18 +223,30 @@ func toggle_pause():
 		max_lives = GameSettings.team_lives
 		# Update hearts to match current settings
 		update_all_hearts()
+		# Unblock player movement controls
+		for player_num in player_nodes.keys():
+			player_nodes[player_num].restrict_movement_controls = false
 		SoundManager.play_sound("ui_back")
-		
-		
-		
+	
 	else:
 		# Pause
 		Engine.time_scale = 0.00000000000001
 		pause_menu.visible = true
-		pause_menu.reload_slider_values()
-		pause_menu.focus_first_slider()
+		pause_menu.focus_first_element()
 		round_paused = true
+		# Block player movement controls
+		for player_num in player_nodes.keys():
+			player_nodes[player_num].restrict_movement_controls = true
 		SoundManager.play_sound("ui_next")
+
+
+func return_to_main_menu():
+	PlayerManager.remove_all_players()
+	LoadMatch.remove_all_players()
+	remove_players()
+	remove_map()
+	SoundManager.play_sound("ui_back")
+	get_tree().change_scene_to_file(MAIN_MENU_SCENE_PATH)
 
 
 # Function to update hearts for a given team
@@ -367,3 +377,22 @@ func unfreeze_time():
 
 func _on_post_match_timer_timeout():
 	block_match_start = false
+
+
+func _on_pause_menu_resume_match():
+	toggle_pause()
+
+
+func _on_pause_menu_open_settings():
+	#settings_screen.reload_slider_values()
+	settings_menu.visible = true
+	settings_menu.focus_first_element()
+
+
+func _on_pause_menu_quit_match():
+	return_to_main_menu()
+
+
+func _on_settings_menu_close_settings():
+	settings_menu.visible = false
+	pause_menu.focus_first_element()

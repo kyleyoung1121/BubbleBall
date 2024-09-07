@@ -1,0 +1,401 @@
+[gd_scene load_steps=22 format=3 uid="uid://c43kajtyykd4t"]
+
+[ext_resource type="Script" path="res://scenes-and-scripts/menu/settings_menu/settings_menu.gd" id="1_hmyo2"]
+[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="2_lf0me"]
+[ext_resource type="Texture2D" uid="uid://y1i4m5t44lwu" path="res://assets/sprites/buttons/lb_button.png" id="3_8p6yv"]
+[ext_resource type="Texture2D" uid="uid://b6kv02enrb6jl" path="res://assets/sprites/buttons/rb_button.png" id="4_eumdh"]
+[ext_resource type="PackedScene" uid="uid://fx5kk0fguxdv" path="res://scenes-and-scripts/menu/settings_menu/template_slider.tscn" id="5_vlhqw"]
+[ext_resource type="Texture2D" uid="uid://cny5vlfq1voyw" path="res://assets/sprites/buttons/b_button.png" id="6_uowpn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pbo0a"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2j7hd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gfai0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8nir1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8od2t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1upwh"]
+
+[sub_resource type="Theme" id="Theme_rngxt"]
+Button/styles/disabled = SubResource("StyleBoxEmpty_2j7hd")
+Button/styles/focus = SubResource("StyleBoxEmpty_gfai0")
+Button/styles/hover = SubResource("StyleBoxEmpty_8nir1")
+Button/styles/normal = SubResource("StyleBoxEmpty_8od2t")
+Button/styles/pressed = SubResource("StyleBoxEmpty_1upwh")
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_py1fv"]
+color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_clo3g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tphtj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kse1v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bewx3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wcq8l"]
+
+[sub_resource type="Theme" id="Theme_radcq"]
+VScrollBar/styles/grabber = SubResource("StyleBoxEmpty_clo3g")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_tphtj")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_kse1v")
+VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_bewx3")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_wcq8l")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b6hag"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hmyo2")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pbo0a")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -91.5
+offset_top = 16.0
+offset_right = 91.5
+offset_bottom = 45.0
+grow_horizontal = 2
+theme = ExtResource("2_lf0me")
+theme_override_font_sizes/font_size = 20
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="PageBar" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 6.0
+offset_right = 20.0
+offset_bottom = 46.0
+grow_horizontal = 2
+
+[node name="PagesLabel" type="Label" parent="Panel/PageBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -239.0
+offset_top = 46.0
+offset_right = 302.0
+offset_bottom = 75.0
+grow_horizontal = 2
+theme = ExtResource("2_lf0me")
+theme_override_font_sizes/font_size = 14
+text = "Game / Video & Audio / Controls / Accessibility"
+
+[node name="GamePageButton" type="Button" parent="Panel/PageBar/PagesLabel"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = 2.0
+offset_right = 56.0
+offset_bottom = 22.0
+theme = SubResource("Theme_rngxt")
+
+[node name="VideoAudioPageButton" type="Button" parent="Panel/PageBar/PagesLabel"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 2.0
+offset_right = 214.0
+offset_bottom = 22.0
+theme = SubResource("Theme_rngxt")
+
+[node name="ControlsPageButton" type="Button" parent="Panel/PageBar/PagesLabel"]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 2.0
+offset_right = 328.0
+offset_bottom = 22.0
+theme = SubResource("Theme_rngxt")
+
+[node name="AccessibilityPageButton" type="Button" parent="Panel/PageBar/PagesLabel"]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 2.0
+offset_right = 477.0
+offset_bottom = 22.0
+theme = SubResource("Theme_rngxt")
+
+[node name="LbButtonGraphic" type="TextureRect" parent="Panel/PageBar"]
+layout_mode = 0
+offset_left = -259.0
+offset_top = 48.0
+offset_right = -106.0
+offset_bottom = 142.0
+scale = Vector2(0.19, 0.19)
+texture = ExtResource("3_8p6yv")
+
+[node name="LbButton" type="Button" parent="Panel/PageBar/LbButtonGraphic"]
+layout_mode = 0
+offset_right = 153.0
+offset_bottom = 95.0
+theme = SubResource("Theme_rngxt")
+
+[node name="RbButtonGraphic" type="TextureRect" parent="Panel/PageBar"]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 48.0
+offset_right = 418.0
+offset_bottom = 142.0
+scale = Vector2(0.19, 0.19)
+texture = ExtResource("4_eumdh")
+
+[node name="RbButton" type="Button" parent="Panel/PageBar/RbButtonGraphic"]
+layout_mode = 0
+offset_right = 153.0
+offset_bottom = 95.0
+theme = SubResource("Theme_rngxt")
+
+[node name="PageUnderlines" type="Control" parent="Panel/PageBar"]
+anchors_preset = 0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 48.0
+
+[node name="GameUnderline" type="HSeparator" parent="Panel/PageBar/PageUnderlines"]
+layout_mode = 0
+offset_left = -221.0
+offset_top = 55.0
+offset_right = -173.0
+offset_bottom = 59.0
+theme_override_styles/separator = SubResource("StyleBoxLine_py1fv")
+
+[node name="VideoAndAudioUnderline" type="HSeparator" parent="Panel/PageBar/PageUnderlines"]
+visible = false
+layout_mode = 0
+offset_left = -149.0
+offset_top = 55.0
+offset_right = -17.0
+offset_bottom = 59.0
+theme_override_styles/separator = SubResource("StyleBoxLine_py1fv")
+
+[node name="VideoAndAudioUnderline2" type="HSeparator" parent="Panel/PageBar/PageUnderlines"]
+visible = false
+layout_mode = 0
+offset_left = 7.0
+offset_top = 55.0
+offset_right = 98.0
+offset_bottom = 59.0
+theme_override_styles/separator = SubResource("StyleBoxLine_py1fv")
+
+[node name="VideoAndAudioUnderline3" type="HSeparator" parent="Panel/PageBar/PageUnderlines"]
+visible = false
+layout_mode = 0
+offset_left = 122.0
+offset_top = 55.0
+offset_right = 256.0
+offset_bottom = 59.0
+theme_override_styles/separator = SubResource("StyleBoxLine_py1fv")
+
+[node name="Spacer" type="MarginContainer" parent="Panel/PageBar"]
+layout_mode = 2
+offset_left = -272.0
+offset_top = 70.0
+offset_right = 312.0
+offset_bottom = 91.0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ColorRect" type="ColorRect" parent="Panel/PageBar/Spacer"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.74558, 0.74558, 0.74558, 1)
+
+[node name="Game" type="ScrollContainer" parent="Panel"]
+layout_mode = 2
+offset_left = 28.0
+offset_top = 95.0
+offset_right = 612.0
+offset_bottom = 361.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_radcq")
+scroll_vertical_custom_step = 10.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Game"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+alignment = 1
+
+[node name="TeamLives" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Team Lives"
+game_setting = "team_lives"
+min_value = 1.0
+max_value = 10.0
+
+[node name="GameSpeed" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Game Speed"
+game_setting = "game_time_scale"
+min_value = 0.25
+max_value = 1.25
+step = 0.05
+
+[node name="SlowMoSpeed" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Slow Mo Speed"
+game_setting = "slow_mo_scale"
+min_value = 0.25
+max_value = 1.25
+step = 0.05
+
+[node name="BubbleSize" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Bubble Size"
+game_setting = "bubble_size"
+min_value = 0.5
+max_value = 2.5
+step = 0.1
+
+[node name="BallScale" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Ball Scale"
+game_setting = "ball_scale"
+min_value = 0.4
+max_value = 2.0
+step = 0.2
+
+[node name="BallMass" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Ball Mass"
+game_setting = "ball_mass"
+min_value = 0.1
+max_value = 0.5
+step = 0.05
+
+[node name="SpinSpeed" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Spin Speed"
+game_setting = "spin_speed"
+max_value = 5.0
+step = 0.25
+
+[node name="VideoAudio" type="ScrollContainer" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -292.0
+offset_top = -273.0
+offset_right = 292.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_radcq")
+scroll_vertical_custom_step = 10.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VideoAudio"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+alignment = 1
+
+[node name="MasterVolume" parent="Panel/VideoAudio/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Master Volume"
+game_setting = "master_volume"
+step = 10.0
+
+[node name="SfxVolume" parent="Panel/VideoAudio/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "SFX Volume"
+game_setting = "sfx_volume"
+step = 10.0
+
+[node name="MusicVolume" parent="Panel/VideoAudio/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Music Volume"
+game_setting = "music_volume"
+step = 10.0
+
+[node name="TrackSelect" parent="Panel/VideoAudio/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Music Track"
+game_setting = "music_track"
+min_value = 1.0
+max_value = 7.0
+
+[node name="BackButtonInfo" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="BackButtonInfo"]
+layout_mode = 2
+offset_left = 556.0
+offset_top = 6.0
+offset_right = 606.0
+offset_bottom = 29.0
+size_flags_horizontal = 4
+theme = ExtResource("2_lf0me")
+text = "Back
+"
+horizontal_alignment = 1
+
+[node name="BackButtonGraphic" type="TextureRect" parent="BackButtonInfo"]
+layout_mode = 2
+offset_left = 612.0
+offset_top = 7.0
+offset_right = 651.0
+offset_bottom = 49.0
+scale = Vector2(0.555, 0.555)
+size_flags_horizontal = 4
+theme = ExtResource("2_lf0me")
+texture = ExtResource("6_uowpn")
+stretch_mode = 2
+
+[node name="SettingsBackButton" type="Button" parent="BackButtonInfo"]
+layout_mode = 2
+offset_left = 545.0
+offset_right = 639.0
+offset_bottom = 38.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_b6hag")
+theme_override_styles/hover = SubResource("StyleBoxFlat_b6hag")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b6hag")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_b6hag")
+theme_override_styles/focus = SubResource("StyleBoxFlat_b6hag")
+
+[connection signal="button_up" from="Panel/PageBar/PagesLabel/GamePageButton" to="." method="_on_game_page_button_button_up"]
+[connection signal="button_up" from="Panel/PageBar/PagesLabel/VideoAudioPageButton" to="." method="_on_video_audio_page_button_button_up"]
+[connection signal="button_up" from="Panel/PageBar/PagesLabel/ControlsPageButton" to="." method="_on_controls_page_button_button_up"]
+[connection signal="button_up" from="Panel/PageBar/PagesLabel/AccessibilityPageButton" to="." method="_on_accessibility_page_button_button_up"]
+[connection signal="button_up" from="Panel/PageBar/LbButtonGraphic/LbButton" to="." method="_on_lb_button_button_up"]
+[connection signal="button_up" from="Panel/PageBar/RbButtonGraphic/RbButton" to="." method="_on_rb_button_button_up"]
+[connection signal="button_up" from="BackButtonInfo/SettingsBackButton" to="." method="_on_settings_back_button_button_up"]

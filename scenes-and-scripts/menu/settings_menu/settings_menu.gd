@@ -39,6 +39,7 @@ func _process(_delta):
 			focused_slider_index = active_page.get_child(0).get_children().find(focused_container)
 		
 		# For every set of 6 additional sliders, we need 219 units of scroll
+		@warning_ignore("integer_division")
 		active_page.scroll_vertical = floor(focused_slider_index / 6) * 219
 		
 		# Calculate how much scroll would be needed to view all sliders

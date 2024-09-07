@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1slhitlksj8m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8dmdr"]
+
+[node name="Bubble" type="Node2D" groups=["Bubble"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.333, 0.333)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(1.685, 1.685)
+shape = SubResource("CircleShape2D_8dmdr")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

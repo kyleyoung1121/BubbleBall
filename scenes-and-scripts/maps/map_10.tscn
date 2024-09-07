@@ -81,7 +81,7 @@ position = Vector2(285, 455)
 polygon = PackedVector2Array(-580, -354, -580, -320, -576, -307, -569, -296, -557, -288, -543, -284, -24, -284, -9, -289, 3, -298, 9, -310, 12, -323, 12, -354, 35, -354, 100, -354, 100, -199, -676, -185, -676, -354)
 
 [node name="Platform4" parent="." instance=ExtResource("7_li0hk")]
-position = Vector2(224, 189)
+position = Vector2(224, 229)
 rotation = -1.5708
 metadata/_edit_group_ = true
 
@@ -99,7 +99,7 @@ position = Vector2(45, 0)
 position = Vector2(-45, 0)
 
 [node name="Platform5" parent="." instance=ExtResource("7_li0hk")]
-position = Vector2(416, 189)
+position = Vector2(416, 229)
 rotation = -1.5708
 metadata/_edit_group_ = true
 
@@ -139,11 +139,11 @@ texture = ExtResource("7_vt7f8")
 shape = SubResource("RectangleShape2D_sm6g3")
 
 [node name="SpinningPlatformRB" parent="." instance=ExtResource("9_01mov")]
-position = Vector2(270, 259)
+position = Vector2(273, 291)
 spin_speed = 10.0
 
 [node name="SpinningPlatformRB2" parent="." instance=ExtResource("9_01mov")]
-position = Vector2(366, 259)
+position = Vector2(369, 291)
 spin_speed = -10.0
 
 [node name="SpawnPointBall" parent="." groups=["BallSpawn"] instance=ExtResource("8_4i4r8")]

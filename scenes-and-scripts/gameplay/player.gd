@@ -201,7 +201,7 @@ func summon_bubble():
 		# Clear this player's previous bubble (if applicable)
 		var players_old_bubble = PlayerManager.get_player_data(player, "current_bubble")
 		if players_old_bubble != null and is_instance_valid(players_old_bubble):
-			PlayerManager.get_player_data(player, "current_bubble").queue_free()
+			PlayerManager.get_player_data(player, "current_bubble").trigger_pop()
 		PlayerManager.set_player_data(player, "current_bubble", bubble_instance)
 
 

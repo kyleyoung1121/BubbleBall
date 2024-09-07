@@ -47,8 +47,8 @@ func add_player_card(player_num):
 	var last_index = players_and_prompt.get_child_count() - 1
 	players_and_prompt.move_child(add_players_graphic, last_index)
 	
-	# If at least two players are joined, show the prompt to start the match
-	if player_nodes.keys().size() >= 2:
+	# If at least one players is joined, show the prompt to start the match
+	if player_nodes.keys().size() >= 1:
 		hold_x_to_start_graphic.visible = true
 
 

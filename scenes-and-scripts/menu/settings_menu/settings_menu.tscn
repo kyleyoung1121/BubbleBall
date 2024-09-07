@@ -89,6 +89,40 @@ theme_override_font_sizes/font_size = 20
 text = "Settings"
 horizontal_alignment = 1
 
+[node name="ScrollUpHint" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 15.0
+offset_top = 91.0
+offset_right = 43.0
+offset_bottom = 120.0
+grow_horizontal = 2
+rotation = 1.57079
+theme = ExtResource("2_lf0me")
+theme_override_font_sizes/font_size = 20
+text = "<"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollDownHint" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 15.0
+offset_top = 334.0
+offset_right = 43.0
+offset_bottom = 363.0
+grow_horizontal = 2
+rotation = 1.57079
+theme = ExtResource("2_lf0me")
+theme_override_font_sizes/font_size = 20
+text = ">"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="PageBar" type="Control" parent="Panel"]
 layout_mode = 1
 anchors_preset = 5
@@ -234,12 +268,13 @@ color = Color(0.74558, 0.74558, 0.74558, 1)
 [node name="Game" type="ScrollContainer" parent="Panel"]
 layout_mode = 2
 offset_left = 28.0
-offset_top = 95.0
+offset_top = 112.0
 offset_right = 612.0
-offset_bottom = 361.0
+offset_bottom = 331.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = SubResource("Theme_radcq")
+scroll_vertical = 73
 scroll_vertical_custom_step = 10.0
 horizontal_scroll_mode = 0
 
@@ -280,6 +315,12 @@ min_value = 0.5
 max_value = 2.5
 step = 0.1
 
+[node name="AllowBubbles" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Allow Bubbles"
+game_setting = "allow_bubbles"
+max_value = 1.0
+
 [node name="BallScale" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
 layout_mode = 2
 title = "Ball Scale"
@@ -312,9 +353,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -292.0
-offset_top = -273.0
+offset_top = -248.0
 offset_right = 292.0
-offset_bottom = -42.0
+offset_bottom = -29.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = SubResource("Theme_radcq")
@@ -351,6 +392,56 @@ title = "Music Track"
 game_setting = "music_track"
 min_value = 1.0
 max_value = 7.0
+
+[node name="Controls" type="ScrollContainer" parent="Panel"]
+visible = false
+layout_mode = 2
+offset_left = 28.0
+offset_top = 112.0
+offset_right = 612.0
+offset_bottom = 331.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_radcq")
+scroll_vertical_custom_step = 10.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Controls"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+alignment = 1
+
+[node name="PlaceholderSlider" parent="Panel/Controls/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Placeholder Slider"
+min_value = 1.0
+step = 10.0
+
+[node name="Accessibility" type="ScrollContainer" parent="Panel"]
+visible = false
+layout_mode = 2
+offset_left = 28.0
+offset_top = 112.0
+offset_right = 612.0
+offset_bottom = 331.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_radcq")
+scroll_vertical_custom_step = 10.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Accessibility"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+alignment = 1
+
+[node name="PlaceholderSlider" parent="Panel/Accessibility/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Placeholder Slider"
+min_value = 1.0
+step = 10.0
 
 [node name="BackButtonInfo" type="Control" parent="."]
 anchors_preset = 0

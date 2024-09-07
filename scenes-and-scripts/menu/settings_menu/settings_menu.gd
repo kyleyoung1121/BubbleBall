@@ -3,18 +3,22 @@ extends Control
 signal close_settings
 
 @export var page_index = 0
-@export var page_order = ["Game", "VideoAudio"]
+@export var page_order = ["Game", "VideoAudio", "Controls", "Accessibility"]
 
 @onready var game_page = $Panel/Game
 @onready var video_audio_page = $Panel/VideoAudio
+@onready var controls_page = $Panel/Controls
+@onready var accessibility_page = $Panel/Accessibility
 
 @onready var page_underlines = $Panel/PageBar/PageUnderlines
+@onready var scroll_up_hint = $Panel/ScrollUpHint
+@onready var scroll_down_hint = $Panel/ScrollDownHint
 
 var active_page = game_page
 
 
 func _process(_delta):
-	# Only check for input when the settings screen is visible
+	# Only check for changes if the menu is actually open (visible)
 	if visible == true:
 		if PlayerManager.device_button_pressed("page_next") or PlayerManager.player_button_pressed("page_next"):
 			cycle_active_page("page_next")
@@ -26,25 +30,62 @@ func _process(_delta):
 			release_focus()
 			play_ui_back_sound()
 			emit_signal("close_settings")
+		
+		# Attempt to match the scroll to show the selected slider
+		var focused_element = get_viewport().gui_get_focus_owner()
+		var focused_container = focused_element.get_parent().get_parent().get_parent()
+		var focused_slider_index = -1
+		if focused_container in active_page.get_child(0).get_children():
+			focused_slider_index = active_page.get_child(0).get_children().find(focused_container)
+		
+		# For every set of 6 additional sliders, we need 219 units of scroll
+		active_page.scroll_vertical = floor(focused_slider_index / 6) * 219
+		
+		# Calculate how much scroll would be needed to view all sliders
+		var count_scroll_bars = active_page.get_child(0).get_children().size()
+		var off_screen_scroll_bars = max(0, count_scroll_bars - 6) # About 6 fit on screen
+		var max_scroll = off_screen_scroll_bars * 36.5 # Each scroll bar is about this tall
+		# Check if we are scrolled to the ~bottom
+		if active_page.scroll_vertical >= max_scroll:
+			scroll_down_hint.visible = false
+		else:
+			scroll_down_hint.visible = true
+		
+		# Check if we are scrolled to the top
+		if active_page.scroll_vertical == 0:
+			scroll_up_hint.visible = false
+		else:
+			scroll_up_hint.visible = true
 
 
 func _ready():
 	show_active_page()
 
 
+# When the settings menu is opened, focus on the first slider
 func focus_first_element():
-	# When the settings menu is opened, focus on the first slider
-	var sliders_vbox = active_page.get_child(0)
-	var first_slider_container = sliders_vbox.get_child(0)
-	var first_slider = first_slider_container.get_node("HBox/SliderBox/Slider")
-	active_page.scroll_vertical = 0
-	first_slider.grab_focus()
+	# Declare variables to hold different key elements 
+	var sliders_vbox 
+	var first_slider_container
+	var first_slider
+	
+	# Attempt to dig into the active page to find the first slider
+	if active_page and active_page.get_children().size() > 0:
+		sliders_vbox = active_page.get_child(0)
+	if sliders_vbox and sliders_vbox.get_children().size() > 0:
+		first_slider_container = sliders_vbox.get_child(0)
+	if first_slider_container:
+		first_slider = first_slider_container.get_node("HBox/SliderBox/Slider")
+	if first_slider:
+		first_slider.grab_focus()
 
 
 func show_active_page():
 	# Hide all pages & underlines
 	game_page.visible = false
 	video_audio_page.visible = false
+	controls_page.visible = false
+	accessibility_page.visible = false
 	for underline in page_underlines.get_children():
 		underline.visible = false
 	
@@ -56,12 +97,20 @@ func show_active_page():
 		"VideoAudio":
 			video_audio_page.visible = true
 			active_page = video_audio_page
+		"Controls":
+			controls_page.visible = true
+			active_page = controls_page
+		"Accessibility":
+			accessibility_page.visible = true
+			active_page = accessibility_page
 		_:
 			# If no match is found, default to showing the game page
 			game_page.visible = true
+			active_page = game_page
 	
-	# Reveal the correct underline
-	page_underlines.get_children()[page_index].visible = true
+	# Reveal the correct underline if possible
+	if page_underlines.get_children().size() >= page_index - 1:
+		page_underlines.get_children()[page_index].visible = true
 	
 	# Finally, focus the first slider on the correct page
 	focus_first_element()

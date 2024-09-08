@@ -11,18 +11,27 @@ const ROTATION_SPEED = 0.001
 # NOTE: when the bubble is created in the player script, these must be referred to manually
 @onready var bubble_animation = $BubbleAnimation
 @onready var collision2d = $Area2D/CollisionShape2D
+@onready var arrow = $Arrow
 
 
+var blast_direction
 var team_name = null
 var is_popping = false
 
 
 func _process(delta):
-	rotation += ROTATION_SPEED
+	if not GameSettings.directional_bubbles:
+		rotation += ROTATION_SPEED
 
 
 func _ready():
-	rotation = randi_range(0,10)
+	if not GameSettings.directional_bubbles:
+		rotation = randi_range(0,10)
+		arrow.visible = false
+	else:
+		arrow.visible = true
+		if blast_direction:
+			arrow.rotation = blast_direction.angle()
 
 
 # If the bubble is collided with, delete the bubble and apply force if it touched the ball
@@ -32,12 +41,20 @@ func _on_body_entered(body):
 		return
 	
 	if body.is_in_group("ball"):
-		# Calculate the direction from the bubble to the ball
-		var direction = (body.global_position - global_position).normalized()
+		# Determine what direction the ball should be pushed
+		var direction
+		if not GameSettings.directional_bubbles:
+			# Calculate the direction from the bubble to the ball
+			direction = (body.global_position - global_position).normalized()
+		else:
+			if blast_direction:
+				direction = blast_direction
+				
 		# Cancel part of the ball's momentum
 		body.linear_velocity = Vector2(body.linear_velocity.x * 0.5, body.linear_velocity.y * 0.5)
 		# Apply impulse to the ball
-		body.apply_central_impulse(direction * IMPULSE)
+		if direction:
+			body.apply_central_impulse(direction * IMPULSE)
 	
 	# Play the pop animation (afterwards, the bubble will be removed)
 	trigger_pop()
@@ -47,10 +64,15 @@ func _on_body_entered(body):
 func trigger_pop():
 	is_popping = true
 	collision2d.disabled = true
+	arrow.visible = false
 	if team_name == 1:
 		bubble_animation.play("orange_pop")
 	else:
 		bubble_animation.play("blue_pop")
+
+
+func set_blast_direction(direction):
+	blast_direction = direction
 
 
 # Given a team, assign the sprite & collision layers.

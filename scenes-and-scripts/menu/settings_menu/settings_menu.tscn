@@ -321,6 +321,12 @@ title = "Allow Bubbles"
 game_setting = "allow_bubbles"
 max_value = 1.0
 
+[node name="DirectionalBubbles" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Arrow Bubbles"
+game_setting = "directional_bubbles"
+max_value = 1.0
+
 [node name="BallScale" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
 layout_mode = 2
 title = "Ball Scale"

@@ -196,7 +196,23 @@ func summon_bubble():
 		bubble_instance.position = self.position  # Set the bubble's position to the player's position
 		bubble_instance.scale = Vector2(GameSettings.bubble_size, GameSettings.bubble_size)
 		bubble_instance.set_team(team_name)
-		get_parent().add_child(bubble_instance)  # Add the bubble to the scene tree
+		
+		# If we are using directional bubbles, determine what direction this bubble needs
+		if GameSettings.directional_bubbles:
+			
+			var horizontal_axis = input.get_action_strength("point_right") - input.get_action_strength("point_left")
+			var vertical_axis = input.get_action_strength("point_down") - input.get_action_strength("point_up")
+			var direction = Vector2(horizontal_axis, vertical_axis)
+			# Normalize to get the direction vector
+			if direction.length() > 0:
+				direction = direction
+				bubble_instance.set_blast_direction(direction)
+			else:
+				# If the player doesnt give a direction in direction mode, dont spawn a bubble
+				return
+		
+		# Add the bubble to the scene tree
+		get_parent().add_child(bubble_instance)  
 		
 		# Clear this player's previous bubble (if applicable)
 		var players_old_bubble = PlayerManager.get_player_data(player, "current_bubble")

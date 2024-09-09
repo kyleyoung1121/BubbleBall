@@ -17,6 +17,7 @@ var ball_mass = 0.2 # 0.1 - 0.5
 # Bubbles
 var allow_bubbles = 1
 var directional_bubbles = 0
+var max_bubbles = 1
 var bubble_size = 1.2
 
 # Platforms

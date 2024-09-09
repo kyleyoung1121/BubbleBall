@@ -14,6 +14,7 @@ const ROTATION_SPEED = 0.001
 @onready var arrow = $Arrow
 
 
+var player
 var blast_direction
 var team_name = null
 var is_popping = false
@@ -96,4 +97,13 @@ func set_team(given_team):
 
 func _on_animated_sprite_2d_animation_finished():
 	if is_popping:
-		queue_free() # Bubble is deleted upon any collision, ball or not.
+		
+		# Try to remove self from the player's bubble list
+		if player:
+			var player_bubbles = PlayerManager.get_player_data(player, "bubbles")
+			if self in player_bubbles:
+				player_bubbles.erase(self)
+				PlayerManager.set_player_data(player, "bubbles", player_bubbles)
+		
+		# Finally, remove the bubble
+		queue_free()

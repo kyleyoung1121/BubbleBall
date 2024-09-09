@@ -321,6 +321,13 @@ title = "Allow Bubbles"
 game_setting = "allow_bubbles"
 max_value = 1.0
 
+[node name="BubbleCount" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+layout_mode = 2
+title = "Bubble Count"
+game_setting = "max_bubbles"
+min_value = 1.0
+max_value = 3.0
+
 [node name="DirectionalBubbles" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
 layout_mode = 2
 title = "Arrow Bubbles"

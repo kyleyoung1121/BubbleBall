@@ -3,8 +3,9 @@
 ## Overview
 
 Welcome to Bubble Ball, a hobby project by Kyle Young!
-All code is my own, but the gameplay is heavily inspired by the arcade game Death Ball.
-In fact, the purpose of the project was to try to recreate the fun I've had with friends playing Death Ball at my local arcade.
+This game is my interpretation of the arcade game, Death Ball.
+The purpose of the project is to try to recreate the fun I've had with friends playing Death Ball at my local arcade.
+All code is my own, but many mechanics are directly from the original Death Ball arcade game
 
 ## Features
 
@@ -22,17 +23,17 @@ In fact, the purpose of the project was to try to recreate the fun I've had with
 ### Additional Controls
 
 - **Bubble**: Jump while in midair to place a bubble
-- **Power Slide**: Hold down direction and jump
-- **Power Jump**: Jump while on the ground next to the ball
+- **Power Slide**: Hold down and jump
+- **Power Jump**: Jump while on the ground next to the ball. The ball will match your momentum and jump with you!
 - **Dive**: Hold down direction to fall faster
 - **Dive Jump**: Jump while diving to boost downwards
-
-
+- **Arrow Bubbles:** (OPTIONAL SETTING) Press any direction while jumping midair to place an arrow bubble. This will launch the ball in the saved location.
 
 ## Acknowledgements
 
 - **Death Ball**: Bubble Ball is inspired by the original Death Ball arcade game. Special thanks to the creators for their innovative gameplay mechanics.
 - **Godot Engine**: Bubble Ball is built using the Godot Engine, an open-source game engine.
+- **Paint.net**: Many sprites were modified through this digital art tool.
 
 ## Contact
 

@@ -212,13 +212,25 @@ func summon_bubble():
 				return
 		
 		# Add the bubble to the scene tree
-		get_parent().add_child(bubble_instance)  
+		get_parent().add_child(bubble_instance)
 		
-		# Clear this player's previous bubble (if applicable)
-		var players_old_bubble = PlayerManager.get_player_data(player, "current_bubble")
-		if players_old_bubble != null and is_instance_valid(players_old_bubble):
-			PlayerManager.get_player_data(player, "current_bubble").trigger_pop()
-		PlayerManager.set_player_data(player, "current_bubble", bubble_instance)
+		bubble_instance.player = player
+		
+		# Access the player's list of active bubbles
+		var player_bubbles = PlayerManager.get_player_data(player, "bubbles")
+		# Add the new bubble
+		player_bubbles.push_front(weakref(bubble_instance))
+		# If the player has too many bubbles, remove the oldest one(s)
+		while player_bubbles.size() > GameSettings.max_bubbles:
+			var old_bubble = player_bubbles.pop_back()
+			if old_bubble.get_ref(): 
+				old_bubble.get_ref().trigger_pop()
+		# Once the bubble list is updated, reassign the data to the player
+		PlayerManager.set_player_data(player, "bubbles", player_bubbles)
+
+
+func bubble_popped():
+	pass
 
 
 func play_jump_sound():

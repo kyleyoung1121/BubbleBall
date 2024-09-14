@@ -103,34 +103,21 @@ func _physics_process(_delta):
 
 
 func handle_jump():
-	if GameSettings.jump_mode == 0:
-		# Jump normally if not holding down
-		if not input.is_action_pressed("dive"):
-			# If falling, set speed to 0 before applying
-			if linear_velocity.y > 0:
-				set_linear_velocity(Vector2(linear_velocity.x, 0))
-			# Apply impulse upwards
-			apply_central_impulse(Vector2(0, JUMP_VELOCITY))
-		
-		# If holding down during a jump, boost downwards instead
-		else:
-			# If rising, set speed to 0 before applying
-			if linear_velocity.y < 0:
-				set_linear_velocity(Vector2(linear_velocity.x, 0))
-			# Apply impulse downwards 
-			apply_central_impulse(Vector2(0, JUMP_VELOCITY * -0.5))
+	# Jump normally if not holding down
+	if not input.is_action_pressed("dive"):
+		# If falling, set speed to 0 before applying
+		if linear_velocity.y > 0:
+			set_linear_velocity(Vector2(linear_velocity.x, 0))
+		# Apply impulse upwards
+		apply_central_impulse(Vector2(0, JUMP_VELOCITY))
 	
-	# Alternative jump mode (unimplemented)
-	# To Do: Instead of jumping up, jump towards where the player is pushing joystick
+	# If holding down during a jump, boost downwards instead
 	else:
-		var jump_direction = Vector2(
-			Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
-			Input.get_action_strength("dive") - Input.get_action_strength("jump")
-		)
-		if jump_direction.length() > 1.0:
-			jump_direction = jump_direction.normalized()
-		print(jump_direction * JUMP_VELOCITY)
-		apply_central_impulse(jump_direction * JUMP_VELOCITY)
+		# If rising, set speed to 0 before applying
+		if linear_velocity.y < 0:
+			set_linear_velocity(Vector2(linear_velocity.x, 0))
+		# Apply impulse downwards 
+		apply_central_impulse(Vector2(0, JUMP_VELOCITY * -0.5))
 
 
 func handle_power_jump():

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes-and-scripts/menu/settings_menu/template_slider.gd" id="1_5jt6v"]
 [ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="1_nh40a"]
 
-[node name="TemplateSlider" type="MarginContainer"]
+[node name="TemplateSlider" type="MarginContainer" groups=["template_settings_container"]]
 script = ExtResource("1_5jt6v")
 
 [node name="HBox" type="HBoxContainer" parent="."]

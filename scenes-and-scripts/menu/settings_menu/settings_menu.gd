@@ -3,12 +3,12 @@ extends Control
 signal close_settings
 
 @export var page_index = 0
-@export var page_order = ["Game", "VideoAudio", "Controls", "Accessibility"]
+@export var page_order = ["Game", "VideoAudio", "PartyMode", "Controls"]
 
 @onready var game_page = $Panel/Game
 @onready var video_audio_page = $Panel/VideoAudio
+@onready var party_mode_page = $Panel/PartyMode
 @onready var controls_page = $Panel/Controls
-@onready var accessibility_page = $Panel/Accessibility
 
 @onready var page_underlines = $Panel/PageBar/PageUnderlines
 @onready var scroll_up_hint = $Panel/ScrollUpHint
@@ -33,14 +33,20 @@ func _process(_delta):
 		
 		# Attempt to match the scroll to show the selected slider
 		var focused_element = get_viewport().gui_get_focus_owner()
-		var focused_container = focused_element.get_parent().get_parent().get_parent()
-		var focused_slider_index = -1
+		
+		# Iterate through parent nodes until we have found a valid container or we've checked all options
+		var focused_container = focused_element.get_parent()
+		while not focused_container.is_in_group("template_settings_container") and focused_container.get_parent():
+			focused_container = focused_container.get_parent()
+		
+		# Attempt to find which child of the active page is focused
+		var focused_element_index = -1
 		if focused_container in active_page.get_child(0).get_children():
-			focused_slider_index = active_page.get_child(0).get_children().find(focused_container)
+			focused_element_index = active_page.get_child(0).get_children().find(focused_container)
 		
 		# For every set of 6 additional sliders, we need 219 units of scroll
 		@warning_ignore("integer_division")
-		active_page.scroll_vertical = floor(focused_slider_index / 6) * 219
+		active_page.scroll_vertical = floor(focused_element_index / 6) * 219
 		
 		# Calculate how much scroll would be needed to view all sliders
 		var count_scroll_bars = active_page.get_child(0).get_children().size()
@@ -66,27 +72,30 @@ func _ready():
 # When the settings menu is opened, focus on the first slider
 func focus_first_element():
 	# Declare variables to hold different key elements 
-	var sliders_vbox 
-	var first_slider_container
-	var first_slider
+	var element_vbox 
+	var first_element_container
+	var first_element
 	
 	# Attempt to dig into the active page to find the first slider
 	if active_page and active_page.get_children().size() > 0:
-		sliders_vbox = active_page.get_child(0)
-	if sliders_vbox and sliders_vbox.get_children().size() > 0:
-		first_slider_container = sliders_vbox.get_child(0)
-	if first_slider_container:
-		first_slider = first_slider_container.get_node("HBox/SliderBox/Slider")
-	if first_slider:
-		first_slider.grab_focus()
+		element_vbox = active_page.get_child(0)
+	if element_vbox and element_vbox.get_children().size() > 0:
+		first_element_container = element_vbox.get_child(0)
+	if first_element_container:
+		if first_element_container.get_node("HBox/SliderBox/Slider"):
+			first_element = first_element_container.get_node("HBox/SliderBox/Slider")
+		elif first_element_container.get_node("HBox/CheckBoxContainer/MarginContainer/CheckBox"):
+			first_element = first_element_container.get_node("HBox/CheckBoxContainer/MarginContainer/CheckBox")
+	if first_element:
+		first_element.grab_focus()
 
 
 func show_active_page():
 	# Hide all pages & underlines
 	game_page.visible = false
 	video_audio_page.visible = false
+	party_mode_page.visible = false
 	controls_page.visible = false
-	accessibility_page.visible = false
 	for underline in page_underlines.get_children():
 		underline.visible = false
 	
@@ -98,12 +107,12 @@ func show_active_page():
 		"VideoAudio":
 			video_audio_page.visible = true
 			active_page = video_audio_page
+		"PartyMode":
+			party_mode_page.visible = true
+			active_page = party_mode_page
 		"Controls":
 			controls_page.visible = true
 			active_page = controls_page
-		"Accessibility":
-			accessibility_page.visible = true
-			active_page = accessibility_page
 		_:
 			# If no match is found, default to showing the game page
 			game_page.visible = true
@@ -162,17 +171,18 @@ func _on_video_audio_page_button_button_up():
 	play_ui_next_sound()
 
 
+func _on_party_page_button_button_up():
+	jump_to_new_page("PartyMode")
+	play_ui_next_sound()
+
+
 func _on_controls_page_button_button_up():
 	jump_to_new_page("Controls")
 	play_ui_next_sound()
 
 
-func _on_accessibility_page_button_button_up():
-	jump_to_new_page("Accessibility")
-	play_ui_next_sound()
-
-
 func _on_settings_back_button_button_up():
+	release_focus()
 	play_ui_back_sound()
 	emit_signal("close_settings")
 
@@ -183,3 +193,6 @@ func play_ui_next_sound(volume_change = 0.0, pitch_change = 1.0):
 
 func play_ui_back_sound(volume_change = 0.0, pitch_change = 1.0):
 	SoundManager.play_sound("ui_back", volume_change, pitch_change)
+
+
+

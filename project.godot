@@ -169,22 +169,22 @@ page_previous={
 ]
 }
 point_up={
-"deadzone": 0.1,
+"deadzone": 0.25,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":-1.0,"script":null)
 ]
 }
 point_down={
-"deadzone": 0.1,
+"deadzone": 0.25,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":1.0,"script":null)
 ]
 }
 point_left={
-"deadzone": 0.1,
+"deadzone": 0.25,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":-1.0,"script":null)
 ]
 }
 point_right={
-"deadzone": 0.1,
+"deadzone": 0.25,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":1.0,"script":null)
 ]
 }

@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://c43kajtyykd4t"]
+[gd_scene load_steps=23 format=3 uid="uid://c43kajtyykd4t"]
 
 [ext_resource type="Script" path="res://scenes-and-scripts/menu/settings_menu/settings_menu.gd" id="1_hmyo2"]
 [ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="2_lf0me"]
 [ext_resource type="Texture2D" uid="uid://y1i4m5t44lwu" path="res://assets/sprites/buttons/lb_button.png" id="3_8p6yv"]
 [ext_resource type="Texture2D" uid="uid://b6kv02enrb6jl" path="res://assets/sprites/buttons/rb_button.png" id="4_eumdh"]
 [ext_resource type="PackedScene" uid="uid://fx5kk0fguxdv" path="res://scenes-and-scripts/menu/settings_menu/template_slider.tscn" id="5_vlhqw"]
+[ext_resource type="PackedScene" uid="uid://cduesnt1w60su" path="res://scenes-and-scripts/menu/settings_menu/template_check_box.tscn" id="6_dc2u5"]
 [ext_resource type="Texture2D" uid="uid://cny5vlfq1voyw" path="res://assets/sprites/buttons/b_button.png" id="6_uowpn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pbo0a"]
@@ -139,14 +140,14 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -239.0
+offset_left = -230.0
 offset_top = 46.0
-offset_right = 302.0
+offset_right = 311.0
 offset_bottom = 75.0
 grow_horizontal = 2
 theme = ExtResource("2_lf0me")
 theme_override_font_sizes/font_size = 14
-text = "Game / Video & Audio / Controls / Accessibility"
+text = "Game / Video & Audio / Party Mode / Controls"
 
 [node name="GamePageButton" type="Button" parent="Panel/PageBar/PagesLabel"]
 layout_mode = 0
@@ -164,19 +165,19 @@ offset_right = 214.0
 offset_bottom = 22.0
 theme = SubResource("Theme_rngxt")
 
-[node name="ControlsPageButton" type="Button" parent="Panel/PageBar/PagesLabel"]
+[node name="PartyPageButton" type="Button" parent="Panel/PageBar/PagesLabel"]
 layout_mode = 0
-offset_left = 216.0
+offset_left = 223.0
 offset_top = 2.0
-offset_right = 328.0
+offset_right = 342.0
 offset_bottom = 22.0
 theme = SubResource("Theme_rngxt")
 
-[node name="AccessibilityPageButton" type="Button" parent="Panel/PageBar/PagesLabel"]
+[node name="ControlsPageButton" type="Button" parent="Panel/PageBar/PagesLabel"]
 layout_mode = 0
-offset_left = 330.0
+offset_left = 360.0
 offset_top = 2.0
-offset_right = 477.0
+offset_right = 455.0
 offset_bottom = 22.0
 theme = SubResource("Theme_rngxt")
 
@@ -212,8 +213,9 @@ theme = SubResource("Theme_rngxt")
 
 [node name="PageUnderlines" type="Control" parent="Panel/PageBar"]
 anchors_preset = 0
+offset_left = 9.0
 offset_top = 8.0
-offset_right = 40.0
+offset_right = 49.0
 offset_bottom = 48.0
 
 [node name="GameUnderline" type="HSeparator" parent="Panel/PageBar/PageUnderlines"]
@@ -238,16 +240,16 @@ visible = false
 layout_mode = 0
 offset_left = 7.0
 offset_top = 55.0
-offset_right = 98.0
+offset_right = 119.0
 offset_bottom = 59.0
 theme_override_styles/separator = SubResource("StyleBoxLine_py1fv")
 
 [node name="VideoAndAudioUnderline3" type="HSeparator" parent="Panel/PageBar/PageUnderlines"]
 visible = false
 layout_mode = 0
-offset_left = 122.0
+offset_left = 142.0
 offset_top = 55.0
-offset_right = 256.0
+offset_right = 236.0
 offset_bottom = 59.0
 theme_override_styles/separator = SubResource("StyleBoxLine_py1fv")
 
@@ -274,7 +276,7 @@ offset_bottom = 331.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = SubResource("Theme_radcq")
-scroll_vertical = 73
+scroll_vertical = 36
 scroll_vertical_custom_step = 10.0
 horizontal_scroll_mode = 0
 
@@ -284,55 +286,31 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 alignment = 1
 
-[node name="TeamLives" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+[node name="EnableBubbles" parent="Panel/Game/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
-title = "Team Lives"
-game_setting = "team_lives"
-min_value = 1.0
-max_value = 10.0
-
-[node name="GameSpeed" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
-layout_mode = 2
-title = "Game Speed"
-game_setting = "game_time_scale"
-min_value = 0.25
-max_value = 1.25
-step = 0.05
-
-[node name="SlowMoSpeed" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
-layout_mode = 2
-title = "Slow Mo Speed"
-game_setting = "slow_mo_scale"
-min_value = 0.25
-max_value = 1.25
-step = 0.05
-
-[node name="BubbleSize" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
-layout_mode = 2
-title = "Bubble Size"
-game_setting = "bubble_size"
-min_value = 0.5
-max_value = 2.5
-step = 0.1
-
-[node name="AllowBubbles" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
-layout_mode = 2
-title = "Allow Bubbles"
+title = "Enable Bubbles"
 game_setting = "allow_bubbles"
-max_value = 1.0
+
+[node name="DirectionalBubbles" parent="Panel/Game/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Directional Bubbles"
+game_setting = "directional_bubbles"
 
 [node name="BubbleCount" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
 layout_mode = 2
 title = "Bubble Count"
 game_setting = "max_bubbles"
 min_value = 1.0
-max_value = 3.0
+max_value = 20.0
 
-[node name="DirectionalBubbles" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
+[node name="TeamLives" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
 layout_mode = 2
-title = "Arrow Bubbles"
-game_setting = "directional_bubbles"
-max_value = 1.0
+focus_neighbor_top = NodePath(".")
+focus_previous = NodePath(".")
+title = "Team Lives"
+game_setting = "team_lives"
+min_value = 1.0
+max_value = 10.0
 
 [node name="BallScale" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
 layout_mode = 2
@@ -406,6 +384,85 @@ game_setting = "music_track"
 min_value = 1.0
 max_value = 7.0
 
+[node name="Mute" parent="Panel/VideoAudio/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Mute"
+game_setting = "mute"
+
+[node name="PartyMode" type="ScrollContainer" parent="Panel"]
+visible = false
+layout_mode = 2
+offset_left = 28.0
+offset_top = 112.0
+offset_right = 612.0
+offset_bottom = 331.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_radcq")
+scroll_vertical_custom_step = 10.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/PartyMode"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+alignment = 1
+
+[node name="GiantBall" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Giant Ball"
+game_setting = "giant_ball"
+
+[node name="TinyBall" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Tiny Ball"
+game_setting = "tiny_ball"
+
+[node name="AlwaysSlowMo" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Always Slow Mo"
+game_setting = "always_slow_mo"
+
+[node name="FastMo" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Fast Mo"
+game_setting = "fast_mo"
+
+[node name="NoBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "No Bubbles"
+game_setting = "no_bubbles"
+
+[node name="ThreeBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Three Bubbles"
+game_setting = "three_bubbles"
+
+[node name="FiveBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Five Bubbles"
+game_setting = "five_bubbles"
+
+[node name="UnlimitedBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Unlimited Bubbles"
+game_setting = "unlimited_bubbles"
+
+[node name="ArrowBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Arrow Bubbles"
+game_setting = "arrow_bubbles"
+
+[node name="Colorblind" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Colorblind"
+game_setting = "colorblind"
+
+[node name="InvisiblePlayers" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Invisible Players"
+game_setting = "invisible_players"
+
 [node name="Controls" type="ScrollContainer" parent="Panel"]
 visible = false
 layout_mode = 2
@@ -426,31 +483,6 @@ size_flags_vertical = 4
 alignment = 1
 
 [node name="PlaceholderSlider" parent="Panel/Controls/VBoxContainer" instance=ExtResource("5_vlhqw")]
-layout_mode = 2
-title = "Placeholder Slider"
-min_value = 1.0
-step = 10.0
-
-[node name="Accessibility" type="ScrollContainer" parent="Panel"]
-visible = false
-layout_mode = 2
-offset_left = 28.0
-offset_top = 112.0
-offset_right = 612.0
-offset_bottom = 331.0
-grow_horizontal = 2
-grow_vertical = 0
-theme = SubResource("Theme_radcq")
-scroll_vertical_custom_step = 10.0
-horizontal_scroll_mode = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Accessibility"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-alignment = 1
-
-[node name="PlaceholderSlider" parent="Panel/Accessibility/VBoxContainer" instance=ExtResource("5_vlhqw")]
 layout_mode = 2
 title = "Placeholder Slider"
 min_value = 1.0
@@ -498,8 +530,8 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_b6hag")
 
 [connection signal="button_up" from="Panel/PageBar/PagesLabel/GamePageButton" to="." method="_on_game_page_button_button_up"]
 [connection signal="button_up" from="Panel/PageBar/PagesLabel/VideoAudioPageButton" to="." method="_on_video_audio_page_button_button_up"]
+[connection signal="button_up" from="Panel/PageBar/PagesLabel/PartyPageButton" to="." method="_on_party_page_button_button_up"]
 [connection signal="button_up" from="Panel/PageBar/PagesLabel/ControlsPageButton" to="." method="_on_controls_page_button_button_up"]
-[connection signal="button_up" from="Panel/PageBar/PagesLabel/AccessibilityPageButton" to="." method="_on_accessibility_page_button_button_up"]
 [connection signal="button_up" from="Panel/PageBar/LbButtonGraphic/LbButton" to="." method="_on_lb_button_button_up"]
 [connection signal="button_up" from="Panel/PageBar/RbButtonGraphic/RbButton" to="." method="_on_rb_button_button_up"]
 [connection signal="button_up" from="BackButtonInfo/SettingsBackButton" to="." method="_on_settings_back_button_button_up"]

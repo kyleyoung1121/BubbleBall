@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://cduesnt1w60su"]
+
+[ext_resource type="Script" path="res://scenes-and-scripts/menu/settings_menu/template_check_box.gd" id="1_hv4wm"]
+[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="2_ftqcm"]
+
+[node name="TemplateCheckBox" type="MarginContainer" groups=["template_settings_container"]]
+script = ExtResource("1_hv4wm")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="CheckBoxTitle" type="Label" parent="HBox"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme = ExtResource("2_ftqcm")
+theme_override_font_sizes/font_size = 16
+text = "Game Setting"
+
+[node name="CheckBoxContainer" type="HBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBox/CheckBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 54
+
+[node name="CheckBox" type="CheckBox" parent="HBox/CheckBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CheckBoxValueBox" type="MarginContainer" parent="HBox/CheckBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="CheckBoxValueText" type="Label" parent="HBox/CheckBoxContainer/CheckBoxValueBox"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_ftqcm")
+theme_override_font_sizes/font_size = 21
+text = "On"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[connection signal="toggled" from="HBox/CheckBoxContainer/MarginContainer/CheckBox" to="." method="_on_setting_value_changed"]

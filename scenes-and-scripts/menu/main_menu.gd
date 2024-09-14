@@ -4,16 +4,20 @@ extends CanvasLayer
 @onready var main_menu = $Main
 @onready var settings_menu = $Settings/SettingsMenu
 @onready var add_players_menu = $AddPlayers
+@onready var game_mode_select_menu = $GameModeSelect
+
 @onready var hold_x_to_start_graphic = $AddPlayers/CenterContainer/VBoxContainer/HoldXToStartGraphic
 @onready var players_and_prompt = $AddPlayers/CenterContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PlayersAndPrompt
 @onready var add_players_graphic = $AddPlayers/CenterContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PlayersAndPrompt/AddPlayersGraphic
 @onready var main_play_button = $Main/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MainPlayButton
+@onready var casual_button = $GameModeSelect/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/CasualButton
 
 const PLAYER_CARD_SCENE = preload("res://scenes-and-scripts/menu/player_card.tscn")
 const PLAYER_CARD_TEAM_ONE_THEME = preload("res://assets/themes/team_one_player_card.tres")
 const PLAYER_CARD_TEAM_TWO_THEME = preload("res://assets/themes/team_two_player_card.tres")
 const GAMEPLAY_SCENE_PATH = "res://scenes-and-scripts/gameplay/gameplay.tscn"
 
+var ready_to_start = false
 
 # map from player integer to the player node
 var player_nodes = {}
@@ -73,6 +77,7 @@ func _ready():
 	settings_menu.visible = false
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
+	game_mode_select_menu.visible = false
 	
 	main_play_button.grab_focus()
 
@@ -88,8 +93,11 @@ func _process(_delta):
 	if add_players_menu.visible == true and hold_x_to_start_graphic.visible == true:
 		# If at least one player has pressed start, continue
 		if PlayerManager.player_button_pressed("start"):
-			start_match()
 			play_ui_next_sound()
+			#start_match()
+			add_players_menu.visible = false
+			game_mode_select_menu.visible = true
+			casual_button.grab_focus()
 	
 	# Back out from the add players screen
 	if add_players_menu.visible == true:
@@ -109,6 +117,15 @@ func _process(_delta):
 	# Back out from the settings menu
 	if settings_menu.visible == true and PlayerManager.device_button_pressed("back"):
 		_on_settings_back_button_pressed()
+	
+	if game_mode_select_menu.visible == true:
+		if PlayerManager.player_button_pressed("back"):
+			play_ui_back_sound()
+			add_players_menu.visible = true
+			game_mode_select_menu.visible = false
+			casual_button.release_focus()
+		elif ready_to_start == true:
+			start_match()
 
 
 func update_player_card_colors():
@@ -168,3 +185,18 @@ func _on_add_players_back_button_pressed():
 	add_players_menu.visible = false
 	hold_x_to_start_graphic.visible = false
 	play_ui_back_sound()
+
+
+func _on_casual_button_button_up():
+	GameSettings.game_mode = "casual"
+	ready_to_start = true
+
+
+func _on_tournament_button_button_up():
+	GameSettings.game_mode = "tournament"
+	ready_to_start = true
+
+
+func _on_party_button_button_up():
+	GameSettings.game_mode = "party"
+	ready_to_start = true

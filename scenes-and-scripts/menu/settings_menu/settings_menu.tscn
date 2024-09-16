@@ -276,7 +276,6 @@ offset_bottom = 331.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = SubResource("Theme_radcq")
-scroll_vertical = 36
 scroll_vertical_custom_step = 10.0
 horizontal_scroll_mode = 0
 
@@ -288,13 +287,13 @@ alignment = 1
 
 [node name="EnableBubbles" parent="Panel/Game/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
-title = "Enable Bubbles"
-game_setting = "allow_bubbles"
+title = "Use Bubbles"
+game_setting = "use_bubbles"
 
 [node name="DirectionalBubbles" parent="Panel/Game/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "Directional Bubbles"
-game_setting = "directional_bubbles"
+game_setting = "use_directional_bubbles"
 
 [node name="BubbleCount" parent="Panel/Game/VBoxContainer" instance=ExtResource("5_vlhqw")]
 layout_mode = 2
@@ -408,60 +407,70 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 alignment = 1
 
+[node name="LockEffect" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
+layout_mode = 2
+title = "Lock Current Effect"
+game_setting = "lock_effect"
+
 [node name="GiantBall" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "Giant Ball"
 game_setting = "giant_ball"
+game_setting_category = "party_effects"
 
 [node name="TinyBall" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "Tiny Ball"
 game_setting = "tiny_ball"
+game_setting_category = "party_effects"
 
 [node name="AlwaysSlowMo" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "Always Slow Mo"
 game_setting = "always_slow_mo"
+game_setting_category = "party_effects"
 
 [node name="FastMo" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "Fast Mo"
 game_setting = "fast_mo"
+game_setting_category = "party_effects"
 
 [node name="NoBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "No Bubbles"
 game_setting = "no_bubbles"
+game_setting_category = "party_effects"
 
 [node name="ThreeBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "Three Bubbles"
 game_setting = "three_bubbles"
+game_setting_category = "party_effects"
 
 [node name="FiveBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "Five Bubbles"
 game_setting = "five_bubbles"
+game_setting_category = "party_effects"
 
 [node name="UnlimitedBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "Unlimited Bubbles"
 game_setting = "unlimited_bubbles"
+game_setting_category = "party_effects"
 
 [node name="ArrowBubbles" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
-title = "Arrow Bubbles"
-game_setting = "arrow_bubbles"
-
-[node name="Colorblind" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
-layout_mode = 2
-title = "Colorblind"
-game_setting = "colorblind"
+title = "Directional Bubbles"
+game_setting = "directional_bubbles"
+game_setting_category = "party_effects"
 
 [node name="InvisiblePlayers" parent="Panel/PartyMode/VBoxContainer" instance=ExtResource("6_dc2u5")]
 layout_mode = 2
 title = "Invisible Players"
 game_setting = "invisible_players"
+game_setting_category = "party_effects"
 
 [node name="Controls" type="ScrollContainer" parent="Panel"]
 visible = false

@@ -9,6 +9,8 @@ extends Node2D
 @onready var orange_hearts = $OrangeHearts
 @onready var blue_hearts = $BlueHearts
 
+@onready var party_effect_info_bubble = $PartyEffectInfoBubble
+
 @onready var pause_menu = $PauseMenu
 @onready var settings_menu = $SettingsMenu
 
@@ -23,6 +25,7 @@ const MAPS_FOLDER = "res://scenes-and-scripts/maps/"
 
 # Keep track of the player nums and their corresponding player instances
 var player_nodes = {}
+var invisible_players = false
 var map_paths = []
 var map_selected = null
 var map_iterator = 0
@@ -32,6 +35,8 @@ var match_in_progress = false
 var round_in_progress = false
 var block_match_start = false
 var ball_instance
+var current_party_effect
+var party_effect_recovery_memory = {}
 
 var max_lives = GameSettings.team_lives
 var team_one_lives
@@ -59,6 +64,12 @@ func _ready():
 		# End the directory listing
 		dir.list_dir_end()
 	
+	if GameSettings.game_mode == "party":
+		party_effect_info_bubble.visible = true
+		new_party_mode_effect()
+	else:
+		party_effect_info_bubble.visible = false
+	
 	# Show the initial map
 	show_map(map_paths[map_iterator])
 	
@@ -78,7 +89,8 @@ func _ready():
 func _process(_delta):
 	
 	# Testing: Show FPS
-	$FpsCounter.text = str(Engine.get_frames_per_second())
+	if $FpsCounter.visible:
+		$FpsCounter.text = str(Engine.get_frames_per_second())
 	
 	# Input handling before the match, during match select
 	if not match_in_progress and not block_match_start:
@@ -133,6 +145,8 @@ func goal_scored(team):
 
 func reset_round():
 	# Reset players & ball
+	if GameSettings.game_mode == "party":
+		new_party_mode_effect()
 	freeze_time()
 	remove_players()
 	remove_ball()
@@ -200,7 +214,8 @@ func prepare_match():
 			team_two_iterator += 1
 			# If we don't have enough spawn points, cycle back around and double up.
 			if team_two_iterator > team_two_spawns.size() - 1: team_two_iterator = 0
-	
+		if invisible_players:
+			player_nodes[player_num].visible = false
 	freeze_time()
 	
 	# Set time scale to normal
@@ -241,6 +256,7 @@ func toggle_pause():
 
 
 func return_to_main_menu():
+	resolve_party_mode_effect()
 	PlayerManager.remove_all_players()
 	LoadMatch.remove_all_players()
 	remove_players()
@@ -375,6 +391,130 @@ func unfreeze_time():
 			node.freeze = false
 
 
+func new_party_mode_effect():
+	# If the player has locked their party mode effect, we shouldn't apply a new one
+	if GameSettings.lock_effect:
+		return
+	# Remove the old effect, then apply a new one
+	resolve_party_mode_effect()
+	apply_party_mode_effect()
+
+
+func apply_party_mode_effect():
+	# Don't consider effects if they are toggle off in settings
+	var possible_effects = []
+	for effect in GameSettings.party_effects.keys():
+		if GameSettings.get("party_effects").get(effect) == true:
+			possible_effects.append(effect)
+	
+	# Choose the effect to apply
+	var selected_effect = possible_effects.pick_random()
+	current_party_effect = selected_effect 
+	
+	party_effect_info_bubble.show_effect_name(selected_effect)
+	
+	match selected_effect:
+		"giant_ball":
+			party_effect_recovery_memory["ball_mass"] = GameSettings.ball_mass
+			party_effect_recovery_memory["ball_scale"] = GameSettings.ball_scale
+			GameSettings.ball_mass = 0.4
+			GameSettings.ball_scale = 2
+			
+		"tiny_ball":
+			party_effect_recovery_memory["ball_mass"] = GameSettings.ball_mass
+			party_effect_recovery_memory["ball_scale"] = GameSettings.ball_scale
+			GameSettings.ball_mass = 0.18
+			GameSettings.ball_scale = 0.4
+			
+		"always_slow_mo":
+			party_effect_recovery_memory["game_time_scale"] = GameSettings.game_time_scale
+			party_effect_recovery_memory["slow_mo_scale"] = GameSettings.slow_mo_scale
+			GameSettings.game_time_scale = 0.55
+			GameSettings.slow_mo_scale = 0.55
+			
+		"fast_mo":
+			party_effect_recovery_memory["game_time_scale"] = GameSettings.game_time_scale
+			party_effect_recovery_memory["slow_mo_scale"] = GameSettings.slow_mo_scale
+			GameSettings.game_time_scale = 1
+			GameSettings.slow_mo_scale = 1
+			
+		"no_bubbles":
+			party_effect_recovery_memory["use_bubbles"] = GameSettings.use_bubbles
+			GameSettings.use_bubbles = false
+			
+		"three_bubbles":
+			party_effect_recovery_memory["max_bubbles"] = GameSettings.max_bubbles
+			GameSettings.max_bubbles = 3
+			
+		"five_bubbles":
+			party_effect_recovery_memory["max_bubbles"] = GameSettings.max_bubbles
+			GameSettings.max_bubbles = 5
+			
+		"unlimited_bubbles":
+			party_effect_recovery_memory["max_bubbles"] = GameSettings.max_bubbles
+			GameSettings.max_bubbles = 999999
+			
+		"directional_bubbles":
+			party_effect_recovery_memory["max_bubbles"] = GameSettings.max_bubbles
+			party_effect_recovery_memory["use_directional_bubbles"] = GameSettings.use_directional_bubbles
+			GameSettings.max_bubbles = 15
+			GameSettings.use_directional_bubbles = true
+			
+		"invisible_players":
+			for player_index in player_nodes.keys():
+				player_nodes[player_index].visible = false
+			invisible_players = true
+		
+		_:
+			print(selected_effect + " not found... No effect applied")
+
+
+func resolve_party_mode_effect():
+	match current_party_effect:
+		"giant_ball":
+			GameSettings.ball_mass = party_effect_recovery_memory["ball_mass"]
+			GameSettings.ball_scale = party_effect_recovery_memory["ball_scale"]
+			
+		"tiny_ball":
+			GameSettings.ball_mass = party_effect_recovery_memory["ball_mass"]
+			GameSettings.ball_scale = party_effect_recovery_memory["ball_scale"]
+			
+		"always_slow_mo":
+			GameSettings.game_time_scale = party_effect_recovery_memory["game_time_scale"]
+			GameSettings.slow_mo_scale = party_effect_recovery_memory["slow_mo_scale"]
+			
+		"fast_mo":
+			GameSettings.game_time_scale = party_effect_recovery_memory["game_time_scale"]
+			GameSettings.slow_mo_scale = party_effect_recovery_memory["slow_mo_scale"]
+			
+		"no_bubbles":
+			GameSettings.use_bubbles = party_effect_recovery_memory["use_bubbles"]
+			
+		"three_bubbles":
+			GameSettings.max_bubbles = party_effect_recovery_memory["max_bubbles"]
+			
+		"five_bubbles":
+			GameSettings.max_bubbles = party_effect_recovery_memory["max_bubbles"]
+			
+		"unlimited_bubbles":
+			GameSettings.max_bubbles = party_effect_recovery_memory["max_bubbles"]
+			
+		"directional_bubbles":
+			GameSettings.max_bubbles = party_effect_recovery_memory["max_bubbles"]
+			GameSettings.use_directional_bubbles = party_effect_recovery_memory["use_directional_bubbles"]
+			
+		"invisible_players":
+			for player_index in player_nodes.keys():
+				player_nodes[player_index].visible = true
+			invisible_players = false
+		
+		_:
+			pass
+	
+	# Finally, after settings have been restored, clear the party effects recovery memory
+	party_effect_recovery_memory = {}
+
+
 func _on_post_match_timer_timeout():
 	block_match_start = false
 
@@ -396,3 +536,8 @@ func _on_pause_menu_quit_match():
 func _on_settings_menu_close_settings():
 	settings_menu.visible = false
 	pause_menu.focus_first_element()
+
+
+func _on_party_mode_effect_timer_timeout():
+	if GameSettings.game_mode == "party" and not GameSettings.apply_effect_per_round:
+		new_party_mode_effect()

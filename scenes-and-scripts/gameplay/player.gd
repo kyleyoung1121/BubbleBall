@@ -178,14 +178,14 @@ func _integrate_forces(state):
 
 # Summon a bubble, called upon each jump
 func summon_bubble():
-	if GameSettings.allow_bubbles:
+	if GameSettings.use_bubbles:
 		var bubble_instance = BUBBLE_SCENE.instantiate()
 		bubble_instance.position = self.position  # Set the bubble's position to the player's position
 		bubble_instance.scale = Vector2(GameSettings.bubble_size, GameSettings.bubble_size)
 		bubble_instance.set_team(team_name)
 		
 		# If we are using directional bubbles, determine what direction this bubble needs
-		if GameSettings.directional_bubbles:
+		if GameSettings.use_directional_bubbles:
 			
 			var horizontal_axis = input.get_action_strength("point_right") - input.get_action_strength("point_left")
 			var vertical_axis = input.get_action_strength("point_down") - input.get_action_strength("point_up")

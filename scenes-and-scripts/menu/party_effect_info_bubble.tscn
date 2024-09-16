@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://d76hma88atyg"]
+
+[ext_resource type="Theme" uid="uid://dxnhffmfb2hde" path="res://assets/themes/new_theme.tres" id="1_7g1wb"]
+[ext_resource type="Script" path="res://scenes-and-scripts/menu/party_effect_info_bubble.gd" id="1_tbc1m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugu2b"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="PartyEffectInfoBubble" type="Node2D"]
+script = ExtResource("1_tbc1m")
+
+[node name="InfoBubble" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -152.0
+offset_top = -18.5
+offset_right = 152.0
+offset_bottom = 18.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_ugu2b")
+
+[node name="Label" type="Label" parent="InfoBubble"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.5
+offset_top = -13.5
+offset_right = 51.5
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_7g1wb")
+theme_override_font_sizes/font_size = 19
+text = "Fast Mo"
+horizontal_alignment = 1
+vertical_alignment = 1

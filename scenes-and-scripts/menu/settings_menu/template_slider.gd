@@ -10,7 +10,7 @@ extends MarginContainer
 @onready var slider_title_label = $HBox/SliderTitle
 @onready var slider_value_text = $HBox/SliderBox/SliderValueBox/SliderValueText
 
-var sound_settings = ["master_volume", "sfx_volume", "music_volume", "music_track"]
+var sound_settings = ["master_volume", "sfx_volume", "music_volume", "music_track", "mute"]
 
 var freeze_sliders = true
 

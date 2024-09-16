@@ -10,12 +10,12 @@ var game_mode = "casual"
 var player_mass = 0.4
 
 # Ball
-var ball_scale = 0.8 # 0.4 - 2 , 0.8 preferred
-var ball_mass = 0.2 # 0.1 - 0.5
+var ball_scale = 0.8
+var ball_mass = 0.2
 
 # Bubbles
-var allow_bubbles = true
-var directional_bubbles = false
+var use_bubbles = true
+var use_directional_bubbles = false
 var max_bubbles = 1
 var bubble_size = 1.2
 
@@ -23,17 +23,21 @@ var bubble_size = 1.2
 var spin_speed = 1
 
 # Party Mode Settings
-var giant_ball = true
-var tiny_ball = true
-var always_slow_mo = true
-var fast_mo = true
-var no_bubbles = true
-var three_bubbles = true
-var five_bubbles = true
-var unlimited_bubbles = true
-var arrow_bubbles = true
-var colorblind = true
-var invisible_players = true
+var effect_frequency = 30
+var apply_effect_per_round = true
+var lock_effect = false
+var party_effects = {
+	"giant_ball": true,
+	"tiny_ball": true,
+	"always_slow_mo": true,
+	"fast_mo": true,
+	"no_bubbles": true,
+	"three_bubbles": true,
+	"five_bubbles": true,
+	"unlimited_bubbles": true,
+	"directional_bubbles": true,
+	"invisible_players": true,
+}
 
 # Audio
 var master_volume = 50

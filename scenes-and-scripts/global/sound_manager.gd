@@ -84,6 +84,9 @@ func update_settings():
 	if (GameSettings.get("master_volume") == 0 or GameSettings.get("music_volume") == 0):
 		background_music_player.volume_db = -100
 	
+	if GameSettings.get("mute") == true:
+		background_music_player.volume_db = -100
+	
 	# If the track number has changed, change to that track
 	if (not track_number_playing == GameSettings.music_track):
 		play_track(GameSettings.music_track)

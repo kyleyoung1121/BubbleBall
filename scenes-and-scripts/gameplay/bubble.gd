@@ -21,12 +21,12 @@ var is_popping = false
 
 
 func _process(delta):
-	if not GameSettings.directional_bubbles:
+	if not GameSettings.use_directional_bubbles:
 		rotation += ROTATION_SPEED
 
 
 func _ready():
-	if not GameSettings.directional_bubbles:
+	if not GameSettings.use_directional_bubbles:
 		rotation = randi_range(0,10)
 		arrow.visible = false
 	else:
@@ -44,7 +44,7 @@ func _on_body_entered(body):
 	if body.is_in_group("ball"):
 		# Determine what direction the ball should be pushed
 		var direction
-		if not GameSettings.directional_bubbles:
+		if not GameSettings.use_directional_bubbles:
 			# Calculate the direction from the bubble to the ball
 			direction = (body.global_position - global_position).normalized()
 		else:
